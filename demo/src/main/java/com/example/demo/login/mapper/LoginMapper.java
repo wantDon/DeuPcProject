@@ -7,5 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface LoginMapper {
 
     LoginDTO login(String id, String pwd);
+    
+    LoginDTO nlogin(String id);
 
 }

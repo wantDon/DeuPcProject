@@ -17,6 +17,13 @@ public class LoginServiceImple implements LoginService {
         LoginDTO loginDTO = loginMapper.login(id, pwd);
         return loginDTO != null;
     }
+    
+    @Override
+    public boolean nlogin(String id) {
+    	id = "비회원-" + id;
+        LoginDTO loginDTO = loginMapper.nlogin(id);
+        return loginDTO != null;
+    }
 
 }
 
