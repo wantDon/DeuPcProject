@@ -10,4 +10,6 @@ public interface LoginMapper {
     
     LoginDTO nlogin(String id);
 
+    public void movePC(String id, String pwd);
+    
 }

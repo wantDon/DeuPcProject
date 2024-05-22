@@ -25,10 +25,16 @@ public class LoginServiceImple implements LoginService {
     }
     
     @Override
-    public boolean nlogin(String id) {
+    public LoginDTO nlogin(String id) {
     	id = "비회원-" + id;
         LoginDTO loginDTO = loginMapper.nlogin(id);
-        return loginDTO != null;
+        return loginDTO;
+    }
+    
+    @Override
+    public void movePC(String id, String pwd) {
+    	id = "비회원-" + id;
+    	loginMapper.movePC(id, pwd);
     }
 
 }

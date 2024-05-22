@@ -12,8 +12,14 @@
     
     <select id="nlogin" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
         <![CDATA[
-			select id from user
+			select id, pwd from user
 			where id = #{id};
 		]]>
     </select>
+    
+    <update id="movePC" parameterType="com.example.demo.counter.DTO.UserDTO">
+		<![CDATA[
+			update user set pwd = #{pwd} where id = #{id};
+		]]>
+	</update>
 </mapper>

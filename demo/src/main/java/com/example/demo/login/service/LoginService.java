@@ -1,9 +1,13 @@
 package com.example.demo.login.service;
 
+import com.example.demo.login.dto.LoginDTO;
+
 public interface LoginService {
 
     public boolean login(String id, String pwd);
     
-    public boolean nlogin(String id);
+    public LoginDTO nlogin(String id);
 
+    public void movePC(String id, String pwd);
+    
 }
