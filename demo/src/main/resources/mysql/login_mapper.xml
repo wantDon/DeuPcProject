@@ -9,4 +9,11 @@
 			where id = #{id} and pwd = #{pwd};
 		]]>
     </select>
+    
+    <select id="nlogin" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
+        <![CDATA[
+			select id from user
+			where id = #{id};
+		]]>
+    </select>
 </mapper>

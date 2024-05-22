@@ -23,6 +23,13 @@ public class LoginServiceImple implements LoginService {
         counterManager.addUserTime(id,5);
         return loginDTO != null;
     }
+    
+    @Override
+    public boolean nlogin(String id) {
+    	id = "비회원-" + id;
+        LoginDTO loginDTO = loginMapper.nlogin(id);
+        return loginDTO != null;
+    }
 
 }
 

@@ -5,7 +5,7 @@
 
 		<link rel="stylesheet" href="/assets/css/login.css">
 		
-		<title>DEU PC - 회원 로그인</title>
+		<title>DEU PC - 비회원 로그인</title>
 	</head>
 	<body>
 		<script type="text/javascript" src="/assets/js/smain.js"></script>
@@ -14,21 +14,18 @@
 				<span class="do-hyeon-regular sm1">돌아가기</span>
 			</div>
 		</div>
-		<div class="d1">
-			<div class="d2 w-75">
+		<div class="nld1">
+			<div class="nld2 w-75">
 				<span class="login-logo">DEU PC</span><br>
 				<span class="do-hyeon-regular">로그인 후 이용하실 수 있습니다.</span>
 			</div>
-			<div class="d3 mt-4">
-				<div class="d4 w-75">
-					<form id="loginFrm" name="loginFrm" method="POST" th:action="@{/pc/login}">
+			<div class="nld3 mt-4">
+				<div class="nld4 w-75">
+					<form id="loginFrm" name="loginFrm" method="POST" th:action="@{/pc/nlogin}">
 						<input class="form-control mb-3 mt-5" name="id" type="text" placeholder="아이디" required><p>
-						<input class="form-control mb-3" name="pwd" type="password" placeholder="비밀번호" required><p>
-						<button type="button" class="btn">아이디/비밀번호 찾기</button>
-						<button type="button" class="btn ms-5">회원가입</button><p>
-						<button type="submit" class="login mt-2" id="btn-login">로그인</button>
+						<button type="submit" class="login mt-2">로그인</button>
 					</form>
-					<div class="d5" th:if="${error}" th:text="${error}"></div>
+					<div class="nld5" th:if="${error}" th:text="${error}"></div>
 				</div>
 			</div>
 		</div>
