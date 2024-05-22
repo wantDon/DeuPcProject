@@ -4,22 +4,32 @@
 		<title>DEU PC 동의대점</title>
 	</head>
 <th:block th:replace="~{_layout/stop::sTop}"></th:block>
-		
 		<div class="d1 smain">
+			<th:block th:unless="${clientIP == '127.0.0.1'}">
 			<div class="d2">
-				<script type="text/javascript" src="/assets/js/smain.js"></script>
-				<div class="d3" onclick="movePage('회원')">
+			</th:block>
+			<th:block th:if="${clientIP == '127.0.0.1'}">
+			<div class="d2 admin">
+			<div class="d3 mx-2" onclick="movePage('관리자')">
+				<div class="d4">
+					<span class="do-hyeon-regular">관리자</span><br><br>
+					<img class="img01" src="/assets/img/p1.png">
+				</div>
+			</div>
+			</th:block>
+				<div class="d3 mx-2" onclick="movePage('회원')">
 					<div class="d4">
 						<span class="do-hyeon-regular">회원</span><br><br>
 						<img class="img01" src="/assets/img/p1.png">
 					</div>
 				</div>
-				<div class="d3" onclick="movePage('비회원')">
+				<div class="d3 mx-2" onclick="movePage('비회원')">
 					<div class="d4">
 						<span class="do-hyeon-regular">비회원</span><br><br>
 						<img class="img01" src="/assets/img/p1.png">
 					</div>
 				</div>
+				<script type="text/javascript" src="/assets/js/smain.js"></script>
 			</div>
 		</div>
 	</body>

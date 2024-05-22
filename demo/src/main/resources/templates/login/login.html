@@ -5,12 +5,6 @@
 
 		<link rel="stylesheet" href="/assets/css/login.css">
 		
-		<script type="text/javascript">
-			function redirection() {
-				location.replace("/pc");
-			}
-		</script>
-		
 		<title>DEU PC - 회원 로그인</title>
 	</head>
 	<body>
@@ -32,7 +26,7 @@
 						<input class="form-control mb-3" name="pwd" type="password" placeholder="비밀번호" required><p>
 						<button type="button" class="btn">아이디/비밀번호 찾기</button>
 						<button type="button" class="btn ms-5">회원가입</button><p>
-						<button type="submit" class="login mt-2">로그인</button>
+						<button type="submit" class="login mt-2" id="btn-login">로그인</button>
 					</form>
 					<div class="d5" th:if="${error}" th:text="${error}"></div>
 				</div>

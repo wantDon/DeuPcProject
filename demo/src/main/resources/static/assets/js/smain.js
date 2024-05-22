@@ -1,5 +1,7 @@
 function movePage(value) {
-	if (value === "회원") {
+	if (value === "관리자") {
+		location.href = "/pc/admin";
+	} else if (value === "회원") {
 		location.href = "/pc/member";
 	} else if (value === "비회원") {
 		location.href = "/pc/non-member";

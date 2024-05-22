@@ -2,7 +2,12 @@
 package com.example.demo.login.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value="/pc")
@@ -23,7 +28,14 @@ public class MainController {
     }
 
     @RequestMapping(value="/smain")
-    public String smain() {
+    public String smain(Model model) {
+    	HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String ip = req.getHeader("X-FORWARDED-FOR");
+		if (ip == null) {
+			ip = req.getRemoteAddr();
+		}
+		model.addAttribute("clientIP", ip);
+		
         return "pc/smain";
     }
     

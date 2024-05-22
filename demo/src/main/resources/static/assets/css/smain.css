@@ -12,9 +12,13 @@
 .d2 {
 	text-align: center;
 	margin: 0 auto;
-	width: 45%;
+	width: 50%;
 	display: flex;
 	justify-content: space-between;
+}
+
+.admin {
+	width: 60%;
 }
 
 .d3 {

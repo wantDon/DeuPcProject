@@ -14,8 +14,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
 
+	@Autowired
     private LoginServiceImple loginService;
-    @Autowired
     public LoginController(LoginServiceImple loginService) {
         this.loginService = loginService;
     }
@@ -65,6 +65,6 @@ public class LoginController {
     @GetMapping(value="/pc/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginId");
-        return "redirect:login";
+        return "redirect:/pc/smain";
     }
 }
