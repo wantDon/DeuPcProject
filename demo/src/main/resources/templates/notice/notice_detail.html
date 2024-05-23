@@ -8,10 +8,8 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-md-3">
-                <div th:replace="layout/left_tab :: deupcLeft_Tab"></div>
-            </div>
-            <div class="col-md-6">
+            <div th:replace="layout/left_tab :: deupcLeft_Tab"></div>
+            <div class="container col-md-10">
                 <div class="container mt-4">
                     <h1>공지 상세 정보</h1>
                     <div class="card">
@@ -37,9 +35,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div th:replace="layout/right_tab :: deupcRight_Tab"></div>
-            </div>
+
+            <div th:replace="layout/right_tab :: deupcRight_Tab"></div>
         </div>
     </div>
 </body>
