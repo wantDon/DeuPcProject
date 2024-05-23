@@ -2,16 +2,16 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.ac.deu.pc.food.mapper.FoodMapper">
+<mapper namespace="com.example.demo.food.mapper.FoodMapper">
 
-	<insert id="insertFood" parameterType="kr.ac.deu.pc.food.dto.FoodDTO">
+	<insert id="insertFood" parameterType="com.example.demo.food.dto.FoodDTO">
 	    INSERT INTO food
 	    (cate_name, food_name, food_price, count, state, food_info)
 	    VALUES
 	    (#{cate_name}, #{food_name}, #{food_price}, #{count}, #{state}, #{food_info})
 	</insert>
 
-	<select id="getAllFoods" resultType="kr.ac.deu.pc.food.dto.FoodDTO">
+	<select id="getAllFoods" resultType="com.example.demo.food.dto.FoodDTO">
 		SELECT * FROM food
 	</select>
 </mapper>
