@@ -18,7 +18,7 @@ public class MainController {
     	
     }
 
-    @RequestMapping(value={"*", "/"})
+    @RequestMapping(value={"/", "", "/pc"})
     public String index() {
         return "pc/pc";
     }
@@ -42,7 +42,7 @@ public class MainController {
 		
 		if (ip.equals("127.0.0.1") || ip.equals("113.198.238.105")) {
 			pcnum = "01";
-		} else if (ip.equals("172.17.103.10")) {
+		} else if (ip.equals("172.17.106.110")) {
 			pcnum = "16";
 		}
 		
@@ -68,5 +68,5 @@ public class MainController {
     	model.addAttribute("pcnum", session.getAttribute("pcnum"));
     	return "pc/nmemMain";
     }
-
+    
 }
