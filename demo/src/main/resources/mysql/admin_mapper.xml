@@ -15,4 +15,15 @@
 		]]>
 	</select>
 	
+	<select id="getUserInfo" resultType="com.example.demo.admin.dto.MemberDTO" parameterType="String">
+		<![CDATA[
+			select * from user where id = #{id};
+		]]>
+	</select>
+	
+	<select id="getAllUser" resultType="com.example.demo.admin.dto.MemberDTO">
+		<![CDATA[
+			select * from user where grade is null or grade = 1 or grade = 2;
+		]]>
+	</select>
 </mapper>

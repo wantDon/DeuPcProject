@@ -68,16 +68,22 @@ public class LoginController {
         	return "잔여시간이 없습니다. 시간 충전 후 다시 로그인 해주세요.";
         } else {
         	String id = loginDTO.getId();
+        	int time = loginDTO.getTime();
+        	
+        	session.setAttribute("time", time);
         	
         	loginService.useStart(id, pcnum);
             session.setAttribute("loginId", id);
             
             LocalDateTime loginTime = LocalDateTime.now();
             session.setAttribute("loginTime", loginTime);
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
-            String formattedLoginTime = loginTime.format(formatter);
             
-            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            String formattedLoginTime = loginTime.format(formatter);
+            String formattedLoginTime2 = loginTime.format(formatter2);
+            
+            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime2 + "/" + time);
         	System.out.println("[" + formattedLoginTime + "] " + id + " " +  pcnum + "번 PC 사용 시작");
             //return "redirect:/pc";
         	return "success";
@@ -107,21 +113,27 @@ public class LoginController {
     		loginDTO.setId(loginDTO.getId().split("-")[1]);
         	if (loginDTO.getPwd().equals(pcnum) || loginDTO.getPwd().equals("자리이동")) {
         		String id = "비회원-" + loginDTO.getId();
+            	int time = loginDTO.getTime();
         		
+            	session.setAttribute("time", time);
+            	
             	loginService.useStart(id, pcnum);
 	            session.setAttribute("loginId", id);
 	            
 	            LocalDateTime loginTime = LocalDateTime.now();
 	            session.setAttribute("loginTime", loginTime);
+	            
 	            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+	            DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 	            String formattedLoginTime = loginTime.format(formatter);
+	            String formattedLoginTime2 = loginTime.format(formatter2);
 	            
 	            if (loginDTO.getPwd().equals("자리이동")) {
 	            	loginDTO.setPwd(pcnum);
 	            	loginService.movePC(id, loginDTO.getPwd());
 	            }
 	            
-	            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum);
+	            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime2 + "/" + time);
 	        	System.out.println("[" + formattedLoginTime + "] " + id + " " + pcnum + "번 PC에 접속 성공");
 	            return "redirect:pc";
         	} else {
@@ -152,10 +164,14 @@ public class LoginController {
     	String id = (String) session.getAttribute("loginId");
     	String pcnum = (String) session.getAttribute("pcnum");
     	
-    	loginService.logout(id, minutes);
-    	messagingTemplate.convertAndSend("/topic/login", "logout/" + id + " " + "/" + pcnum);
+    	LocalDateTime nowTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd HH:mm");
+        String formattedLoginTime = nowTime.format(formatter);
     	
-    	System.out.println(id + " " + minutes + "분 사용 " + pcnum + "번 PC 종료");
+    	loginService.logout(id, minutes);
+    	messagingTemplate.convertAndSend("/topic/login", "logout/" + id + "/" + pcnum);
+    	
+    	System.out.println("[" + formattedLoginTime + "] " + id + " " + minutes + "분 사용 " + pcnum + "번 PC 종료");
     	
         session.invalidate();
         return "redirect:/pc/smain";

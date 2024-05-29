@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>DEU PC - 회원 관리</title>
+		
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		
+		<link href="/assets/css/font.css" rel="stylesheet">
+		<link href="/assets/css/admin_m.css" rel="stylesheet">
+	</head>
+	<body>
+		<div class="container-fluid">
+		    <div class="row">
+		        <div th:replace="~{layout/left_tab::deupcLeft_Tab}"></div>
+				<div class="container col-md-8">
+					<div class="amd1">
+						<span class="do-hyeon-regular">회원 관리</span>
+					</div>
+					<div class="row justify-content-md-center amd2">
+						<table class="table table-bordered" style="width: 100%">
+							<tr align="center" height="40">
+								<td class="ttd1 do-hyeon-regular" width="110">이름</td>
+								<td class="ttd1 do-hyeon-regular" width="110">아이디</td>
+								<td class="ttd1 do-hyeon-regular" width="200">이메일</td>
+								<td	class="ttd1 do-hyeon-regular" width="120">생년월일</td>
+								<td	class="ttd1 do-hyeon-regular" width="120">전화번호</td>
+								<td	class="ttd1 do-hyeon-regular" width="100">회원등급</td>
+								<td	class="ttd1 do-hyeon-regular" width="100">정보수정</td>
+							</tr>
+							<tr th:each="ulist : ${memberList}" >
+								<td th:text="${ulist.name}"></td>
+								<td th:text="${ulist.id}"></td>
+								<td th:text="${ulist.email}"></td>
+								<td th:text="${ulist.birth}"></td>
+								<td th:text="${ulist.phone}"></td>
+								<td th:text="${ulist.grade == null || ulist.grade == 1 ? '일반회원' : '블랙리스트'}"></td>
+								<td><button type="button" class="btn btn-light">회원 탈퇴</button></td>
+							</tr>
+						</table>
+						<nav>
+							<ul class="pagination justify-content-center">
+								<li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+									<a class="page-link" th:href="@{/pc/admin/member(page=${currentPage - 1})}">이전</a>
+								</li>
+								<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+									<a class="page-link" th:href="@{/pc/admin/member(page=${i})}" th:text="${i + 1}">1</a>
+								</li>
+								<li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+									<a class="page-link" th:href="@{/pc/admin/member(page=${currentPage + 1})}">다음</a>
+								</li>
+							</ul>
+						</nav>
+					</div>
+				</div>
+				<div th:replace="~{layout/right_tab::deupcRight_Tab}"></div>
+			</div>
+		</div>
+	</body>
+</html>

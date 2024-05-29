@@ -16,40 +16,36 @@
 	<body>
 		<div class="container-fluid">
 	        <div class="row">
-	            <div th:replace="layout/left_tab :: deupcLeft_Tab"></div>
+	            <div th:replace="~{layout/left_tab::deupcLeft_Tab}"></div>
 				<div class="admin-d1 container col-md-8">
 					<div class="admin-d2">
 						<span class="do-hyeon-regular">관리자 메인</span>
 					</div>
 					<div class="row justify-content-md-center admin-d3">
-						<div class="admin-d4">						
-							
-						</div>
-						<script type="text/javascript" src="/assets/js/admin.js"></script>
+						<div id="admin-d4" class="admin-d4"></div>
 					</div>
 				</div>
 				
-				<!-- Bootstrap Modal -->
 				<div class="modal fade" id="seatModal" tabindex="-1" role="dialog" aria-labelledby="seatModalLabel" aria-hidden="true">
 				    <div class="modal-dialog" role="document">
 				        <div class="modal-content">
 				            <div class="modal-header">
-				                <h5 class="modal-title" id="seatModalLabel">Seat Information</h5>
+				                <h5 class="modal-title" id="seatModalLabel">회원 정보</h5>
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				            </div>
 				            <div class="modal-body">
-				                Seat details go here.
+				                선택하신 회원의 정보입니다.
 				                <div id="seatDetails"></div>
 				            </div>
 				            <div class="modal-footer">
-								<button type="button" class="admin-modal-btn btn btn-primary">정보 수정</button>								
 								<button type="button" class="admin-modal-btn btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 				            </div>
 				        </div>
 				    </div>
 				</div>
-				<div th:replace="layout/right_tab :: deupcRight_Tab"></div>
+				<div th:replace="~{layout/right_tab::deupcRight_Tab}"></div>
 			</div>
-		</div>
+		</div>		
+		<script type="text/javascript" src="/assets/js/admin.js"></script>
 	</body>
 </html>

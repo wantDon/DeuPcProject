@@ -11,8 +11,6 @@ public class CounterManager {
     @Autowired
     public CounterManager(TestMapper testMapper){
         this.testMapper = testMapper;
-        System.out.println("Countermanager.생성자+");
-        System.out.println(testMapper);
     }
 
     public void addUserTime(String userName,int addTime){
