@@ -21,7 +21,7 @@ public class NoticeController {
 	}
 	
 	// 공지사항 목록 페이지 요청 처리
-	@RequestMapping("*")
+	@RequestMapping(value={"", "*"})
     public String notice(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String sword) {
         int pageSize = 10;
         int totalNotices = noticeService.getTotalNoticeCount();

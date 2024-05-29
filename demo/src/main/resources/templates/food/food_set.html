@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 등록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .preview-container {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #preview {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+        .centered-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .centered-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div th:replace="layout/left_tab :: deupcLeft_Tab"></div>
+
+            <div class="container text-center col-md-9">
+                <div class="row">
+                    <div class="row" style="margin-top: 50px;">
+                        <h1 style="font-weight: bold;">세트상품 등록</h1>
+                    </div>
+                    
+                    <div class="container text-center">
+                        <div class="row">
+							<div class="col-6 col-sm-5" style="overflow-y: auto; max-height: 400px; margin-top: 50px;">
+								<div class="row" style="margin-bottom: 20px;">
+							        <h3>구성상품 선택</h3>
+							        <div class="input-group">
+										<select class="form-select" name="cate_name" aria-label="Cate_Name" onchange="searchByCategory(this.value)">
+										    <option value="all" selected>상품 분류 전체</option>
+										    <option value="라면">라면</option>
+										    <option value="밥">밥</option>
+										    <option value="사이드">사이드</option>
+										    <option value="음료">음료</option>
+										    <option value="햄버거">햄버거</option>
+										</select>
+							            <input type="text" style="width: 200px; margin-left: 50px;" id="searchInput" onkeyup="searchProduct()" placeholder="상품 검색">
+							        </div>
+							    </div>
+								<div th:each="food : ${foodList}" class="product-card" th:attr="data-category=${food.cate_name}">
+								    <div class="card mb-3" style="display: inline-block; width: 100%;">
+								        <img th:src="@{${food.food_img}}" class="card-img-top" alt="상품 이미지" style="max-width: 100px; max-height: 100px; float: left;">
+								        <div class="card-body" style="float: left; cursor: pointer;" onclick="showProductDetails(this)">
+								            <h5 class="card-title" th:text="${food.food_name}">상품명</h5>
+								            <p class="card-text" th:text="${food.food_info}">상품 설명</p>
+								            <p class="card-text"><small class="text-muted" th:text="${food.food_price} + '원'">가격</small></p>
+								        </div>
+								    </div>
+								</div>
+							</div>
+                            
+                            <div class="col-6 col-sm-7 centered-container">
+                                <div class="row">
+                                    <h3>세트상품 설정</h3>
+                                </div>
+                                
+                                <div class="col-md-5 centered-container" style="margin-top: 50px;">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input class="form-control" type="file" id="formFile" name="food_img" accept="image/*" onchange="previewImage(event)">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 preview-container">
+                                            <img id="preview" src="#" alt="미리 보기 이미지">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <!-- Force next columns to break to new line -->
+                            <div class="w-100"></div>
+                        
+                            <div class="col-6 col-sm-5">
+                                <div class="col-md-12">
+                                    <!-- 왼쪽 아래에 클릭한 상품의 정보를 표시할 위치와 추가 기능 버튼 -->
+                                    <div id="additionalFeaturesContainer" style="display: flex; flex-direction: column;"></div>
+                                </div>
+                                <div class="col-md-12" style="margin-top: 100px;">
+                                    <h2 id="totalPrice">총 가격: 0원</h2>
+                                </div>
+                            </div>
+                            
+                            <div class="col-6 col-sm-7">
+                                <form th:action="@{/food/save}" method="post" enctype="multipart/form-data" class="row">
+                                    <div class="col-md-7 centered-form">
+                                        <div class="row">
+                                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                                <h7>상품 분류</h7>
+                                            </div>
+                                            <div class="col-md-7" style="margin-bottom: 30px;">
+                                                <div class="input-group">
+                                                    <select class="form-select" name="cate_name" aria-label="Cate_Name">
+                                                        <option value="세트" selected>세트 상품</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                                <h7>상품명</h7>
+                                            </div>
+                                            <div class="col-md-7" style="margin-bottom: 30px;">
+                                                <div class="input-group flex-nowrap">
+                                                    <input type="text" class="form-control" name="food_name" placeholder="(30자이내)" aria-label="(30자이내)" aria-describedby="addon-wrapping">
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                                <h7>상품 설명</h7>
+                                            </div>
+                                            <div class="col-md-7" style="margin-bottom: 30px;">
+                                                <div class="input-group flex-nowrap">
+                                                    <input type="text" class="form-control" name="food_info" placeholder="(50자이내)" aria-label="(50자이내)" aria-describedby="addon-wrapping">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                                <h6>판매가격</h6>
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom: 30px;">
+                                                <div class="input-group flex-nowrap">
+                                                    <input type="text" class="form-control" name="food_price" aria-describedby="addon-wrapping">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1" style="margin-bottom: 30px;">
+                                                <h6>원</h6>
+                                            </div>
+                                        
+                                            <div class="col-md-3" style="margin-bottom: 30px;">
+                                                <h7>노출설정</h7>
+                                            </div>
+                                            <div class="col-md-5" style="margin-bottom: 30px;">
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="state" value="0">
+                                                    <label class="form-check-label">일반 판매</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="state" value="1">
+                                                    <label class="form-check-label">품절</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="checkbox" name="state" value="2">
+                                                    <label class="form-check-label">무인기 판매</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+									<div class="col-md-12" style="text-align: center; margin-top: -10px;">
+								        <button type="submit" class="btn btn-primary" style="width: 10%;">저장</button>
+								        <button type="button" class="btn btn-secondary" style="width: 10%;" th:onclick="'location.href=\'/food\''">취소</button>
+								    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div th:replace="layout/right_tab :: deupcRight_Tab"></div>
+        </div>
+    </div>
+    <script>
+        var totalPrice = 0;
+
+        function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+        
+		// 상품 목록을 저장할 배열
+		var selectedProducts = [];
+		
+		function showProductDetails(food) {
+		    var productName = food.querySelector('.card-title').innerText;
+		    var productPriceText = food.querySelector('.text-muted').innerText;
+		    var productPrice = parseInt(productPriceText.replace(/[^0-9]/g, ''), 10); // 가격에서 숫자값 추출
+		
+		    // 선택된 상품 배열에서 해당 상품 찾기
+		    var existingProduct = selectedProducts.find(function(product) {
+		        return product.name === productName;
+		    });
+		
+		    if (existingProduct) {
+		        // 이미 선택된 상품인 경우 수량 증가
+		        existingProduct.quantity++;
+		    } else {
+		        // 새로운 상품인 경우 배열에 추가
+		        selectedProducts.push({
+		            name: productName,
+		            price: productPrice,
+		            quantity: 1
+		        });
+		    }
+		
+		    updateSelectedProducts(); // 선택된 상품 목록 업데이트
+		}
+		
+		// 선택된 상품 목록을 업데이트하고 HTML로 렌더링하는 함수
+		function updateSelectedProducts() {
+		    var container = document.getElementById('additionalFeaturesContainer');
+		    container.innerHTML = ''; // 목록 초기화
+		
+		    selectedProducts.forEach(function(product) {
+		        var productHTML = '<div class="product" style="display: flex; align-items: center; margin-bottom: 5px;">';
+		        productHTML += '<h6 style="margin-right: 10px;">' + product.name + '</h6>';
+		        productHTML += '<h6 style="margin-right: 10px;">' + product.price + '원</h6>';
+		        productHTML += '<div style="display: flex; align-items: center;">';
+		        productHTML += '<div class="input-group" style="margin-right: 10px;">';
+		        productHTML += '<input type="number" value="' + product.quantity + '" min="1" step="1" class="form-control product-count" style="max-width: 50px;" onchange="updateTotalPrice()">';
+		        productHTML += '</div>';
+		        productHTML += '<button onclick="deleteProduct(this, ' + product.price + ')" class="btn btn-danger">x</button>';
+		        productHTML += '</div></div>';
+		
+		        container.innerHTML += productHTML;
+		    });
+		
+		    updateTotalPrice(); // 총 가격 업데이트
+		}
+		
+		// 상품 삭제 버튼 클릭 시 호출되는 함수
+		function deleteProduct(button, productPrice) {
+		    var productName = button.parentNode.parentNode.querySelector('h6:first-child').innerText;
+		
+		    // 선택된 상품 배열에서 해당 상품 찾기
+		    var index = selectedProducts.findIndex(function(product) {
+		        return product.name === productName;
+		    });
+		
+		    // 선택된 상품 배열에서 상품 삭제
+		    if (index !== -1) {
+		        selectedProducts.splice(index, 1);
+		    }
+		
+		    updateSelectedProducts(); // 선택된 상품 목록 업데이트
+		}
+
+
+        function updateTotalPrice() {
+            var priceElements = document.querySelectorAll('#additionalFeaturesContainer .product h6:nth-child(2)');
+            totalPrice = Array.from(priceElements).reduce((sum, priceElement) => {
+                var price = parseInt(priceElement.innerText.replace(/[^0-9]/g, ''), 10);
+                var count = parseInt(priceElement.parentNode.querySelector('.product-count').value, 10);
+                return sum + (price * count);
+            }, 0);
+
+            document.getElementById('totalPrice').innerText = '총 가격: ' + totalPrice + '원';
+        }
+		
+		function searchProduct() {
+		    var input, filter, products, card, title, i, txtValue;
+		    input = document.getElementById("searchInput");
+		    filter = input.value.toUpperCase();
+		    products = document.getElementsByClassName("product-card");
+		    for (i = 0; i < products.length; i++) {
+		        card = products[i];
+		        title = card.querySelector(".card-title");
+		        txtValue = title.textContent || title.innerText;
+		        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+		            card.style.display = "";
+		        } else {
+		            card.style.display = "none";
+		        }
+		    }
+		}
+		
+		// 카테고리 선택 시 호출되는 함수
+		function searchByCategory(category) {
+		    var products = document.getElementsByClassName("product-card");
+		    for (var i = 0; i < products.length; i++) {
+		        var card = products[i];
+		        var cardCategory = card.getAttribute("data-category");
+		        if (category === "all" || cardCategory === category) {
+		            card.style.display = "block";
+		        } else {
+		            card.style.display = "none";
+		        }
+		    }
+		}
+		
+    </script>
+
+</body>
+</html>

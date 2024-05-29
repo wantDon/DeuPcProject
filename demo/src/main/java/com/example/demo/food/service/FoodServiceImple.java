@@ -1,11 +1,9 @@
 package com.example.demo.food.service;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.food.dto.FoodDTO;
 import com.example.demo.food.mapper.FoodMapper;
@@ -29,4 +27,5 @@ public class FoodServiceImple implements FoodService{
         // FoodDTO를 Food 엔티티로 변환하여 Mapper를 통해 데이터베이스에 저장
         foodMapper.insertFood(foodDTO);
     }
+
 }
