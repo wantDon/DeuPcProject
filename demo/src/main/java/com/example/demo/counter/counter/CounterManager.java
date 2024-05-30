@@ -1,21 +1,25 @@
 package com.example.demo.counter.counter;
 
+import com.example.demo.counter.DTO.TimeDTO;
 import com.example.demo.counter.DTO.UserDTO;
 import com.example.demo.counter.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.Random;
 
 public class CounterManager {
 
     private TestMapper testMapper;
 
     @Autowired
-    public CounterManager(TestMapper testMapper){
+    public CounterManager(TestMapper testMapper) {
         this.testMapper = testMapper;
         System.out.println("Countermanager.생성자+");
         System.out.println(testMapper);
     }
 
-    public void addUserTime(String userName,int addTime){
+    public void addUserTime(String userName, int addTime) {
         //유저의 시간을 추가해주는 함수이다.
         //1.유저를 찾는다
         UserDTO userDTO = testMapper.selectUser(userName);
@@ -24,8 +28,47 @@ public class CounterManager {
         //3.유저를 업데이트 해준다.
         userDTO.setTime(time);
         testMapper.updateUser(userDTO);
-
     }
 
+    public UserDTO selectUser(String userName) {
+        UserDTO userDTO = testMapper.selectUser(userName);
+
+        return userDTO;
+    }
+
+    public List<TimeDTO> selectNonUserTime() {
+        return testMapper.selectNonUserTime();
+    }
+
+    public List<TimeDTO> selectUserTime() {
+        return testMapper.selectUserTime();
+    }
+
+    //비회원 랜덤계정 생성 메소드
+    public UserDTO makeNewRandomUser() {
+        UserDTO randomUserDTO = new UserDTO(); // 변수명을 소문자로 변경
+        UserDTO insertUserDTO = new UserDTO();
+        Random random = new Random(); // Random 객체를 밖으로 이동하여 재사용
+
+        while (true) {
+            int randomNumber = random.nextInt(10000);
+            String result = String.format("%04d", randomNumber);
+            String nonMemberCode = "비회원-" + result;
+
+            // 생성된 코드로 사용자 조회
+            randomUserDTO = testMapper.selectUser(nonMemberCode);
+
+            if (randomUserDTO == null) {
+                // 사용자가 존재하지 않으면 해당 코드 반환+insert시키기
+
+                insertUserDTO.setId(nonMemberCode);
+                testMapper.insertUser(insertUserDTO);
+                break;
+            }
+        }
+
+        System.out.println(insertUserDTO.getId());
+        return insertUserDTO;
+    }
 
 }

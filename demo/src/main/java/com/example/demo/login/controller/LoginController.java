@@ -13,13 +13,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class LoginController {
 
-	@Autowired
+    @Autowired
     private LoginServiceImple loginService;
+
     public LoginController(LoginServiceImple loginService) {
         this.loginService = loginService;
     }
 
-    @PostMapping(value="/pc/login")
+    @PostMapping(value = "/pc/login")
     public String login(LoginDTO loginDTO, HttpSession session, RedirectAttributes r) {
         boolean result = loginService.login(loginDTO.getId(), loginDTO.getPwd());
 
@@ -28,19 +29,19 @@ public class LoginController {
             return "redirect:login";
         } else {
             session.setAttribute("loginId", loginDTO.getId());
-            return "redirect:pc";
+            return "/timePayment/paymentMain";
         }
     }
 
-    @GetMapping(value="/pc/login")
+    @GetMapping(value = "/pc/login")
     public String chkLogin(HttpSession session) {
         if (session.getAttribute("loginId") != null) {
             return "redirect:pc";
         }
         return "login/login";
     }
-    
-    @PostMapping(value="/pc/nlogin")
+
+    @PostMapping(value = "/pc/nlogin")
     public String nlogin(LoginDTO loginDTO, HttpSession session, RedirectAttributes r) {
         boolean result = loginService.nlogin(loginDTO.getId());
 
@@ -53,7 +54,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping(value="/pc/nlogin")
+    @GetMapping(value = "/pc/nlogin")
     public String chknLogin(HttpSession session) {
         if (session.getAttribute("loginId") != null) {
             return "redirect:pc";
@@ -61,7 +62,7 @@ public class LoginController {
         return "login/nlogin";
     }
 
-    @GetMapping(value="/pc/logout")
+    @GetMapping(value = "/pc/logout")
     public String logout(HttpSession session) {
         session.removeAttribute("loginId");
         return "redirect:/pc/smain";

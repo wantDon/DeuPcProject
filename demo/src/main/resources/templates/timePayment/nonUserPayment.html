@@ -1,36 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
     <title>Heroic Features - Start Bootstrap Template</title>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="/assets/css/timePayment.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/css/timePayment.css"/>
     <!-- Bootstrap icons-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/assets/css/timePayment.css" rel="stylesheet"/>
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+            crossorigin="anonymous"
+    />
+    <!-- jQuery -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <!-- 포트원 -->
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
 </head>
 <body>
-<!--상단-->
-<div style="">
-
-</div>
 <!--컨텐츠-->
 <div>
 
 </div>
+<!--상단-->
+<div class="grid text-center" style="background-color: gray;">
+    <div th:if="${userType == '비회원'}" class="g-col-4"
+         style="min-height: 100px; font-size: 32px;display: flex;align-items: center;justify-content: center;">비회원 상품 구매
+    </div>
+    <div th:if="${userType == '회원'}" th:text="${userId + '님의 남은 시간은 ' + userTime + '분 입니다.'}" class="g-col-4"
+         style="min-height: 100px; font-size: 32px; display: flex; align-items: center; justify-content: center;">
+        회원 상품 구매
+    </div>
 
+</div>
+<!--중앙 컨텐츠-->
+<div class="text-center" style="margin-left: 50px;margin-right: 50px;margin-top: 50px;">
+    <div class="mx-auto p-2 row justify-content-center grid gap-3">
+        <!--좌측 컨텐츠-->
+        <div class="card col" style="width: 18rem;min-height: 600px;max-width: 500px;">
+            <div class="card-body" style="max-height: 100px;">
+                <h5 class="card-title">요금제 선택</h5>
+                <p class="card-text">구매하실 요금을 선택해 주세요</p>
+            </div>
+            <ul class="list-group list-group-flush">
+            </ul>
+            <div class="card-body">
+                <div class="container text-center">
+                    <div class="grid gap-3 row row-cols-3">
 
+                        <!-- 반복되는 timeItem1 카드들 -->
+                        <div th:each="time : ${times}" th:id="'timeItem-' + ${time.time_num}" class="card col"
+                             th:style="'width: 10rem;'" th:data-time="${time.time_use}"
+                             th:data-price="${time.time_price}">
+                            <div class="card-body">
+                                <h5 th:id="'itemName-' + ${time.time_num}" class="card-title"
+                                    th:text="${time.time_use} + '분'"></h5>
+                                <h6 th:id="'itemPrice-' + ${time.time_num}"
+                                    class="card-subtitle mb-2 text-body-secondary"
+                                    th:text="${time.time_price} + ' 원'"></h6>
+                                <button th:id="'addItemInBucket-' + ${time.time_num}" class="btn btn-primary"
+                                        type="submit">추가하기
+                                </button>
+                            </div>
+                        </div>
+                        <!-- 반복 끝 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--우측 컨텐츠-->
+        <div class="card col" style="width: 18rem;min-height: 600px;max-width: 500px;">
+            <div class="card-body">
+                <h5 class="card-title">결제 정보 확인</h5>
+                <p class="card-text">구매하실 요금을 선택해 주세요</p>
+                <div style="margin: 1px ;"></div>
+                <!--구매 목록 리스트-->
+                <ul id="buyItemList" class="list-group">
+                    <li id="buyItem" class="list-group-item" data-name="60분" data-price="1000" data-time="60"
+                        data-itemNum="1">
+                        <label class="form-check-label">60분</label>
+                        <label class="form-check-label">1000원</label>
+                        <label class="form-check-label">1개</label>
 
+                        <button id="itemMoreReduceButton" class="btn btn-primary" type="submit">-</button>
+                    </li>
+                </ul>
 
-
-
-
+            </div>
+            <ul class="list-group list-group-flush">
+                <li id="allPrice" class="list-group-item">합계 금액 0원</li>
+                <li id="allTime" class="list-group-item">충전 시간 0시간 0분</li>
+            </ul>
+            <div style="padding: 5px;">
+                <div class="container text-center">
+                    <div class="grid gap-3 row row-cols-4">
+                        <button id="buyButton" class="btn btn-primary" type="submit" onclick="requestPay()">구매하기
+                        </button>
+                        <button id="cancleButton" class="btn btn-primary" type="submit">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JS-->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!--외부 js-->
+<script src="/assets/js/timePayment.js"></script>
 </body>
 </html>
