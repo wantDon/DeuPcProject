@@ -10,43 +10,46 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping(value="/pc")
+@RequestMapping(value = "/pc")
 public class MainController {
 
     public MainController() {
         // TODO Auto-generated constructor stub
     }
 
-    @RequestMapping(value={"*", "/"})
+    @RequestMapping(value = {"*", "/"})
     public String index() {
         return "pc/pc";
     }
 
-    @RequestMapping(value="/login")
+    @RequestMapping(value = "/login")
     public String indexZero() {
         return "login/login";
     }
 
-    @RequestMapping(value="/smain")
+    @RequestMapping(value = "/smain")
     public String smain(Model model) {
-    	HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-		String ip = req.getHeader("X-FORWARDED-FOR");
-		if (ip == null) {
-			ip = req.getRemoteAddr();
-		}
-		model.addAttribute("clientIP", ip);
-		
+        HttpServletRequest req = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        String ip = req.getHeader("X-FORWARDED-FOR");
+        if (ip == null) {
+            ip = req.getRemoteAddr();
+        }
+        model.addAttribute("clientIP", ip);
+
         return "pc/smain";
     }
-    
-    @RequestMapping(value="/member")
+
+    @RequestMapping(value = "/member")
     public String memberMain() {
-    	return "pc/memMain";
+        return "pc/memMain";
     }
 
-    @RequestMapping(value="/non-member")
+    @RequestMapping(value = "/non-member")
     public String nonmemberMain() {
-    	return "pc/nmemMain";
+        return "pc/nmemMain";
     }
+
+    //결제 화면 이동하기===================================
+
 
 }

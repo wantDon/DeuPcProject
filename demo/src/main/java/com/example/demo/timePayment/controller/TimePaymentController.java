@@ -3,12 +3,14 @@ package com.example.demo.timePayment.controller;
 import com.example.demo.counter.DTO.TimeDTO;
 import com.example.demo.counter.DTO.UserDTO;
 import com.example.demo.counter.counter.CounterManager;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -25,13 +27,14 @@ public class TimePaymentController {
         this.counterManager = counterManager;
     }
 
-    //사용자의 아이디값으로 회원과 비회원페이지를 나눠서 출력해야함
-    @GetMapping(value = "/timePayment/paymentMain")
-    public String chkUser(HttpSession session, Model model) {
-        if (session.getAttribute("loginId") != null) {
+    //비회원 사용자가 시간을 충전할려고 할때================================
+    @GetMapping(value = "/timePayment/paymentMain_nonUser")
+    public String chkNonUser(HttpSession session, Model model, HttpServletRequest request) {
+        String id = request.getParameter("id");
+        if (id != null) {
             //회원
-            List<TimeDTO> times = counterManager.selectNonUserTime();
-            UserDTO userDTO = counterManager.selectUser((String) session.getAttribute("loginId"));
+            List<TimeDTO> times = counterManager.selectUserTime();
+            UserDTO userDTO = counterManager.selectUser(id);
             model.addAttribute("userType", "회원");
             model.addAttribute("userId", userDTO.getId());
             model.addAttribute("times", times);
@@ -41,11 +44,33 @@ public class TimePaymentController {
         }
         //비회원
         model.addAttribute("userType", "비회원");
-        List<TimeDTO> times = counterManager.selectUserTime();
+        List<TimeDTO> times = counterManager.selectNonUserTime();
         model.addAttribute("times", times);
         return "timePayment/nonUserPayment";
     }
 
+    //회원 사용자가 시간을 충전 할려고 할때================================
+    @GetMapping(value = "/timePayment/paymentMain_User")
+    public String inputUserId(HttpSession session, Model model) {
+
+
+        return "timePayment/userPayment";
+    }
+
+    @PostMapping(value = "/timePayment/paymentMain_User")
+    public String chkUser(@RequestParam("id") String id, HttpSession session, Model model) {
+        //존재하지 않는 id면 돌려보내야 한다.
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(id);
+        if (counterManager.selectUser(userDTO.getId()) == null) {
+            return "timePayment/userPayment";
+        }
+        //존재한다면 세션에 임의의 값을 저장시켜서 보내준다.
+
+        return "redirect:/timePayment/paymentMain_nonUser?id=" + id;
+    }
+
+    //결제 완료 페이지=============================
     @GetMapping(value = "/timePayment/paymentMain/payItem")
     public String buyItem(@RequestParam("price") String price, @RequestParam("times") int times, HttpSession session, Model model) {
         System.out.println("TimePaymentController price = " + price + ", times" + times);
