@@ -3,7 +3,7 @@
 }
 
 .amd2 {
-	margin-top: 5%;
+	margin-top: 3%;
 }
 
 th, td {
@@ -13,4 +13,45 @@ th, td {
 
 .ttd1 {
 	font-size: 14pt;
+}
+
+.adm5 {
+	float: right;
+}
+
+.form-select {
+	width: 150px;
+	margin-right: 1%;
+}
+
+.btn-search {
+	width: 80px;
+	border: 2px solid darkorchid;
+	color: darkorchid;
+}
+
+.btn-search:hover {
+	background-color: darkorchid;
+	color: white;
+}
+
+.page-item.active > .page-link {
+	background-color: darkorchid;
+	border: 1px solid darkorchid;
+}
+
+.page-link {
+	color: darkorchid;
+}
+
+.page-link:hover {
+	color: darkorchid;
+}
+
+.page-item.active > .page-link:hover {
+	color: white;
+}
+
+.adi1 {
+	width: 300px;
 }

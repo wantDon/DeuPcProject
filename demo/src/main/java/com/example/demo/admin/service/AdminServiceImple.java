@@ -36,10 +36,10 @@ public class AdminServiceImple implements AdminService {
 	@Override
 	public LoginTimeDTO getUserUse(String id, LocalDateTime time) {
 		Map<String, Object> param = new HashMap<>();
-    	param.put("id", id);
-    	param.put("time", time);
-    	
-    	LoginTimeDTO loginTimeDTO = adminMapper.getUseruse(param);
+	param.put("id", id);
+	param.put("time", time);
+	
+	LoginTimeDTO loginTimeDTO = adminMapper.getUseruse(param);
 		return loginTimeDTO;
 	}
 	
@@ -48,29 +48,67 @@ public class AdminServiceImple implements AdminService {
 		return adminMapper.getUserInfo(id);
 	}
 	
-    @Override
-    public Page<MemberDTO> getAllUser(Pageable pageable) {
-        Vector<MemberDTO> allUsers = adminMapper.getAllUser();
-
-        List<MemberDTO> formattedUsers = allUsers.stream().map(member -> {
-            String birthString = member.getBirth();
-            if (birthString != null && !birthString.isEmpty()) {
-                try {
-                    LocalDate birthDate = LocalDate.parse(birthString, DateTimeFormatter.BASIC_ISO_DATE);
-                    String formattedDate = birthDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
-                    member.setBirth(formattedDate);
-                } catch (DateTimeParseException e) {
-                    // Handle parse exception if needed
-                }
-            }
-            return member;
-        }).collect(Collectors.toList());
-
-        int start = (int) pageable.getOffset();
-        int end = Math.min((start + pageable.getPageSize()), formattedUsers.size());
-        List<MemberDTO> pageContent = formattedUsers.subList(start, end);
-
-        return new PageImpl<>(pageContent, pageable, formattedUsers.size());
-    }
+	@Override
+	public Page<MemberDTO> getAllUser(Pageable pageable) {
+		Vector<MemberDTO> allUsers = adminMapper.getAllUser();
+		
+		List<MemberDTO> formattedUsers = allUsers.stream().map(member -> {
+			String birthString = member.getBirth();
+			if (birthString != null && !birthString.isEmpty()) {
+				try {
+					LocalDate birthDate = LocalDate.parse(birthString, DateTimeFormatter.BASIC_ISO_DATE);
+					String formattedDate = birthDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+					member.setBirth(formattedDate);
+				} catch (DateTimeParseException e) {
+					// Handle parse exception if needed
+				}
+			}
+			return member;
+		}).collect(Collectors.toList());
+		
+		int start = (int) pageable.getOffset();
+		int end = Math.min((start + pageable.getPageSize()), formattedUsers.size());
+		List<MemberDTO> pageContent = formattedUsers.subList(start, end);
+		
+		return new PageImpl<>(pageContent, pageable, formattedUsers.size());
+	}
+	
+	@Override
+	public Page<MemberDTO> searchUsers(String searchCriteria, String searchKeyword, Pageable pageable) {
+		Vector<MemberDTO> allUsers = adminMapper.getAllUser();
+		
+		List<MemberDTO> filteredUsers = allUsers.stream().filter(member -> {
+			switch (searchCriteria) {
+				case "id":
+					return member.getId().contains(searchKeyword);
+				case "name":
+					return member.getName() != null ? member.getName().contains(searchKeyword) : false;
+				case "phone":
+					return member.getPhone() != null ? member.getPhone().contains(searchKeyword) : false;
+				default:
+					return false;
+			}
+		}).collect(Collectors.toList());
+		
+		List<MemberDTO> formattedUsers = filteredUsers.stream().map(member -> {
+			String birthString = member.getBirth();
+			if (birthString != null && !birthString.isEmpty()) {
+				try {
+					LocalDate birthDate = LocalDate.parse(birthString, DateTimeFormatter.BASIC_ISO_DATE);
+					String formattedDate = birthDate.format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일"));
+					member.setBirth(formattedDate);
+				} catch (DateTimeParseException e) {
+					// Handle parse exception if needed
+				}
+			}
+			return member;
+		}).collect(Collectors.toList());
+		
+		int start = (int) pageable.getOffset();
+		int end = Math.min((start + pageable.getPageSize()), formattedUsers.size());
+		List<MemberDTO> pageContent = formattedUsers.subList(start, end);
+		
+		return new PageImpl<>(pageContent, pageable, formattedUsers.size());
+	}
 	
 }

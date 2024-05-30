@@ -36,14 +36,29 @@ public class AdminController {
 	}
 	
 	@GetMapping("/member")
-	public String AdminMember(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, Model model) {
-		Pageable pageable = PageRequest.of(page, size);
-		Page<MemberDTO> pageResult = adminService.getAllUser(pageable);
+	public String AdminMember(
+		@RequestParam(defaultValue = "0") int page, 
+		@RequestParam(defaultValue = "10") int size,
+		@RequestParam(required = false) String searchCriteria,
+		@RequestParam(required = false) String searchKeyword,
+		Model model) {
 		
+		Pageable pageable = PageRequest.of(page, size);
+		Page<MemberDTO> pageResult;
+	
+		// 검색 조건이 비어있거나 유효하지 않은 경우 모든 사용자 반환
+		if (searchCriteria == null || searchCriteria.isEmpty() || searchKeyword == null || searchKeyword.isEmpty()) {
+			pageResult = adminService.getAllUser(pageable);
+		} else {
+			pageResult = adminService.searchUsers(searchCriteria, searchKeyword, pageable);
+		}
+	
 		model.addAttribute("memberList", pageResult.getContent());
 		model.addAttribute("currentPage", pageResult.getNumber());
 		model.addAttribute("totalPages", pageResult.getTotalPages());
-		
+		model.addAttribute("searchCriteria", searchCriteria);
+		model.addAttribute("searchKeyword", searchKeyword);
+	
 		return "admin/member_info";
 	}
 	

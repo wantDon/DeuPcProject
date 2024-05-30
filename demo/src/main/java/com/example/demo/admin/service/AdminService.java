@@ -20,4 +20,6 @@ public interface AdminService {
 	
 	public Page<MemberDTO> getAllUser(Pageable pageable);
 	
+	public Page<MemberDTO> searchUsers(String searchCriteria, String searchKeyword, Pageable pageable);
+	
 }

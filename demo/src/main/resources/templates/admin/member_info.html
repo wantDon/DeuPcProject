@@ -12,11 +12,25 @@
 	</head>
 	<body>
 		<div class="container-fluid">
-		    <div class="row">
-		        <div th:replace="~{layout/left_tab::deupcLeft_Tab}"></div>
+			<div class="row">
+				<div th:replace="~{layout/left_tab::deupcLeft_Tab}"></div>
 				<div class="container col-md-8">
 					<div class="amd1">
-						<span class="do-hyeon-regular">회원 관리</span>
+						<form class="d-flex justify-content-between" onsubmit="handleFormSubmit(event)">
+							<div class="adm3">
+								<span class="do-hyeon-regular">회원 관리</span>
+							</div>
+							<div class="adm4 d-flex">									
+								<select class="form-select" id="searchCriteria" name="searchCriteria">
+									<option selected>검색기준</option>
+									<option value="id">아이디</option>
+									<option value="name">이름</option>
+									<option value="phone">전화번호</option>
+								</select>
+								<input class="form-control me-2 adi1" type="search" id="searchKeyword" name="searchKeyword" placeholder="검색어를 입력해주세요." aria-label="Search">
+								<button class="btn btn-search" type="submit">검색</button>
+							</div>
+						</form>
 					</div>
 					<div class="row justify-content-md-center amd2">
 						<table class="table table-bordered" style="width: 100%">
@@ -29,25 +43,25 @@
 								<td	class="ttd1 do-hyeon-regular" width="100">회원등급</td>
 								<td	class="ttd1 do-hyeon-regular" width="100">정보수정</td>
 							</tr>
-							<tr th:each="ulist : ${memberList}" >
+							<tr th:each="ulist : ${memberList}">
 								<td th:text="${ulist.name}"></td>
 								<td th:text="${ulist.id}"></td>
 								<td th:text="${ulist.email}"></td>
 								<td th:text="${ulist.birth}"></td>
 								<td th:text="${ulist.phone}"></td>
 								<td th:text="${ulist.grade == null || ulist.grade == 1 ? '일반회원' : '블랙리스트'}"></td>
-								<td><button type="button" class="btn btn-light">회원 탈퇴</button></td>
+								<td><button type="button" class="btn btn-light" th:id="${ulist.id}">회원 탈퇴</button></td>
 							</tr>
 						</table>
-						<nav>
+						<nav class="mt-4" th:if="${totalPages > 1}">
 							<ul class="pagination justify-content-center">
-								<li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+								<li class="page-item" th:classappend="${currentPage == 0 || totalPages == 0} ? 'disabled'">
 									<a class="page-link" th:href="@{/pc/admin/member(page=${currentPage - 1})}">이전</a>
 								</li>
 								<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
 									<a class="page-link" th:href="@{/pc/admin/member(page=${i})}" th:text="${i + 1}">1</a>
 								</li>
-								<li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+								<li class="page-item" th:classappend="${currentPage + 1 >= totalPages || totalPages == 0} ? 'disabled'">
 									<a class="page-link" th:href="@{/pc/admin/member(page=${currentPage + 1})}">다음</a>
 								</li>
 							</ul>
@@ -57,5 +71,6 @@
 				<div th:replace="~{layout/right_tab::deupcRight_Tab}"></div>
 			</div>
 		</div>
+		<script type="text/javascript" src="/assets/js/admin_member.js"></script>
 	</body>
 </html>
