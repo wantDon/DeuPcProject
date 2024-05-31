@@ -22,4 +22,8 @@ public interface AdminService {
 	
 	public Page<MemberDTO> searchUsers(String searchCriteria, String searchKeyword, Pageable pageable);
 	
+	public void resignUser(String id);
+	
+	public void updateGrade(String id, int grade);
+	
 }

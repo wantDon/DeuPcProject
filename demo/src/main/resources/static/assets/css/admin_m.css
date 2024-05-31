@@ -9,6 +9,7 @@
 th, td {
 	text-align: center;
 	vertical-align: middle;
+	align-items: center;
 }
 
 .ttd1 {
@@ -19,9 +20,14 @@ th, td {
 	float: right;
 }
 
-.form-select {
+.form-sel1 {
 	width: 150px;
 	margin-right: 1%;
+}
+
+.form-sel2 {
+	margin-right: 0;
+	display: inline;
 }
 
 .btn-search {
@@ -54,4 +60,8 @@ th, td {
 
 .adi1 {
 	width: 300px;
+}
+
+.form-select {
+	width: 140px;
 }

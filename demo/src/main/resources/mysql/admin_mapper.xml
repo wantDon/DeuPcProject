@@ -23,7 +23,19 @@
 	
 	<select id="getAllUser" resultType="com.example.demo.admin.dto.MemberDTO">
 		<![CDATA[
-			select * from user where grade = 1 or grade = 2;
+			select * from user where grade is not null;
 		]]>
 	</select>
+	
+	<delete id="resignUser" parameterType="String">
+		<![CDATA[
+			delete from user where id = #{id};
+		]]>
+	</delete>
+	
+	<update id="updateGrade" parameterType="map">
+		<![CDATA[
+			update user set grade = #{grade} where id = #{id};
+		]]>
+	</update>
 </mapper>

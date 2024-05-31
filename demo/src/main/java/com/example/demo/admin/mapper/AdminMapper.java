@@ -20,4 +20,8 @@ public interface AdminMapper {
 	
 	public Vector<MemberDTO> getAllUser();
 	
+	public void resignUser(String id);
+
+	public void updateGrade(Map<String, Object> param);
+	
 }

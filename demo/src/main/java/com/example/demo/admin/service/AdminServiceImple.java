@@ -28,6 +28,20 @@ public class AdminServiceImple implements AdminService {
 	}
 	
 	@Override
+	public void resignUser(String id) {
+		adminMapper.resignUser(id);
+	}
+	
+	@Override
+	public void updateGrade(String id, int grade) {
+		Map<String, Object> param = new HashMap<>();
+		param.put("id", id);
+		param.put("grade", grade);
+		
+		adminMapper.updateGrade(param);
+	}
+	
+	@Override
 	public List getAllUse() {
 		List<LoginTimeDTO> ulist = adminMapper.getAllUse();
 		return ulist;
@@ -36,10 +50,10 @@ public class AdminServiceImple implements AdminService {
 	@Override
 	public LoginTimeDTO getUserUse(String id, LocalDateTime time) {
 		Map<String, Object> param = new HashMap<>();
-	param.put("id", id);
-	param.put("time", time);
-	
-	LoginTimeDTO loginTimeDTO = adminMapper.getUseruse(param);
+		param.put("id", id);
+		param.put("time", time);
+		
+		LoginTimeDTO loginTimeDTO = adminMapper.getUseruse(param);
 		return loginTimeDTO;
 	}
 	

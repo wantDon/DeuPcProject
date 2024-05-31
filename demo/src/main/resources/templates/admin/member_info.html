@@ -21,7 +21,7 @@
 								<span class="do-hyeon-regular">회원 관리</span>
 							</div>
 							<div class="adm4 d-flex">									
-								<select class="form-select" id="searchCriteria" name="searchCriteria">
+								<select class="form-select form-sel1" id="searchCriteria" name="searchCriteria">
 									<option selected>검색기준</option>
 									<option value="id">아이디</option>
 									<option value="name">이름</option>
@@ -37,20 +37,31 @@
 							<tr align="center" height="40">
 								<td class="ttd1 do-hyeon-regular" width="110">이름</td>
 								<td class="ttd1 do-hyeon-regular" width="110">아이디</td>
-								<td class="ttd1 do-hyeon-regular" width="200">이메일</td>
-								<td	class="ttd1 do-hyeon-regular" width="120">생년월일</td>
-								<td	class="ttd1 do-hyeon-regular" width="120">전화번호</td>
-								<td	class="ttd1 do-hyeon-regular" width="100">회원등급</td>
+								<td class="ttd1 do-hyeon-regular" width="180">이메일</td>
+								<td	class="ttd1 do-hyeon-regular" width="125">생년월일</td>
+								<td	class="ttd1 do-hyeon-regular" width="125">전화번호</td>
+								<td	class="ttd1 do-hyeon-regular" width="150">회원등급</td>
 								<td	class="ttd1 do-hyeon-regular" width="100">정보수정</td>
 							</tr>
-							<tr th:each="ulist : ${memberList}">
+							<th:block th:if="${memberList.size() == 0}">
+								<script type="text/javascript">
+									window.location.replace("/pc/admin/member");
+								</script>
+							</th:block>
+							<tr th:each="ulist : ${memberList}">							
 								<td th:text="${ulist.name}"></td>
 								<td th:text="${ulist.id}"></td>
 								<td th:text="${ulist.email}"></td>
 								<td th:text="${ulist.birth}"></td>
 								<td th:text="${ulist.phone}"></td>
-								<td th:text="${ulist.grade == null || ulist.grade == 1 ? '일반회원' : '블랙리스트'}"></td>
-								<td><button type="button" class="btn btn-light" th:id="${ulist.id}">회원 탈퇴</button></td>
+								<td>
+									<select th:id="${ulist.id}" class="form-sel2 form-select form-select-sm" onchange="grade(this)">
+										<option value="0" th:selected="${ulist.grade == 0}">관리자</option>
+										<option value="1" th:selected="${ulist.grade == 1}">일반회원</option>
+										<option value="2" th:selected="${ulist.grade == 2}">블랙리스트</option>
+									</select>
+								</td>
+								<td><button type="button" class="btn btn-light" th:id="${ulist.id}" onclick="resign(this.id)">회원 탈퇴</button></td>
 							</tr>
 						</table>
 						<nav class="mt-4" th:if="${totalPages > 1}">

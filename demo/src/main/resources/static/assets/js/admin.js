@@ -15,7 +15,8 @@ function formatTime(time) {
 
 function formatGrade(grade) {
 	if (grade == 0) {
-		
+		return `관리자`;
+	} else if (grade == 1) {
 		return `일반회원`;
 	} else if (grade == 2) {
 		return `블랙리스트`;

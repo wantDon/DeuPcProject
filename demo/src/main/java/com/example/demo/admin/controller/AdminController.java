@@ -13,8 +13,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.admin.dto.MemberDTO;
 import com.example.demo.admin.service.AdminServiceImple;
@@ -60,6 +63,18 @@ public class AdminController {
 		model.addAttribute("searchKeyword", searchKeyword);
 	
 		return "admin/member_info";
+	}
+	
+	@PostMapping(value="/resign/{id}")
+	@ResponseBody
+	public void ResignUser(@PathVariable String id) {
+		adminService.resignUser(id);
+	}
+	
+	@PostMapping(value="/grade/{id}/{grade}")
+	@ResponseBody
+	public void UpdateGrade(@PathVariable String id, @PathVariable int grade) {
+		adminService.updateGrade(id, grade);
 	}
 	
 }
