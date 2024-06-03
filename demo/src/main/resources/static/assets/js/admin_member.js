@@ -5,9 +5,7 @@ function handleFormSubmit(event) {
 	
 	// 검색 기준이 '검색기준' 이거나 검색어가 없는 경우
 	if (searchCriteria === "검색기준" || searchKeyword.trim() === "") {
-		// 페이지 이동 막기
 		event.preventDefault();
-		// '/pc/admin/member' 페이지로 이동
 		window.location.replace("/pc/admin/member");
 	}
 }
