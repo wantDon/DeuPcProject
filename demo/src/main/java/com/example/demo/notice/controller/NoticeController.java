@@ -12,27 +12,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import com.example.demo.notice.dto.NoticeDTO;
 import com.example.demo.notice.service.NoticeServiceImple;
 
 @Controller
 @RequestMapping("/notice")
 public class NoticeController {
-	
+
+	@Autowired
 	private NoticeServiceImple noticeService;
 	
-	@Autowired
 	public NoticeController(NoticeServiceImple noticeService) {
 		this.noticeService = noticeService;
 	}
 	
 	// 공지사항 목록 페이지 요청 처리
-	@RequestMapping(value={"*", ""})
+	@RequestMapping(value={"", "*"})
     public String notice(Model model, @RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "") String sword) {
         int pageSize = 10;
         int totalNotices = noticeService.getTotalNoticeCount();

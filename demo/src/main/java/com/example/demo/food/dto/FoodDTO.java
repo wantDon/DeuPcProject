@@ -9,7 +9,7 @@ public class FoodDTO {
 	private int count;
 	private int state;
 	private String food_info;
-//	private String food_img;
+	private String food_img;
 	
 	public int getFood_num() {
 		return food_num;
@@ -47,12 +47,12 @@ public class FoodDTO {
 	public void setFood_info(String food_info) {
 		this.food_info = food_info;
 	}
-//	public String getFood_img() {
-//		return food_img;
-//	}
-//	public void setFood_img(String food_img) {
-//		this.food_img = food_img;
-//	}
+	public String getFood_img() {
+		return food_img;
+	}
+	public void setFood_img(String food_img) {
+		this.food_img = food_img;
+	}
 	public String getCate_name() {
 		return cate_name;
 	}

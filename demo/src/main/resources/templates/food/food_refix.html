@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>상품 등록</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/food_refix.js"></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="layout/left_tab :: deupcLeft_Tab"></div>
+        <div class="container text-center col-md-9">
+            <div class="row" style="margin-top: 50px;margin-bottom:100px;">
+                <h1 style="font-weight: bold;">상품정보 수정</h1>
+            </div>
+
+            <!--1.상품리스트를 출력해준다. 2. 해당 상품을 클릭하면 정보수정창을 출력해준다.-->
+            <!--7개의 컬럼이 필요 num,category,name,price,count,state,image-->
+            <div class="dropdown" style="text-align:left;padding:5px">
+                <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                        aria-expanded="false">
+                    카테고리 종류
+                </button>
+                <ul class="dropdown-menu">
+                    <th:block th:each="category: ${categoryDTOs}">
+                        <li>
+                            <a class="dropdown-item" th:href="@{'#'}" th:text="${category.cate_name}">Action</a>
+                        </li>
+                    </th:block>
+                </ul>
+            </div>
+            <!-- Modal===== name,price,count,state,image를 바꿀수 있도록 바꿔야 한다. -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                 aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">상품 수정</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div id="modal_body" class="modal-body" data-num="" data-name="" data-price="" data-count=""
+                             data-state="">
+                            <!--name-->
+                            <div id="ItemNameTextField" class="input-group mb-3">
+                                <span class="input-group-text">name</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="ItemNameText"
+                                           placeholder="Username">
+                                    <label for="ItemNameText">name</label>
+                                </div>
+                            </div>
+                            <!--price-->
+                            <div id="ItemPriceTextField" class="input-group mb-3">
+                                <span class="input-group-text">price</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="ItemPriceText"
+                                           placeholder="Username">
+                                    <label for="ItemPriceText">price</label>
+                                </div>
+                            </div>
+                            <!--Count-->
+                            <div id="ItemCountTextField" class="input-group mb-3">
+                                <span class="input-group-text">Count</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="ItemCountText"
+                                           placeholder="Username">
+                                    <label for="ItemCountText">Count</label>
+                                </div>
+                            </div>
+                            <!--State-->
+                            <div id="ItemStateTextField" class="input-group mb-3">
+                                <span class="input-group-text">State</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="ItemStateText"
+                                           placeholder="Username">
+                                    <label for="ItemStateText">State</label>
+                                </div>
+                            </div>
+                            <!--Image-->
+                            <div id="ItemImageTextField" class="input-group mb-3">
+                                <span class="input-group-text">Image</span>
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="ItemImageText"
+                                           placeholder="Username">
+                                    <label for="ItemImageText">Image</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button id="itemRefixButton" type="button" class="btn btn-primary">수정하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">num</th>
+                    <th scope="col">category</th>
+                    <th scope="col">name</th>
+                    <th scope="col">price</th>
+                    <th scope="col">count</th>
+                    <th scope="col">state</th>
+                    <th scope="col">image</th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                <tr th:each="food : ${foodDTOs}" th:id="'foodNumber-'+${food.food_num}">
+                    <th scope="row" th:text="${food.food_num}">1</th>
+                    <td th:text="${food.cate_name}">Mark</td>
+                    <td th:text="${food.food_name}">Otto</td>
+                    <td th:text="${food.food_price}">@mdo</td>
+                    <td th:text="${food.count}">@mdo</td>
+                    <td th:text="${food.state}">@mdo</td>
+                    <td th:text="${food.food_info}">@mdo</td>
+                    <td>
+                        <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop"
+                                th:data-food-num="${food.food_num}"
+                                th:data-food-name="${food.food_name}"
+                                th:data-food-price="${food.food_price}"
+                                th:data-food-count="${food.count}"
+                                th:data-food-state="${food.state}"
+                                th:data-food-image="${food.food_info}">
+                            수정
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- 페이징 컨트롤 -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item"><a class="page-link" href="#" data-page="prev">Previous</a></li>
+                    <!-- 페이지 번호가 동적으로 생성되도록 Thymeleaf로 변경 -->
+                    <li class="page-item" th:each="page: ${pageNumbers}">
+                        <a class="page-link" href="#" th:data-page="${page}">[[${page}]]</a>
+                    </li>
+                    <li class="page-item"><a class="page-link" href="#" data-page="next">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div th:replace="layout/right_tab :: deupcRight_Tab"></div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var editButtons = document.querySelectorAll('.edit-button');
+        editButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var foodNum = button.getAttribute('data-food-num');
+                var foodName = button.getAttribute('data-food-name');
+                var foodPrice = button.getAttribute('data-food-price');
+                var foodCount = button.getAttribute('data-food-count');
+                var foodState = button.getAttribute('data-food-state');
+                var foodImage = button.getAttribute('data-food-image');
+
+                // Clear input fields
+                document.querySelector('#ItemNameText').value = '';
+                document.querySelector('#ItemPriceText').value = '';
+                document.querySelector('#ItemCountText').value = '';
+                document.querySelector('#ItemStateText').value = '';
+                document.querySelector('#ItemImageText').value = '';
+
+                document.querySelector('#staticBackdropLabel').textContent = foodNum + '번 상품 수정';
+                document.querySelector('#ItemNameTextField label').textContent = foodName;
+                document.querySelector('#ItemPriceTextField label').textContent = foodPrice;
+                document.querySelector('#ItemCountTextField label').textContent = foodCount;
+                document.querySelector('#ItemStateTextField label').textContent = foodState;
+                document.querySelector('#ItemImageTextField label').textContent = foodImage;
+                //모달바디에 data값 추가
+                var modalBody = document.querySelector('#modal_body');
+                modalBody.dataset.num = foodNum;
+                modalBody.dataset.name = foodName;
+                modalBody.dataset.price = foodPrice;
+                modalBody.dataset.count = foodCount;
+                modalBody.dataset.state = foodState;
+                modalBody.dataset.image = foodImage;
+
+            });
+        });
+        // 버튼을 찾아서 click 이벤트를 추가한다.
+        var refixButton = document.querySelector('#itemRefixButton');
+        refixButton.addEventListener('click', function () {
+            // 속성값 기반으로 GET 방식 URL 요청
+            var modalBody = document.querySelector('#modal_body');
+            var modalName = document.querySelector('#ItemNameText');
+            var modalPrice = document.querySelector('#ItemPriceText');
+            var modalCount = document.querySelector('#ItemCountText');
+            var modalState = document.querySelector('#ItemStateText');
+
+
+            var url = '/food/food_refix/request?num=' + modalBody.dataset.num +
+                      '&name=' + modalName.value +
+                      '&price=' + modalPrice.value +
+                      '&count=' + modalCount.value +
+                      '&state=' + modalState.value;
+
+            window.location.href = url;
+        });
+        // 페이지 번호 클릭 시 이벤트
+    var pageLinks = document.querySelectorAll('.page-link');
+    pageLinks.forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            var page = link.dataset.page;
+            // 특정 페이지를 불러오는 함수 호출
+            loadPage(page);
+        });
+    });
+
+    // 페이지 로드 함수
+    function loadPage(page) {
+        // 페이지 번호에 따라 해당 페이지 데이터를 서버로 요청하고 받아옴
+        // 받아온 데이터로 테이블의 내용을 갱신
+        // 예: 서버로 AJAX 요청을 보내거나, 새로운 HTML을 불러와서 테이블의 tbody를 갱신
+        console.log('Loading page:', page);
+    }
+
+    });
+</script>
+</body>
+</html>

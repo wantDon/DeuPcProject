@@ -2,11 +2,11 @@ package com.example.demo.notice.mapper;
 
 import java.util.List;
 
+import com.example.demo.notice.dto.NoticeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import com.example.demo.notice.dto.NoticeDTO;
 
 @Mapper
 public interface NoticeMapper {

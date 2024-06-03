@@ -42,26 +42,25 @@
                     <div class="row" style="margin-top: 50px;">
                         <h3>이미지 등록</h3>
                     </div>
-                    
-                    <form th:action="@{/food/save}" method="post" enctype="multipart/form-data" class="row">
-                        <div class="col-md-7">
+					<div class="col-md-7">
+                    	<form th:action="@{/food/save}" method="post" enctype="multipart/form-data" class="row">
                             <div class="gray-box">
                                 <div class="row">
                                     <div class="col-md-3" style="margin-bottom: 30px; margin-top: 30px;">
                                         <h7>상품 분류</h7>
                                     </div>
-									<div class="col-md-9" style="margin-bottom: 30px; margin-top: 30px;">
-									    <div class="input-group">
-									        <select class="form-select" name="cate_name" aria-label="Cate_Name">
-									            <option value="0" selected>상품 분류 전체</option>
-									            <option value="라면">라면</option>
-									            <option value="밥">밥</option>
-									            <option value="사이드">사이드</option>
-									            <option value="음료">음료</option>
-									            <option value="햄버거">햄버거</option>
-									        </select>
-									    </div>
-									</div>
+                                    <div class="col-md-9" style="margin-bottom: 30px; margin-top: 30px;">
+                                        <div class="input-group">
+                                            <select class="form-select" name="cate_name" aria-label="Cate_Name">
+                                                <option value="0" selected>상품 분류 전체</option>
+                                                <option value="라면">라면</option>
+                                                <option value="밥">밥</option>
+                                                <option value="사이드">사이드</option>
+                                                <option value="음료">음료</option>
+                                                <option value="햄버거">햄버거</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     
                                     <div class="col-md-3" style="margin-bottom: 30px;">
                                         <h7>상품명</h7>
@@ -122,25 +121,23 @@
                                             <label class="form-check-label">무인기 판매</label>
                                         </div>
                                     </div>
-                                </div>
-                                <button type="button" class="btn btn-secondary">취소</button>
+                                </div>             <button type="button" class="btn btn-secondary" th:onclick="'location.href=\'/food\''">취소</button>
                                 <button type="submit" class="btn btn-primary">저장</button>
                             </div>
                         </div>
-                        
-                        <div class="col-md-5" style="margin-top: 50px;">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <input class="form-control" type="file" id="formFile" name="food_img" accept="image/*" onchange="previewImage(event)">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12 preview-container">
-                                    <img id="preview" src="#" alt="미리 보기 이미지">
-                                </div>
+                    </form>
+					<div class="col-md-5" style="margin-top: 50px;">
+                        <div class="row">
+                            <div class="col-md-12">
+								<input class="form-control" type="file" id="formFile" name="food_img" accept="image/*" onchange="previewImage(event)">
                             </div>
                         </div>
-                    </form>
+						<div class="row">
+                            <div class="col-md-12 preview-container">
+                                <img id="preview" src="#" alt="미리 보기 이미지">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -148,13 +145,14 @@
         </div>
     </div>
     <script>
-        function previewImage(event) {
-            const reader = new FileReader();
-            reader.onload = function(){
-                const preview = document.getElementById('preview');
-                preview.src = reader.result;
-                preview.style.display = 'block';
-            }
+        // 이미지 미리 보기 함수
+		function previewImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>

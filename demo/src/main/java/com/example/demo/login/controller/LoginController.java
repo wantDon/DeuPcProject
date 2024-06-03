@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -27,6 +26,7 @@ public class LoginController {
 	
 	@Autowired
     private LoginServiceImple loginService;
+
     public LoginController(LoginServiceImple loginService) {
         this.loginService = loginService;
     }
@@ -90,15 +90,15 @@ public class LoginController {
         }
     }
 
-    @GetMapping(value="/pc/login")
+    @GetMapping(value = "/pc/login")
     public String chkLogin(HttpSession session) {
         if (session.getAttribute("loginId") != null) {
             return "redirect:pc";
         }
         return "login/login";
     }
-    
-    @PostMapping(value="/pc/nlogin")
+
+    @PostMapping(value = "/pc/nlogin")
     public String nlogin(LoginDTO loginDTO, HttpSession session, RedirectAttributes r) {
     	session.setMaxInactiveInterval(9999 * 60);
     	String pcnum = (String)session.getAttribute("pcnum");
@@ -153,7 +153,7 @@ public class LoginController {
         return "login/nlogin";
     }
 
-    @GetMapping(value="/pc/logout")
+    @GetMapping(value = "/pc/logout")
     public String logout(HttpSession session) {
     	LocalDateTime loginTime = (LocalDateTime)session.getAttribute("loginTime");
     	LocalDateTime logoutTime = LocalDateTime.now();

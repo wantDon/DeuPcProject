@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.notice.mapper.NoticeMapper">
+	
+	<select id="getAllNotices" resultType="com.example.demo.notice.dto.NoticeDTO" parameterType="String">
+		<![CDATA[
+			select * from notice order by notice_num;
+		]]> 
+	</select>
+	
+	
+	<select id="getPreviousNoticeNum" parameterType="int" resultType="java.lang.Integer">
+	    SELECT MAX(notice_num) FROM notice WHERE notice_num &lt; #{notice_num}
+	</select>
+
+    
+    <select id="getNextNoticeNum" parameterType="int" resultType="java.lang.Integer">
+        SELECT MIN(notice_num) FROM notice WHERE notice_num > #{notice_num}
+    </select>
+    
+	
+	<insert id="insertNotice" parameterType="com.example.demo.notice.dto.NoticeDTO" useGeneratedKeys="true" keyProperty="notice_num">
+	    <![CDATA[
+	        insert into notice
+	        (notice_title, notice_content, notice_date)
+	        values
+	        (#{notice_title}, #{notice_content}, #{notice_date})
+	    ]]>
+	</insert>
+
+	
+	<delete id="deleteNotice" parameterType="Integer">
+		<![CDATA[
+			delete from notice
+			where notice_num = #{notice_num}
+		]]>
+	</delete>
+	
+</mapper>
