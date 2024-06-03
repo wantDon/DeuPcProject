@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function() {
         var minutes = timeMatch ? parseInt(timeMatch[2]) : 0;
         var totalTime = (hours * 60) + minutes; // 전체 시간을 분 단위로 변환
 
+        var user = document.getElementById("userinfo");
+        console.log(user.dataset.id); // data-id 속성 값 출력
 
        //IMP.request_pay(param, callback)
        IMP.init('imp05733874');
@@ -82,7 +84,7 @@ document.addEventListener("DOMContentLoaded", function() {
           name: totalTime + "분 충전", // 주문명 (예: "90분 충전")
           amount: price, // 가격 (예: 1000)
           buyer_email: "aaa@naver.com", //메일
-          buyer_name: "홍길동", //이름
+          buyer_name: user.dataset.userId, //사용자 id 입력
           buyer_tel: "01001000100 ", //전화번호
           buyer_addr: "부산광역시 진구", //주소
           buyer_postcode: "2" //우편번호
@@ -90,7 +92,8 @@ document.addEventListener("DOMContentLoaded", function() {
           if (rsp.success) {
              //결제성공시 로직
             alert('결제가 성공적으로 완료되었습니다.');
-            var successUrl = '/timePayment/paymentMain/payItem?price=' + encodeURIComponent(price) + '&times=' + encodeURIComponent(totalTime);
+            var successUrl = '/timePayment/paymentMain/payItem?price=' + encodeURIComponent(price) + '&times=' + encodeURIComponent(totalTime) + '&userId='+encodeURIComponent(user.dataset.id);
+            console.log(user.dataset.id +"asdf");
             window.location.href = successUrl; // 생성된 URL로 이동
           } else { //결제 실패
              alert("결재 실패\n" + rsp.error_msg);

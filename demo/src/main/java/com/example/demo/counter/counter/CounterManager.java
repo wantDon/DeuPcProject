@@ -89,8 +89,8 @@ public class CounterManager {
     }
 
     //payment관련 메소드 ========================================
-    public List<PaymentDTO> selectAllPayment() {
-        return testMapper.selectAllTime();//시간표를 조회한다.
+    public List<PaymentDTO> selectAllPayment(PaymentDTO paymentDTO) {
+        return testMapper.selectAllPayment(paymentDTO);//시간표를 조회한다.
     }
 
     public void insertPayment(PaymentDTO paymentDTO) {
@@ -98,11 +98,11 @@ public class CounterManager {
     }
 
     public void updatePayment(PaymentDTO paymentDTO) {
-        testMapper.updateTime(timeDTO);//시간을 수정한다.
+        testMapper.updatePayment(paymentDTO);//시간을 수정한다.
     }
 
-    public void deleteTime(TimeDTO timeDTO) {
-        testMapper.deleteTime(timeDTO);//해당시간을 삭제한다.
+    public void deletePayment(PaymentDTO paymentDTO) {
+        testMapper.deletePayment(paymentDTO);
     }
 
 }

@@ -29,7 +29,8 @@
 
 </div>
 <!--상단-->
-<div class="grid text-center" style="background-color: gray;">
+<div class="grid text-center" style="background-color: gray;" id="userinfo"
+     th:data-userType="${userType}" th:data-id="${userId}">
     <div th:if="${userType == '비회원'}" class="g-col-4"
          style="min-height: 100px; font-size: 32px;display: flex;align-items: center;justify-content: center;">비회원 상품 구매
     </div>

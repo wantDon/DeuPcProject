@@ -32,7 +32,7 @@ public interface TestMapper {
     //payment 결제시 결제정보 처리
     void insertPayment(PaymentDTO paymentDTO);
 
-    PaymentDTO selectPayment(int pay_num);
+    List<PaymentDTO> selectAllPayment(PaymentDTO pay_num);
 
     void updatePayment(PaymentDTO paymentDTO);
 

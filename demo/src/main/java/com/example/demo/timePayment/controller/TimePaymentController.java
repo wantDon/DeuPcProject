@@ -1,5 +1,6 @@
 package com.example.demo.timePayment.controller;
 
+import com.example.demo.counter.DTO.PaymentDTO;
 import com.example.demo.counter.DTO.TimeDTO;
 import com.example.demo.counter.DTO.UserDTO;
 import com.example.demo.counter.counter.CounterManager;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -34,17 +36,19 @@ public class TimePaymentController {
         if (id != null) {
             //회원
             List<TimeDTO> times = counterManager.selectUserTime();
+
             UserDTO userDTO = counterManager.selectUser(id);
             model.addAttribute("userType", "회원");
             model.addAttribute("userId", userDTO.getId());
             model.addAttribute("times", times);
             model.addAttribute("userTime", userDTO.getTime());
-            System.out.println(userDTO.getTime());
+
             return "timePayment/nonUserPayment";
         }
         //비회원
         model.addAttribute("userType", "비회원");
         List<TimeDTO> times = counterManager.selectNonUserTime();
+        model.addAttribute("userId", null);
         model.addAttribute("times", times);
         return "timePayment/nonUserPayment";
     }
@@ -65,24 +69,47 @@ public class TimePaymentController {
         if (counterManager.selectUser(userDTO.getId()) == null) {
             return "timePayment/userPayment";
         }
-        //존재한다면 세션에 임의의 값을 저장시켜서 보내준다.
 
         return "redirect:/timePayment/paymentMain_nonUser?id=" + id;
     }
 
     //결제 완료 페이지=============================
     @GetMapping(value = "/timePayment/paymentMain/payItem")
-    public String buyItem(@RequestParam("price") String price, @RequestParam("times") int times, HttpSession session, Model model) {
-        System.out.println("TimePaymentController price = " + price + ", times" + times);
-        if (session.getAttribute("loginId") != null) {
-            //회원일때 1.입력된 정보를 카운터를 이용해 충전한다.2.화면을 이동시켜준다.
-            counterManager.addUserTime((String) session.getAttribute("loginId"), times);
+    public String buyItem(@RequestParam("price") String price, @RequestParam("times") int times, @RequestParam("userId") String userId, HttpSession session, Model model) {
+        System.out.println("TimePaymentController price = " + price + ", times" + times + ", userId " + userId);
+        if (!userId.equals("undefined")) {
+            System.out.println(userId);
+            //회원일때 1.입력된 정보를 카운터를 이용해 충전한다.+결제기록을 남긴다. 2.화면을 이동시켜준다.
+
+
+            PaymentDTO newPaymentDTO = new PaymentDTO();
+            newPaymentDTO.setPay_price(Integer.parseInt(price));
+            newPaymentDTO.setMethod("결제방법");
+            newPaymentDTO.setPay_date(LocalDateTime.now());
+            newPaymentDTO.setPay_div(0);
+            newPaymentDTO.setPay_state(0);
+            newPaymentDTO.setId(userId);
+
+            counterManager.addUserTime(userId, times);
+            counterManager.insertPayment(newPaymentDTO);//결제기록 insert
 
             return "/pc/smain";
         } else {
             //비회원은 결제 완료후 바로 이용 시작화면으로
             UserDTO newUserDTO = counterManager.makeNewRandomUser();//신규 유저 생성
+            PaymentDTO newPaymentDTO = new PaymentDTO();
+
+
+            newPaymentDTO.setPay_price(Integer.parseInt(price));
+            newPaymentDTO.setMethod("결제방법");
+            newPaymentDTO.setPay_date(LocalDateTime.now());
+            newPaymentDTO.setPay_div(0);
+            newPaymentDTO.setPay_state(0);
+            newPaymentDTO.setId(newUserDTO.getId());
+
             counterManager.addUserTime(newUserDTO.getId(), times);//시간충전
+            counterManager.insertPayment(newPaymentDTO);//결제기록 insert
+
             session.setAttribute("loginId", newUserDTO.getId());//비회원 로그인
 
         }
