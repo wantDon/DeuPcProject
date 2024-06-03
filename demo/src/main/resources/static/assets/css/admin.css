@@ -1,0 +1,56 @@
+.admin-d1 {
+	padding: 0;
+}
+
+.admin-d2 {
+	margin-top: 6%;
+}
+
+.admin-d3 {
+	margin-top: 5%;
+}
+
+.admin-d4 {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+
+.pc-seat {
+	height: 170px;
+	background-color: #ddd;
+	padding: 10px;
+	text-align: center;
+	-ms-user-select: none;
+	-moz-user-select: -moz-none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+.pc-seat:hover {
+	cursor: pointer;
+}
+
+.pc-num {
+	float: left;
+	margin-left: 15px;
+}
+
+.pcnum {
+	font-size: 18pt;
+}
+
+.pc-d1 {
+	text-align: center;
+	margin-top: 20px;
+	display: none;
+}
+
+.pcuser {
+	font-size: 14pt;
+}
+
+.admin-modal-btn {
+	width: 100px;
+}

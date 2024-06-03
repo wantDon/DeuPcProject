@@ -19,14 +19,7 @@ public class Counter {
 
     @Bean
     public CounterManager counterManager(){
-        System.out.println("Counter.CounterManager.카운터 매니저 빈 등록");
         return new CounterManager(testMapper);
     }
-
-
-
-
-
-
-
+    
 }

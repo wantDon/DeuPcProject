@@ -1,11 +1,12 @@
 package com.example.demo.notice.service;
 
-import com.example.demo.notice.dto.NoticeDTO;
-import com.example.demo.notice.mapper.NoticeMapper;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import com.example.demo.notice.dto.NoticeDTO;
+import com.example.demo.notice.mapper.NoticeMapper;
 
 @Service
 public class NoticeServiceImple implements NoticeService {
@@ -17,7 +18,7 @@ public class NoticeServiceImple implements NoticeService {
 	}
 
 	@Override
-	public List getListNotice() {
+	public List<NoticeDTO> getListNotice() {
 		return noticeMapper.getAllNotices();
 	}
 	

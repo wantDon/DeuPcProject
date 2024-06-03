@@ -17,8 +17,12 @@
 	justify-content: space-between;
 }
 
-.admin {
-	width: 60%;
+.d2-admin {
+	text-align: center;
+	width: 50%;
+	margin: auto;
+	display: flex;
+	justify-content : center;
 }
 
 .d3 {

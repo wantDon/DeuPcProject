@@ -16,6 +16,7 @@
 			where id = #{id};
 		]]>
     </select>
+    
     <update id="updateUser" parameterType="com.example.demo.counter.DTO.UserDTO">
         <![CDATA[
 			update user

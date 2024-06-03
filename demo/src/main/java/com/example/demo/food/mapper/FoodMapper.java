@@ -18,5 +18,5 @@ public interface FoodMapper {
 
     //Category=====================
     List<CategoryDTO> selectAllCategory();
-
+    
 }

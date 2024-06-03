@@ -1,8 +1,8 @@
 package com.example.demo.notice.service;
 
-import com.example.demo.notice.dto.NoticeDTO;
-
 import java.util.List;
+
+import com.example.demo.notice.dto.NoticeDTO;
 
 public interface NoticeService {
 

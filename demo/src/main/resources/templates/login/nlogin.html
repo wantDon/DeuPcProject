@@ -24,6 +24,7 @@
 					<form id="loginFrm" name="loginFrm" method="POST" th:action="@{/pc/nlogin}">
 						<input class="form-control mb-3 mt-5" name="id" type="text" placeholder="아이디" required><p>
 						<button type="submit" class="login mt-2">로그인</button>
+						<input type="hidden" name="pwd" th:value="${pcnum}">
 					</form>
 					<div class="nld5" th:if="${error}" th:text="${error}"></div>
 				</div>

@@ -6,6 +6,35 @@
 		<link rel="stylesheet" href="/assets/css/login.css">
 		
 		<title>DEU PC - 회원 로그인</title>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script>
+		    $(document).ready(function(){
+		        $("#loginFrm").submit(function(event){
+		            event.preventDefault(); // 기본 동작 중지
+		            var formData = $(this).serialize(); // 폼 데이터를 직렬화
+		
+		            $.ajax({
+		                type: "POST",
+		                url: "/pc/login",
+		                data: formData,
+		                success: function(response){
+		                    if(response === "success") {
+		                        // 로그인 성공
+		                        window.location.href = "/pc";
+		                    } else {
+		                        // 로그인 실패
+								document.getElementById("error").innerText  = response;
+		                    }
+		                },
+		                error: function(xhr, status, error) {
+		                    // AJAX 요청 실패 시 처리
+		                    console.error(xhr.responseText);
+		                }
+		            });
+		        });
+		    });
+		</script>
 	</head>
 	<body>
 		<script type="text/javascript" src="/assets/js/smain.js"></script>
@@ -21,14 +50,16 @@
 			</div>
 			<div class="d3 mt-4">
 				<div class="d4 w-75">
-					<form id="loginFrm" name="loginFrm" method="POST" th:action="@{/pc/login}">
+					<form id="loginFrm" name="loginFrm" method="POST">
 						<input class="form-control mb-3 mt-5" name="id" type="text" placeholder="아이디" required><p>
 						<input class="form-control mb-3" name="pwd" type="password" placeholder="비밀번호" required><p>
 						<button type="button" class="btn">아이디/비밀번호 찾기</button>
-						<button type="button" class="btn ms-5">회원가입</button><p>
+						<button type="button" class="btn ms-5" onclick="location.href='/pc/signin';">회원가입</button><p>
 						<button type="submit" class="login mt-2" id="btn-login">로그인</button>
 					</form>
-					<div class="d5" th:if="${error}" th:text="${error}"></div>
+					<div class="d5">
+						<span class="error" id="error"></span>
+					</div>
 				</div>
 			</div>
 		</div>
