@@ -1,17 +1,34 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.food.mapper.FoodMapper">
 
-	<insert id="insertFood" parameterType="com.example.demo.food.dto.FoodDTO">
-	    INSERT INTO food
-	    (cate_name, food_name, food_price, count, state, food_info)
-	    VALUES
-	    (#{cate_name}, #{food_name}, #{food_price}, #{count}, #{state}, #{food_info})
-	</insert>
+    <insert id="insertFood" parameterType="com.example.demo.food.dto.FoodDTO">
+        INSERT INTO food
+        (cate_name, food_name, food_price, count, state, food_info)
+        VALUES
+        (#{cate_name}, #{food_name}, #{food_price}, #{count}, #{state}, #{food_info})
+    </insert>
 
-	<select id="getAllFoods" resultType="com.example.demo.food.dto.FoodDTO">
-		SELECT * FROM food
-	</select>
+    <select id="getAllFoods" resultType="com.example.demo.food.dto.FoodDTO">
+        SELECT * FROM food
+    </select>
+
+    <update id="refix_request" parameterType="com.example.demo.food.dto.FoodDTO">
+        <!--num에 맞는 food값중 name,price,count,state만 바꾼다.-->
+        UPDATE food
+        SET
+        food_name = #{food_name},
+        food_price = #{food_price},
+        count = #{count},
+        state = #{state}
+        WHERE
+        food_num = #{food_num}
+    </update>
+
+    <!--Category======================-->
+    <select id="selectAllCategory" resultType="com.example.demo.food.dto.CategoryDTO">
+        SELECT * FROM category
+    </select>
 </mapper>

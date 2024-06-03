@@ -3,20 +3,22 @@ package com.example.demo.food.service;
 import java.io.IOException;
 import java.util.List;
 
+import com.example.demo.food.dto.CategoryDTO;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.food.dto.FoodDTO;
 import com.example.demo.food.mapper.FoodMapper;
 
 @Service
-public class FoodServiceImple implements FoodService{
-	
-	private FoodMapper foodMapper;
-	
-	public FoodServiceImple(FoodMapper foodMapper) {
-		this.foodMapper = foodMapper;
-	}
+public class FoodServiceImple implements FoodService {
 
+    private FoodMapper foodMapper;
+
+    public FoodServiceImple(FoodMapper foodMapper) {
+        this.foodMapper = foodMapper;
+    }
+
+    //Food========================================
     @Override
     public List<FoodDTO> getListFood() {
         return foodMapper.getAllFoods();
@@ -28,4 +30,16 @@ public class FoodServiceImple implements FoodService{
         foodMapper.insertFood(foodDTO);
     }
 
+    @Override
+    public void food_refix_request(FoodDTO foodDTO) {
+        foodMapper.refix_request(foodDTO);
+    }
+
+
+    //Category====================================
+    @Override
+    public List<CategoryDTO> selectAllCategoryDTO() {
+
+        return foodMapper.selectAllCategory();
+    }
 }
