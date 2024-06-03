@@ -18,7 +18,7 @@ public class NoticeServiceImple implements NoticeService {
 	}
 
 	@Override
-	public List getListNotice() {
+	public List<NoticeDTO> getListNotice() {
 		return noticeMapper.getAllNotices();
 	}
 	

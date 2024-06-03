@@ -16,7 +16,7 @@ public interface NoticeMapper {
     @Select("SELECT COUNT(*) FROM notice")
     int getTotalNoticeCount();
 
-    @Select("SELECT * FROM notice LIMIT #{offset}, #{pageSize}")
+    @Select("SELECT * FROM notice order by notice_num desc LIMIT #{offset}, #{pageSize}")
     List<NoticeDTO> getNoticesByPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
 
     @Select("SELECT * FROM notice WHERE notice_num = #{notice_num}")

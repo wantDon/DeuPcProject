@@ -11,11 +11,11 @@
 		}
 		
 		.title {
-			max-width: 150px;
+			max-width: 230px;
 		}
 		
 		.content {
-			max-width: 350px;
+			max-width: 400px;
 		}
 	</style>
 </head>
@@ -34,10 +34,10 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th>번호</th>
-                                <th>제목</th>
-                                <th>내용</th>
-                                <th>작성날짜</th>
+                                <th width="100">번호</th>
+                                <th width="250">제목</th>
+                                <th width="500">내용</th>
+                                <th width="200">작성날짜</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,7 +46,7 @@
                                 <td th:text="${rowData.notice_num}" style="text-align: center;"></td>
 								<td><a class="title d-inline-block text-truncate" th:href="@{/notice/detail(notice_num=${rowData.notice_num})}" th:text="${rowData.notice_title}"></a></td>
                                 <td><a class="content d-inline-block text-truncate" th:href="@{/notice/detail(notice_num=${rowData.notice_num})}" th:text="${rowData.notice_content}"></a></td>
-                                <td th:text="${#strings.replace(rowData.notice_date, 'T', ' ')}"></td>
+                                <td th:text="${#strings.replace(rowData.notice_date, 'T', ' ')}" style="text-align: center;"></td>
                             </tr>
                         </tbody>
                     </table>
