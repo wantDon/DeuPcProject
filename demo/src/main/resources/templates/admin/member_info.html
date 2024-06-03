@@ -45,8 +45,11 @@
 							</tr>
 							<th:block th:if="${memberList.size() == 0}">
 								<script type="text/javascript">
-									window.location.replace("/pc/admin/member");
+									if (window.location.href.includes("page=")) {										
+										window.location.replace("/pc/admin/member");
+									}
 								</script>
+								<td colspan="7">검색된 회원이 없습니다.</td>
 							</th:block>
 							<tr th:each="ulist : ${memberList}">							
 								<td th:text="${ulist.name}"></td>
@@ -65,17 +68,41 @@
 							</tr>
 						</table>
 						<nav class="mt-4" th:if="${totalPages > 1}">
-							<ul class="pagination justify-content-center">
-								<li class="page-item" th:classappend="${currentPage == 0 || totalPages == 0} ? 'disabled'">
-									<a class="page-link" th:href="@{/pc/admin/member(page=${currentPage - 1})}">이전</a>
-								</li>
-								<li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
-									<a class="page-link" th:href="@{/pc/admin/member(page=${i})}" th:text="${i + 1}">1</a>
-								</li>
-								<li class="page-item" th:classappend="${currentPage + 1 >= totalPages || totalPages == 0} ? 'disabled'">
-									<a class="page-link" th:href="@{/pc/admin/member(page=${currentPage + 1})}">다음</a>
-								</li>
-							</ul>
+						    <ul class="pagination justify-content-center">
+						        <!-- Previous Page Link -->
+						        <li class="page-item" th:classappend="${currentPage == 0 || totalPages == 0} ? 'disabled'">
+						            <a class="page-link" th:if="${searchCriteria != null and searchKeyword != null}"
+						               th:href="@{/pc/admin/member(page=${currentPage - 1}, searchCriteria=${searchCriteria}, searchKeyword=${searchKeyword})}">
+						                이전
+						            </a>
+						            <a class="page-link" th:if="${searchCriteria == null or searchKeyword == null}"
+						               th:href="@{/pc/admin/member(page=${currentPage - 1})}">
+						                이전
+						            </a>
+						        </li>
+						        
+						        <!-- Page Numbers -->
+						        <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}" th:classappend="${i == currentPage} ? 'active'">
+						            <a class="page-link" th:if="${searchCriteria != null and searchKeyword != null}"
+						               th:href="@{/pc/admin/member(page=${i}, searchCriteria=${searchCriteria}, searchKeyword=${searchKeyword})}"
+						               th:text="${i + 1}">1</a>
+						            <a class="page-link" th:if="${searchCriteria == null or searchKeyword == null}"
+						               th:href="@{/pc/admin/member(page=${i})}"
+						               th:text="${i + 1}">1</a>
+						        </li>
+						        
+						        <!-- Next Page Link -->
+						        <li class="page-item" th:classappend="${currentPage + 1 >= totalPages || totalPages == 0} ? 'disabled'">
+						            <a class="page-link" th:if="${searchCriteria != null and searchKeyword != null}"
+						               th:href="@{/pc/admin/member(page=${currentPage + 1}, searchCriteria=${searchCriteria}, searchKeyword=${searchKeyword})}">
+						                다음
+						            </a>
+						            <a class="page-link" th:if="${searchCriteria == null or searchKeyword == null}"
+						               th:href="@{/pc/admin/member(page=${currentPage + 1})}">
+						                다음
+						            </a>
+						        </li>
+						    </ul>
 						</nav>
 					</div>
 				</div>

@@ -8,7 +8,7 @@ function handleFormSubmit(event) {
 		// 페이지 이동 막기
 		event.preventDefault();
 		// '/pc/admin/member' 페이지로 이동
-		window.location.href = "/pc/admin/member";
+		window.location.replace("/pc/admin/member");
 	}
 }
 
@@ -25,7 +25,7 @@ function resign(id) {
 	// 요청 완료 시 실행될 함수
 	xhr.onload = function() {
 		if (xhr.status === 200) {
-			alert("[" + btn + "] 회원 탈퇴가 이루어졌습니다.");
+			alert("[" + id + "] 회원 탈퇴가 이루어졌습니다.");
 			location.reload();
 		} else {
 			console.error('서버 요청 실패: ' + xhr.status);
