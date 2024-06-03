@@ -1,10 +1,12 @@
 package com.example.demo.counter.counter;
 
+import com.example.demo.counter.DTO.PaymentDTO;
 import com.example.demo.counter.DTO.TimeDTO;
 import com.example.demo.counter.DTO.UserDTO;
 import com.example.demo.counter.mapper.TestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Time;
 import java.util.List;
 import java.util.Random;
 
@@ -69,6 +71,40 @@ public class CounterManager {
 
         System.out.println(insertUserDTO.getId());
         return insertUserDTO;
+    }
+
+    //요금표 관리 메소드=============================================================
+    public List<TimeDTO> selectAllTime() {
+        return testMapper.selectAllTime();//시간표를 조회한다.
+    }
+
+    public void insertTime(TimeDTO timeDTO) {
+        testMapper.insertTime(timeDTO);//시간을 추가한다.
+    }
+
+    public void updateTime(TimeDTO timeDTO) {
+        testMapper.updateTime(timeDTO);//시간을 수정한다.
+    }
+
+    public void deleteTime(TimeDTO timeDTO) {
+        testMapper.deleteTime(timeDTO);//해당시간을 삭제한다.
+    }
+
+    //payment관련 메소드 ========================================
+    public List<PaymentDTO> selectAllPayment() {
+        return testMapper.selectAllTime();//시간표를 조회한다.
+    }
+
+    public void insertPayment(PaymentDTO paymentDTO) {
+        testMapper.insertPayment(paymentDTO);//시간을 추가한다.
+    }
+
+    public void updatePayment(PaymentDTO paymentDTO) {
+        testMapper.updateTime(timeDTO);//시간을 수정한다.
+    }
+
+    public void deleteTime(TimeDTO timeDTO) {
+        testMapper.deleteTime(timeDTO);//해당시간을 삭제한다.
     }
 
 }

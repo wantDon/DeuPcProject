@@ -21,7 +21,15 @@ public interface TestMapper {
 
     List<TimeDTO> selectUserTime();
 
-    //payment
+    List<TimeDTO> selectAllTime();
+
+    void insertTime(TimeDTO timeDTO);
+
+    void updateTime(TimeDTO timeDTO);
+
+    void deleteTime(TimeDTO timeDTO);
+
+    //payment 결제시 결제정보 처리
     void insertPayment(PaymentDTO paymentDTO);
 
     PaymentDTO selectPayment(int pay_num);
@@ -29,4 +37,5 @@ public interface TestMapper {
     void updatePayment(PaymentDTO paymentDTO);
 
     void deletePayment(PaymentDTO paymentDTO);
+
 }
