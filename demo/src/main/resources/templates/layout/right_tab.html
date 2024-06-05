@@ -8,13 +8,13 @@
         <div class="right-tab bg-secondary p-0" style="background-color: #BD75C3 !important; width: 5%; height: 100vh; float: right;">
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group" style="width: 100%;">
                 <button type="button" class="btn btn-secondary group1-btn" style="background-color: #BD75C3; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
-                    onclick="changeButtonStyle(this, '#BD75C3', '#815085'); navigateToFoodPage()">상품</button>
+                    onclick="changeButtonStyle(this, '#BD75C3', '#815085');">주문</button>
                 <button type="button" class="btn btn-secondary group1-btn" style="background-color: #BD75C3; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
                     onclick="changeButtonStyle(this, '#BD75C3', '#815085'); navigateToNoticePage()">공지</button>
                 <button type="button" class="btn btn-secondary group1-btn" style="background-color: #BD75C3; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
                     onclick="changeButtonStyle(this, '#BD75C3', '#815085')">재고</button>
                 <button type="button" class="btn btn-secondary group2-btn" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center; margin-top: 170px;"
-                    onclick="changeButtonStyle(this, 'gray', '#f8f9fa')">판매현황</button>
+                    onclick="changeButtonStyle(this, 'gray', '#f8f9fa'); navigateToSellPage()">판매현황</button>
                 <button type="button" class="btn btn-secondary group2-btn" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
                     onclick="changeButtonStyle(this, 'gray', '#f8f9fa')">판매취소</button>
             </div>
@@ -36,13 +36,21 @@
                 button.style.backgroundColor = activeColor;
                 button.style.color = 'black';
             }
+			
             function navigateToNoticePage() {
                 window.location.href = '/notice/'; // 공지 페이지로 이동
             }
             function navigateToFoodPage() {
                 window.location.href = '/food'; // 상품 등록 페이지로 이동
             }
+<<<<<<< HEAD
+			
+			function navigateToSellPage() {
+			    window.location.href = '/sell'; // 판매 현황 페이지로 이동
+			}
+=======
 
+>>>>>>> 2185956312898ad9b50e6f779047cd8b4af1d9f0
         </script>
     </th:block>
 </body>
