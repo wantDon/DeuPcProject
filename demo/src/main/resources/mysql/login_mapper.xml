@@ -5,15 +5,48 @@
 <mapper namespace="com.example.demo.login.mapper.LoginMapper">
     <select id="login" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
         <![CDATA[
-			select id from user
+			select id, time from user
 			where id = #{id} and pwd = #{pwd};
 		]]>
     </select>
     
     <select id="nlogin" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
         <![CDATA[
-			select id from user
+			select id, pwd, time from user
 			where id = #{id};
 		]]>
     </select>
+    
+    <select id="alogin" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
+        <![CDATA[
+			select id from user
+			where id = #{id} and pwd = #{pwd} and grade = '0';
+		]]>
+    </select>
+    
+    <update id="movePC" parameterType="com.example.demo.counter.DTO.UserDTO">
+		<![CDATA[
+			update user set pwd = #{pwd} where id = #{id};
+		]]>
+	</update>
+	
+	<insert id="useStart" parameterType="map">
+		<![CDATA[
+			insert into `use` values (null, null, now(), #{id}, #{pcnum});
+		]]>
+	</insert>
+	
+	<update id="logout" parameterType="map">
+		<![CDATA[
+			update `use` set use_time = #{time}
+			where use_num = (select max(use_num) from (select * from `use` where id = #{id}) as num);
+		]]>
+	</update>
+	
+	<update id="logout2" parameterType="map">
+		<![CDATA[
+			update user set time = time - #{time}
+			where id = #{id};
+		]]>
+	</update>
 </mapper>

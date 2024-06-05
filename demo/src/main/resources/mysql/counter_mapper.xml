@@ -4,12 +4,19 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.counter.mapper.TestMapper">
     <!--user-->
+    <insert id="insertUser" parameterType="com.example.demo.counter.DTO.UserDTO">
+        <![CDATA[
+        insert into user (id, pwd, name, email, birth, phone, grade, time)
+        values (#{id}, #{pwd}, #{name}, #{email}, #{birth}, #{phone}, #{grade}, #{time});
+        ]]>
+    </insert>
     <select id="selectUser" resultType="com.example.demo.counter.DTO.UserDTO" parameterType="String">
         <![CDATA[
 			select * from user
 			where id = #{id};
 		]]>
     </select>
+
     <update id="updateUser" parameterType="com.example.demo.counter.DTO.UserDTO">
         <![CDATA[
 			update user
@@ -18,5 +25,45 @@
 		]]>
     </update>
     <!--time-->
+    <select id="selectNonUserTime" resultType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+            SELECT * from `time`
+            where time_div = 1;
+        ]]>
+    </select>
+    <select id="selectUserTime" resultType="com.example.demo.counter.DTO.TimeDTO"
+            parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+            SELECT * from `time`
+            where time_div = 0;
+        ]]>
+    </select>
+
+    <!--payment-->
+    <select id="selectAllPayment" resultType="com.example.demo.counter.DTO.PaymentDTO">
+        <![CDATA[
+            SELECT * from `payment`
+        ]]>
+    </select>
+    <insert id="insertPayment" parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+            INSERT into `payment`(pay_num,total_price,method,pay_date,pay_div,pay_state,id)
+            values (#{pay_num},#{pay_price},#{method},#{pay_date},#{pay_div},#{pay_state},#{id})
+        ]]>
+    </insert>
+    <update id="updatePayment" parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+			update `payment`
+			set name = #{pay_num},#{pay_price},#{method},#{pay_date},#{pay_div},#{pay_state},#{id}
+			where id = #{pay_num};
+		]]>
+    </update>
+    <delete id="deletePayment" parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+			delete from `payment`
+			where pay_num = #{pay_num}
+		]]>
+    </delete>
+
 
 </mapper>

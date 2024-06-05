@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>회원가입</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+    .d2 {
+        margin: auto;
+        margin-top: 1%;
+        text-align: center;
+    }
+    .do-hyeon-regular {
+        font-family: "Do Hyeon", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        font-size: 22pt;
+    }
+    .login-logo {
+        font-size: 70pt;
+        color: #BD75C3;
+        font-weight: bold;
+    }
+    .d3 {
+        height: 100%;
+        width: 40%;
+        text-align: center;
+        border: 2px solid #BD75C3;
+        margin: auto;
+        border-radius: 20px;
+    }
+    .d4 {
+        margin: auto;
+        margin-top: 10%;
+    }
+    .sigin {
+        width: 100%;
+        height: 55px;
+        background-color: #BD75C3;
+        border: 0;
+        border-radius: 10px;
+        color: white;
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 10%;
+    }
+    .id_btn {
+        background-color: #BD75C3;
+        border: 0;
+        border-radius: 5px;
+        font-size: 14px;
+        color: white;
+        font-weight: bold;
+    }
+    .input-group-text {
+        background-color: white;
+        border: none;
+		width: 100px;
+    }
+	
+    </style>
+	<script type="text/javascript">
+		function idCheck(){
+			var idCheck = document.getElementById("id").value;
+			var _patterns = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+			var resultSpan = document.getElementById("idCheckResult");
+			
+			if (_patterns.test(idCheck)) {
+				alert("한글은 허용하지 않습니다.");
+				document.getElementById("id").value = "";
+				document.getElementById("id").focus();
+				return false;
+			} else if(idCheck.length < 4 || idCheck.length > 12){
+				alert("4~12자로 입력해주세요");
+				document.getElementById("id").focus();
+				return false;
+			}
+			
+			fetch('/pc/check_id/' + idCheck, {
+				method: 'POST'
+			})
+			.then(response => response.json())
+			.then(data => {
+				if (!data) {
+					resultSpan.textContent = "이미 사용 중인 ID입니다.";
+					resultSpan.style.color = "red";
+				} else {
+					resultSpan.textContent = "사용 가능한 ID입니다.";
+					resultSpan.style.color = "blue";
+				}
+			})
+			.catch(error => {
+				alert("ID 체크 중 오류가 발생했습니다.");
+			});
+
+			return false;
+		}
+
+       function validateForm() {
+           var resultSpan = document.getElementById("idCheckResult");
+           if (resultSpan.textContent !== "사용 가능한 ID입니다.") {
+               alert("아이디 중복 확인을 해주세요.");
+               return false;
+           }
+           return true;
+		}
+	</script>
+</head>
+<body>
+    <div class="d1">
+        <div class="d2 w-75 mb-5">
+            <span class="login-logo">DEU PC</span><br>
+            <span class="do-hyeon-regular">회원가입</span>
+        </div>
+        <div class="d3 mt-5">
+            <div class="d4 w-75">
+			<form id="signinFrm" name="signinFrm" method="POST" onsubmit="return validateForm" th:action="@{/pc/signin}">
+                <div class="input-group mb-4">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="name">이름</span>
+                        <input type="text" class="form-control ml-3" name="name" placeholder="이름을 입력하세요" aria-label="Username" aria-describedby="addon-wrapping" required>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" >아이디</span>
+                        <input type="text" id="id"name="id" class="form-control mx-3" placeholder="아이디를 입력하세요" aria-label="Username" aria-describedby="addon-wrapping"required>
+                        <button type="button" class="id_btn" id="id_btn" onclick="idCheck()">중복확인</button>
+                    </div>		
+				<div class="input-group mb-4">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" > </span>
+						<span class="mx-3" id="idCheckResult"></span>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="pwd">비밀번호</span>
+                        <input type="password" class="form-control ms-3" name="pwd" placeholder="비밀번호를 입력하세요" aria-label="Username" aria-describedby="addon-wrapping"required>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group flex-nowrap">
+                        <span class="input-group-text" id="repwd">비밀번호</span>
+                        <input type="password" class="form-control ms-3" placeholder="비밀번호를 재입력하세요" aria-label="Username" aria-describedby="addon-wrapping"required>
+                    </div>
+                </div>
+                <div class="input-group mb-4">
+                    <label class="input-group-text" for="inputGroupSelect01">전화번호</label>
+                    <select class="form-select mx-3" id="phone">
+                        <option selected>010</option>
+                        <option value="1">011</option>
+                        <option value="2">016</option>
+                        <option value="3">017</option>
+                        <option value="4">018</option>
+                    </select>
+                    -<input type="text" class="form-control mx-3" placeholder="1234" aria-label="Username" aria-describedby="addon-wrapping"required>
+                    -<input type="text" class="form-control ml-3" placeholder="5678" aria-label="Username" aria-describedby="addon-wrapping"required>
+                </div>
+                <div class="input-group mb-4">
+                    <span class="input-group-text" id="email">이메일</span>
+                    <input type="text" class="form-control ml-3" placeholder="abcdefg" aria-label="Username"required>
+                    <span class="input-group-text w-auto">@</span>
+                    <select class="form-select" id="birth">
+                        <option th:each="email : ${emailDomains}" th:value="${email}" th:text="${email}"></option>
+                    </select>
+                </div>
+                <div class="input-group mb-4">
+                    <label class="input-group-text" for="inputGroupSelect01">생년월일</label>
+                    <select class="form-select mx-2" id="year">
+                        <option th:each="year : ${years}" th:value="${year}" th:text="${year}"></option>
+                    </select>
+                    <select class="form-select mx-2" id="month">
+                        <option th:each="month : ${months}"th:value="${month}" th:text="${month}"></option>
+                    </select>
+                    <select class="form-select ml-2" id="day" name="day">
+                        <option th:each="day : ${days}" th:value="${day}" th:text="${day}"></option>
+						<!--th:each : 반복작업할때 사용 th:value : 옵션값을 지정 th:text: 옵션에 표시될 텍스트 지정-->
+                    </select>
+                </div>
+				</div>
+                <button type="submit" class="sigin">회원가입</button>
+				</form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

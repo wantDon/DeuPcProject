@@ -1,0 +1,67 @@
+.amd1 {
+	margin-top: 6%;
+}
+
+.amd2 {
+	margin-top: 3%;
+}
+
+th, td {
+	text-align: center;
+	vertical-align: middle;
+	align-items: center;
+}
+
+.ttd1 {
+	font-size: 14pt;
+}
+
+.adm5 {
+	float: right;
+}
+
+.form-sel1 {
+	width: 150px;
+	margin-right: 1%;
+}
+
+.form-sel2 {
+	margin-right: 0;
+	display: inline;
+}
+
+.btn-search {
+	width: 80px;
+	border: 2px solid darkorchid;
+	color: darkorchid;
+}
+
+.btn-search:hover {
+	background-color: darkorchid;
+	color: white;
+}
+
+.page-item.active > .page-link {
+	background-color: darkorchid;
+	border: 1px solid darkorchid;
+}
+
+.page-link {
+	color: darkorchid;
+}
+
+.page-link:hover {
+	color: darkorchid;
+}
+
+.page-item.active > .page-link:hover {
+	color: white;
+}
+
+.adi1 {
+	width: 300px;
+}
+
+.form-select {
+	width: 140px;
+}

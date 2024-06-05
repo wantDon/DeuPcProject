@@ -1,8 +1,12 @@
 package com.example.demo.food.service;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import com.example.demo.food.dto.CategoryDTO;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.food.dto.FoodDTO;
@@ -28,4 +32,14 @@ public class FoodServiceImple implements FoodService{
         foodMapper.insertFood(foodDTO);
     }
 
+    @Override
+    public void food_refix_request(FoodDTO foodDTO) {
+        foodMapper.refix_request(foodDTO);
+    }
+
+    @Override
+    public List<CategoryDTO> selectAllCategoryDTO() {
+
+        return foodMapper.selectAllCategory();
+    }
 }

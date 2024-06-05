@@ -1,35 +1,63 @@
 package com.example.demo.login.service;
 
-import com.example.demo.counter.counter.CounterManager;
 import com.example.demo.login.dto.LoginDTO;
 import com.example.demo.login.mapper.LoginMapper;
+
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImple implements LoginService {
-
+	
     private LoginMapper loginMapper;
-    private CounterManager counterManager;
 
-    public LoginServiceImple(LoginMapper loginMapper,CounterManager counterManager){
+    public LoginServiceImple(LoginMapper loginMapper){
         this.loginMapper = loginMapper;
-        this.counterManager = counterManager;
     }
 
     @Override
-    public boolean login(String id, String pwd) {
-        LoginDTO loginDTO = loginMapper.login(id, pwd);
-        //임의실험으로 이곳에서 회원 시간을 10식 추가해 보자 로그인 할때마다.
-        counterManager.addUserTime(id,5);
+    public LoginDTO login(String id, String pwd) {
+        return loginMapper.login(id, pwd);
+    }
+    
+    @Override
+    public LoginDTO nlogin(String id) {
+    	id = "비회원-" + id;
+        LoginDTO loginDTO = loginMapper.nlogin(id);
+        return loginDTO;
+    }
+    
+    @Override
+    public boolean alogin(String id, String pwd) {
+        LoginDTO loginDTO = loginMapper.alogin(id, pwd);
         return loginDTO != null;
     }
     
     @Override
-    public boolean nlogin(String id) {
+    public void movePC(String id, String pwd) {
     	id = "비회원-" + id;
-        LoginDTO loginDTO = loginMapper.nlogin(id);
-        return loginDTO != null;
+    	loginMapper.movePC(id, pwd);
     }
 
+    @Override
+    public void useStart(String id, String pcnum) {
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("id", id);
+    	param.put("pcnum", pcnum);
+    	
+    	loginMapper.useStart(param);
+    }
+    
+    @Override
+    public void logout(String id, long time) {
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("id", id);
+    	param.put("time", time);
+    	
+    	loginMapper.logout(param);
+    	loginMapper.logout2(param);
+    }
+    
 }
 

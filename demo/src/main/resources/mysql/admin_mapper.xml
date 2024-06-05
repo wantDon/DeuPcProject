@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.admin.mapper.AdminMapper">
+	<select id="getAllUse" resultType="com.example.demo.admin.dto.LoginTimeDTO">
+		<![CDATA[
+			select * from `use` where use_time is null;
+		]]>
+	</select>
+	
+	<select id="getUseruse" resultType="com.example.demo.admin.dto.LoginTimeDTO" parameterType="map">
+		<![CDATA[
+			select * from `use` where id = #{id} and use_start = #{time} and use_time is null;
+		]]>
+	</select>
+	
+	<select id="getUserInfo" resultType="com.example.demo.admin.dto.MemberDTO" parameterType="String">
+		<![CDATA[
+			select * from user where id = #{id};
+		]]>
+	</select>
+	
+	<select id="getAllUser" resultType="com.example.demo.admin.dto.MemberDTO">
+		<![CDATA[
+			select * from user where grade is not null;
+		]]>
+	</select>
+	
+	<delete id="resignUser" parameterType="String">
+		<![CDATA[
+			delete from user where id = #{id};
+		]]>
+	</delete>
+	
+	<update id="updateGrade" parameterType="map">
+		<![CDATA[
+			update user set grade = #{grade} where id = #{id};
+		]]>
+	</update>
+</mapper>

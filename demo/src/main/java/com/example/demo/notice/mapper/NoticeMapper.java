@@ -1,11 +1,12 @@
 package com.example.demo.notice.mapper;
 
+import java.util.List;
+
 import com.example.demo.notice.dto.NoticeDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import java.util.List;
 
 @Mapper
 public interface NoticeMapper {
@@ -15,7 +16,7 @@ public interface NoticeMapper {
     @Select("SELECT COUNT(*) FROM notice")
     int getTotalNoticeCount();
 
-    @Select("SELECT * FROM notice LIMIT #{offset}, #{pageSize}")
+    @Select("SELECT * FROM notice order by notice_num desc LIMIT #{offset}, #{pageSize}")
     List<NoticeDTO> getNoticesByPage(@Param("offset") int offset, @Param("pageSize") int pageSize);
 
     @Select("SELECT * FROM notice WHERE notice_num = #{notice_num}")
