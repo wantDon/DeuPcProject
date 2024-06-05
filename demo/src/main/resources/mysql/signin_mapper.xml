@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.signin.mapper.SigninMapper">
-	<select id="idOverlap" resultType="String" parameterType="String">
+	<select id="idOverlap" resultType="com.example.demo.signin.dto.SigninDTO" parameterType="String">
 		<![CDATA[ 
 			select id from user
-			where id = #{id};
+			where id=#{id};
 		]]>
 	</select>
+	<insert id="signin" parameterType="com.example.demo.signin.dto.SigninDTO">
+		<![CDATA[
+			insert into user (id, pwd, name, birth, email, phone, grade)
+			values (#{id}, #{pwd}, #{name}, #{birth}, #{email}, #{phone}, 1)
+		]]>
+	</insert>
 </mapper>

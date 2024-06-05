@@ -6,8 +6,8 @@ public class SigninDTO {
 	private String pwd;
 	private String name;
 	private String email;
-	private int birth;
-	private int phone;
+	private String birth;
+	private String phone;
 	private int grade; 
 	
 	public String getId() {
@@ -34,16 +34,16 @@ public class SigninDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public int getBirth() {
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(int birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
-	public int getPhone() {
+	public String getPhone() {
 		return phone;
 	}
-	public void setPhone(int phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 	public int getGrade() {

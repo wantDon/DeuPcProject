@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function() {
           pay_method: "card",
           merchant_uid: createOrderNum(), //주문번호 생성(하단)
           name: totalTime + "분 충전", // 주문명 (예: "90분 충전")
-          amount: price, // 가격 (예: 1000)
+          amount: 100, // 가격 (예: 1000)
           buyer_email: "aaa@naver.com", //메일
           buyer_name: user.dataset.userId, //사용자 id 입력
           buyer_tel: "01001000100 ", //전화번호

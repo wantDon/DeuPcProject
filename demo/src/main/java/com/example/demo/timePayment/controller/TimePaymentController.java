@@ -110,8 +110,6 @@ public class TimePaymentController {
             counterManager.addUserTime(newUserDTO.getId(), times);//시간충전
             counterManager.insertPayment(newPaymentDTO);//결제기록 insert
 
-            session.setAttribute("loginId", newUserDTO.getId());//비회원 로그인
-
         }
         return "/pc/smain";
     }

@@ -7,7 +7,7 @@ public class UserDTO {
     private String name;
     private String email;
     private int birth;
-    private int phone;
+    private String phone;
     private int grade;
     private int time;
 
@@ -51,11 +51,11 @@ public class UserDTO {
         this.birth = birth;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

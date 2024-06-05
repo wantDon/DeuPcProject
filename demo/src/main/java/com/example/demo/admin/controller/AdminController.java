@@ -1,11 +1,5 @@
 package com.example.demo.admin.controller;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.Vector;
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.example.demo.admin.dto.MemberDTO;
 import com.example.demo.admin.service.AdminServiceImple;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping(value="/pc/admin")
 public class AdminController {
@@ -33,8 +29,11 @@ public class AdminController {
 		// TODO Auto-generated constructor stub
 	}
 	
-	@RequestMapping(value={"", "/"})
-	public String AdminMain() {
+	@RequestMapping(value={"*", "/", ""})
+	public String AdminMain(HttpSession session) {
+//		MemberDTO memberDTO = adminService.getMemberInfo((String)session.getAttribute("loginId"));
+//		if (memberDTO == null || memberDTO.getGrade() != 0)
+//			return "redirect:/pc/smain";
 		return "admin/index";
 	}
 	

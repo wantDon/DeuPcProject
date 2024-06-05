@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<head>
+	<th:block th:replace="~{layout/top::top_main}"></th:block>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <!-- Core theme CSS (includes Bootstrap)-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="assets/css/userorder_styles.css" rel="stylesheet" />
+  <style>
+    .filter-btn {
+      width: 110px;
+      height: 50px;
+      margin: 3px;
+      background-color: #BD75C3;
+      color: white;
+      border-color: #BD75C3;
+    }
+
+    .card1 {
+      display: flex;
+      flex-direction: column;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+
+    .card1-img-top {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .card1-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card1-title {
+      font-size: 19px;
+      margin-bottom: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card1-text {
+      flex: 1;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .card1-price {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .add-to-cart {
+      align-self: center;
+      background-color: #BD75C3;
+     border: 0;
+     border-radius: 5px;
+     font-size: 14px;
+     color: white;
+     font-weight: bold;
+	 width: 100%;
+    }
+
+    .card1 h2 {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card1 p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .btn-primary {
+    background-color: #BD75C3;
+     border: 0;
+     border-radius: 5px;
+     font-size: 14px;
+     color: white;
+     font-weight: bold;
+    }
+    #user-wish {
+     resize: none;
+      width : 380px;
+      height: 200px;
+    }
+
+  </style>
+  <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<!-- Page content-->
+<div class="container">
+  <div class="row">
+    <!-- Blog entries-->
+    <div class="col-lg-8">
+      <!-- Category buttons -->
+      <div class="mb-4">
+        <button class="btn btn-primary filter-btn" data-filter="all">All</button>
+        <th:block th:each="category : ${categories}">
+          <button class="btn btn-primary filter-btn" th:attr="data-filter=${category.cate_name}" th:text="${category.cate_name}"></button>
+        </th:block>
+      </div>
+      <div class="row" id="blog-posts">
+        <!-- 각 음식 항목 -->
+        <th:block th:each="food : ${food}">
+          <div class="col-lg-3 col-md-6 mb-4 post-item" th:attr="data-category=${food.cate_name}">
+            <!-- Blog post-->
+            <div class="card1 h-100">
+              <img class="card1-img-top" th:src="@{{food_img}(food_img=${food.food_img})}" alt="food image" />
+              <div class="card1-body">
+                <!-- food_name으로 변경 -->
+                <h2 class="card1-title h4" th:text="${food.food_name}">Post Title 1</h2>
+                <p class="card1-text" th:text="${food.food_info}"></p>
+                <p class="card1-price" th:text="${food.food_price + '원'}">0</p>
+                <button class="btn btn-primary add-to-cart" th:data-name="${food.food_name}" th:data-price="${food.food_price}" th:data-num="${food.food_num}">장바구니 추가</button>
+              </div>
+            </div>
+          </div>
+        </th:block>
+      </div>
+    </div>
+    <!-- Side widgets-->
+    <div class="col-lg-4">
+      <!-- Categories widget-->
+      <div class="card mb-4">
+        <div class="card-header">장바구니</div>
+        <div class="card-body">
+          <ul id="cart-items" class="list-unstyled mb-0"></ul>
+          <div id="total-price-container" class="mt-3">
+            <strong>Total: </strong><span id="total-price">0</span> 원
+          </div>
+          <div id="user-wishs" class ="mt-3">
+            <textarea id="user-wish" rows="4" cols="50" placeholder="여기에 원하는 내용을 입력하세요..."></textarea>
+          </div>
+          <div class="kg_pay_btn">
+            <button id="checkout-btn" class="btn btn-primary mt-3" >계산하기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Footer-->
+<footer class="py-5 bg-dark">
+  <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
+</footer>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const posts = document.querySelectorAll('.post-item');
+    const cartItems = document.getElementById('cart-items');
+    const totalPriceElem = document.getElementById('total-price');
+    let totalPrice = 0;
+
+    // Filter functionality
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+
+        posts.forEach(post => {
+          const category = post.getAttribute('data-category');
+
+          if (filter === 'all' || category === filter) {
+            post.style.display = 'block';
+          } else {
+            post.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+    addToCartButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const name = button.getAttribute('data-name');
+        const price = parseInt(button.getAttribute('data-price'), 10);
+        const num = parseInt(button.getAttribute('data-num'), 10);
+        let cartItem = document.querySelector(`li[data-name="${name}"]`);
+
+        if (cartItem) {
+          const quantityElem = cartItem.querySelector('.quantity-input');
+          quantityElem.value = parseInt(quantityElem.value, 10) + 1;
+          updateCartItem(cartItem, price);
+          return;
+        } else {
+          cartItem = document.createElement('li');
+          cartItem.setAttribute('data-name', name);
+          cartItem.setAttribute('data-num', num);
+          cartItem.innerHTML = `
+            ${name} - <span class="price">${price}</span> 원
+            <input type="number" class="quantity-input" value="1" min="1" style="width: 50px; margin-left: 10px;"/>
+            <button class="remove-item btn btn-danger btn-sm">삭제</button>
+          `;
+          cartItems.appendChild(cartItem);
+          cartItem.querySelector('.quantity-input').addEventListener('input', (event) => {
+            updateCartItem(cartItem, price);
+          });
+          cartItem.querySelector('.remove-item').addEventListener('click', () => {
+            const quantity = parseInt(cartItem.querySelector('.quantity-input').value, 10);
+            const itemPrice = parseInt(cartItem.querySelector('.price').textContent, 10) / quantity;
+            totalPrice -= itemPrice * quantity;
+            totalPriceElem.textContent = totalPrice;
+            cartItem.remove();
+          });
+        }
+
+        // Update total price
+        totalPrice += price;
+        totalPriceElem.textContent = totalPrice;
+      });
+    });
+
+    const updateCartItem = (cartItem, unitPrice) => {
+      const quantity = parseInt(cartItem.querySelector('.quantity-input').value, 10);
+      const priceElem = cartItem.querySelector('.price');
+      const newPrice = unitPrice * quantity;
+      priceElem.textContent = `${newPrice} `;
+      updateTotalPrice();
+    };
+
+ const updateTotalPrice = () => {
+      const prices = document.querySelectorAll('.price');
+      totalPrice = Array.from(prices).reduce((total, priceElem) => {
+        return total + parseInt(priceElem.textContent, 10);
+      }, 0);
+      totalPriceElem.textContent = totalPrice;
+    };
+
+    document.getElementById('checkout-btn').addEventListener('click', requestPay);
+
+    function requestPay() {
+      IMP.init("imp24061400");
+      IMP.request_pay({
+        pg: "html5_inicis",
+        pay_method: "card",
+        merchant_uid: createOrderNum(),
+        name: "테스트",
+        amount: 100,
+        buyer_email: "aaa@naver.com",
+        buyer_name: "홍길동",
+      }, function (rsp) {
+        if (rsp.success) {
+          // 결제 성공 시 실행되는 코드
+          const orders = [];
+          const cartItems = document.querySelectorAll('#cart-items li');
+
+          cartItems.forEach(item => {
+            const foodNum = item.getAttribute('data-foodNum=${food.food_num}');
+            const orderCount = parseInt(item.querySelector('.quantity-input').value, 10);
+            orders.push({ food_num: foodNum, order_count: orderCount });
+          });
+
+          var totalPrice = document.getElementById("total-price").textContent;
+           var userWish = $('#user-wish').val();
+
+
+          var data = {
+            total_price: totalPrice,
+            method: "card",
+            pay_req: userWish,
+            pay_div: 0,
+            pay_state: 0,
+            orders: orders
+          };
+
+          $.ajax({
+            url: '/payment/process',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(data),
+            success: function (response) {
+              alert("주문이 완료되었습니다.");
+              // 장바구니 초기화
+              cartItems.forEach(item => item.remove());
+              totalPriceElem.textContent = '0';
+              $('#user-wish').val('');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.error('Error: ' + textStatus, errorThrown);
+            }
+          });
+        } else {
+          // 결제 실패 시 실행되는 코드
+          const orders = [];
+          const cartItems = document.querySelectorAll('#cart-items li');
+
+          cartItems.forEach(item => {
+            const foodNum = item.getAttribute('data-num');
+            const orderCount = parseInt(item.querySelector('.quantity-input').value, 10);
+            orders.push({ food_num: foodNum, order_count: orderCount });
+          });
+
+          var totalPrice = document.getElementById("total-price").textContent;
+           var userWish = $('#user-wish').val();
+
+
+          var data = {
+            total_price: totalPrice,
+            method: "card",
+            pay_req: userWish,
+            pay_div: 0,
+            pay_state: 0,
+            orders: orders
+          };
+
+          $.ajax({
+            url: '/payment/process',
+            type: 'POST',
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify(data),
+            success: function (response) {
+              alert("주문이 완료되었습니다.");
+              // 장바구니 초기화
+              cartItems.forEach(item => item.remove());
+              totalPriceElem.textContent = '0';
+              $('#user-wish').val('');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+              console.error('Error: ' + textStatus, errorThrown);
+            }
+          });
+          alert("결제 실패\n" + rsp.error_msg);
+        }
+      });
+    }
+
+
+    //주문번호 만들기
+    function createOrderNum() {
+      const date = new Date();
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      let orderNum = year + month + day;
+      for (let i = 0; i < 10; i++) {
+        orderNum += Math.floor(Math.random() * 8);
+      }
+      return orderNum;
+    }
+
+  });
+</script>
+</body>
+</html>

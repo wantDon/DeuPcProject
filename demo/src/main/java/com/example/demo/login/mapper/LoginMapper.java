@@ -9,11 +9,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LoginMapper {
 
-    LoginDTO login(String id, String pwd);
+    LoginDTO login(String id);
     
     LoginDTO nlogin(String id);
     
-    LoginDTO alogin(String id, String pwd);
+    LoginDTO alogin(String id);
 
     public void movePC(String id, String pwd);
     

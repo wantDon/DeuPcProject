@@ -40,7 +40,6 @@ public class LoginController {
             r.addFlashAttribute("error", "아이디 또는 비번호를 확인해주세요.");
             return "redirect:/pc/alogin";
         } else {
-            session.setAttribute("loginId", loginDTO.getId());
         	System.out.println("관리자 로그인");
             return "redirect:/pc/admin";
         }

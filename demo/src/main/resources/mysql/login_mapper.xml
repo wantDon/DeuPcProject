@@ -5,8 +5,8 @@
 <mapper namespace="com.example.demo.login.mapper.LoginMapper">
     <select id="login" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
         <![CDATA[
-			select id, time from user
-			where id = #{id} and pwd = #{pwd};
+			select id, pwd, time from user
+			where id = #{id};
 		]]>
     </select>
     
@@ -19,8 +19,8 @@
     
     <select id="alogin" resultType="com.example.demo.login.dto.LoginDTO" parameterType="String">
         <![CDATA[
-			select id from user
-			where id = #{id} and pwd = #{pwd} and grade = '0';
+			select * from user
+			where id = #{id} and grade = '0';
 		]]>
     </select>
     
