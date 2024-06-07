@@ -67,11 +67,11 @@ public class LoginController {
         	return "잔여시간이 없습니다. 시간 충전 후 다시 로그인 해주세요.";
         } else {
         	String id = loginDTO.getId();
+        	int check = loginService.moveCheck(id);
         	int time = loginDTO.getTime();
         	
         	session.setAttribute("time", time);
         	
-        	loginService.useStart(id, pcnum);
             session.setAttribute("loginId", id);
             
             LocalDateTime loginTime = LocalDateTime.now();
@@ -82,8 +82,21 @@ public class LoginController {
             String formattedLoginTime = loginTime.format(formatter);
             String formattedLoginTime2 = loginTime.format(formatter2);
             
+        	if (check != 0) {
+        		loginService.moveUse(id, pcnum);
+        		String usetime = loginService.getMovetime(id);
+        		LocalDateTime useTime = LocalDateTime.parse(usetime, formatter2);
+                session.setAttribute("loginTime", useTime);
+	            String formattedLoginTime3 = useTime.format(formatter2);
+	            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime3 + "/" + time);
+        		return "success";
+        	}
+            
             messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime2 + "/" + time);
         	System.out.println("[" + formattedLoginTime + "] " + id + " " +  pcnum + "번 PC 사용 시작");
+        	
+        	loginService.useStart(id, pcnum);
+        	
             //return "redirect:/pc";
         	return "success";
         }
@@ -113,10 +126,10 @@ public class LoginController {
         	if (loginDTO.getPwd().equals(pcnum) || loginDTO.getPwd().equals("자리이동")) {
         		String id = "비회원-" + loginDTO.getId();
             	int time = loginDTO.getTime();
+            	int check = loginService.moveCheck(id);
         		
             	session.setAttribute("time", time);
             	
-            	loginService.useStart(id, pcnum);
 	            session.setAttribute("loginId", id);
 	            
 	            LocalDateTime loginTime = LocalDateTime.now();
@@ -131,9 +144,23 @@ public class LoginController {
 	            	loginDTO.setPwd(pcnum);
 	            	loginService.movePC(id, loginDTO.getPwd());
 	            }
-	            
+	        	
+	        	if (check != 0) {
+	        		loginService.moveUse(id, pcnum);
+	        		String usetime = loginService.getMovetime(id);
+	        		LocalDateTime useTime = LocalDateTime.parse(usetime, formatter2);
+	                session.setAttribute("loginTime", useTime);
+		            String formattedLoginTime3 = useTime.format(formatter2);
+		            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime3 + "/" + time);
+	        		
+	        		return "redirect:pc";
+	        	}
+	        	
 	            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime2 + "/" + time);
 	        	System.out.println("[" + formattedLoginTime + "] " + id + " " + pcnum + "번 PC에 접속 성공");
+	        	
+            	loginService.useStart(id, pcnum);
+	        	
 	            return "redirect:pc";
         	} else {
 	        	System.out.println("비회원-" + loginDTO.getId() + " 접속 실패");
@@ -141,6 +168,20 @@ public class LoginController {
                 return "redirect:nlogin";
         	}
         }
+    }
+    
+    @GetMapping(value="/pc/seat")
+    public String moveSeat(HttpSession session) {
+    	String id = (String)session.getAttribute("loginId");
+    	String pcnum = (String)session.getAttribute("pcnum");
+    	if (id.contains("비회원-")) {
+        	loginService.movePC(id, "자리이동");
+    	}
+    	loginService.moveUser(id);
+		session.invalidate();
+    	messagingTemplate.convertAndSend("/topic/login", "logout/" + id + "/" + pcnum);
+    	
+    	return "redirect:/pc/smain";
     }
 
     @GetMapping(value="/pc/nlogin")

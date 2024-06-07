@@ -146,9 +146,31 @@ $(document).ready(function() {
 				var time = message.body.split("/")[2];
 				var start = "시작 시간 : " + formatStartTime(time.split(" ")[1]);
 				
-				document.getElementById("spc" + pc).innerHTML = "<br>" + id + "<br>00 : 00<br>" + start;
 				document.getElementById("dpc-" + pc).style.display = "block";
+				
+				time = new Date(time);
+				currentTime = new Date();
+				timeDifference = currentTime - time;
+				
+				seconds = Math.floor((timeDifference / 1000) % 60);
+				var minutes = Math.floor((timeDifference / 1000 / 60) % 60);
+				var hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+				var days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+				
+				if (minutes < 10) minutes = '0' + minutes;
+				if (hours < 10) hours = '0' + hours;
+				if (days < 10) days = '0' + days;
+				
+				var times = "";
+				
+				if (days >= 1) times = days +  " : " + hours + " : " + minutes;
+				else times = hours + " : " + minutes;
+				
+				document.getElementById("spc" + pc).innerHTML = "<br>" + id + "<br>" + times + "<br>" + start;
+				
+				var time = message.body.split("/")[2];
 				time = time.replace(" ", "T");
+				
 				timer(id, pc, time);
 				use += 1;
 			}

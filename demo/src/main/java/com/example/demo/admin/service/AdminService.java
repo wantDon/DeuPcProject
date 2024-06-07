@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 import com.example.demo.admin.dto.LoginTimeDTO;
 import com.example.demo.admin.dto.MemberDTO;
+import com.example.demo.admin.dto.UserOrdersDTO;
 
 public interface AdminService {
 	
@@ -25,5 +26,9 @@ public interface AdminService {
 	public void resignUser(String id);
 	
 	public void updateGrade(String id, int grade);
+	
+	public Vector<UserOrdersDTO> getOrderList();
+	
+	public void updateUserOrder(int pay_num);
 	
 }

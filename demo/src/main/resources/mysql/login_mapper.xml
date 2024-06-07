@@ -49,4 +49,28 @@
 			where id = #{id};
 		]]>
 	</update>
+	
+	<update id="moveUser" parameterType="String">
+		<![CDATA[
+			update `use` set use_seat = '자리이동' where id = #{id} and use_time is null;
+		]]>
+	</update>
+	
+	<update id="moveUse" parameterType="map">
+		<![CDATA[
+			update `use` set use_seat = #{pcnum} where id = #{id} and use_time is null;
+		]]>
+	</update>
+	
+	<select id="moveCheck" parameterType="String" resultType="Integer">
+		<![CDATA[
+			select count(*) from `use` where id = #{id} and use_time is null;
+		]]>
+	</select>
+	
+	<select id="getMovetime" parameterType="String" resultType="String">
+		<![CDATA[
+			select use_start from `use` where id = #{id} and use_time is null;
+		]]>
+	</select>
 </mapper>

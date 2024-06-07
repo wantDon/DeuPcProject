@@ -38,4 +38,31 @@
 			update user set grade = #{grade} where id = #{id};
 		]]>
 	</update>
+	
+	<select id="getOrderList" resultType="com.example.demo.admin.dto.UserOrdersDTO">
+		<![CDATA[
+			SELECT
+				`order`.pay_num,
+				pay.total_price,
+				pay.pay_date,
+				pay.pay_req,
+				pay.pay_state,
+				pay.id,
+				`order`.food_num,
+				`order`.order_count,
+				food.food_name,
+				pay.pcnum
+			FROM `order`
+				LEFT OUTER JOIN payment pay ON pay.pay_num = `order`.pay_num
+					LEFT OUTER JOIN food ON food.food_num = `order`.food_num
+			where pay.pay_state = 0
+			order by `order`.order_num desc;
+		]]>
+	</select>
+	
+	<update id="updateUserOrder" parameterType="Integer">
+		<![CDATA[
+			update payment set pay_state = 2 where pay_num = #{pay_num};
+		]]>
+	</update>
 </mapper>
