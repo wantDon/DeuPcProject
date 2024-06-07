@@ -10,21 +10,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import jakarta.servlet.http.HttpSession;
 import com.example.demo.signin.dto.SigninDTO;
 import com.example.demo.signin.service.SigninServiceImple;
 
-import jakarta.servlet.http.HttpSession;
-
 @Controller
-@RequestMapping(value="/pc")
+@RequestMapping(value = "pc")
 public class SigninController {
-	
-	private SigninServiceImple signinService;
-	public SigninController(SigninServiceImple signinService) {
-		this.signinService = signinService;
-	}
-	
+
     @GetMapping(value = "/signin")
     public String selectDay(Model model) {
         List<String> days = IntStream.rangeClosed(1, 31)
@@ -40,15 +35,28 @@ public class SigninController {
         model.addAttribute("emailDomains",emailDomains);
         return "signin/signin";
     }
+    private SigninServiceImple signinService;
+    
+	public SigninController(SigninServiceImple signinService) {
+		this.signinService = signinService;
+	}
+	
 	
     @PostMapping(value="/signin")
-    public String signin(SigninDTO signinDTO, HttpSession session) {
-    	String check = (String) session.getAttribute("idcheck");
+    public String signin(SigninDTO signinDTO, HttpSession session, RedirectAttributes r) {
+    	String idCheck = (String) session.getAttribute("idcheck");
+    	boolean signin = signinService.Signin(signinDTO);
     	
-    	if (check == null || check.equals("no")) {
-    		System.out.println("s");
+    	if(!signin) {
+    		r.addFlashAttribute("messageType", "error");
+    		r.addFlashAttribute("message", "회원가입에 실패하였습니다.");
+    		return "redirect:/pc/signin";
     	}
+    	
+    	r.addFlashAttribute("messageType", "success");
+    	r.addFlashAttribute("message", "회원가입에 성공하였습니다.");
     	return "redirect:/pc/signin";
     }
-	
+   
+ 
 }

@@ -5,10 +5,16 @@ import com.example.demo.login.mapper.LoginMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LoginServiceImple implements LoginService {
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
     private LoginMapper loginMapper;
 
@@ -18,7 +24,15 @@ public class LoginServiceImple implements LoginService {
 
     @Override
     public LoginDTO login(String id, String pwd) {
-        return loginMapper.login(id, pwd);
+    	LoginDTO dto = loginMapper.login(id);
+    	
+    	if (dto == null) return null;
+    	
+    	if (passwordEncoder.matches(pwd, dto.getPwd())) {
+    		return dto;
+    	} else {
+    		return null;
+    	}
     }
     
     @Override
@@ -30,8 +44,15 @@ public class LoginServiceImple implements LoginService {
     
     @Override
     public boolean alogin(String id, String pwd) {
-        LoginDTO loginDTO = loginMapper.alogin(id, pwd);
-        return loginDTO != null;
+    	LoginDTO dto = loginMapper.alogin(id);
+    	
+    	if (dto == null) return false;
+    	
+    	if (passwordEncoder.matches(pwd, dto.getPwd())) {
+    		return true;
+    	} else {
+    		return false;
+    	}
     }
     
     @Override

@@ -1,7 +1,5 @@
 package com.example.demo.login.service;
 
-import java.util.List;
-
 import com.example.demo.login.dto.LoginDTO;
 
 public interface LoginService {

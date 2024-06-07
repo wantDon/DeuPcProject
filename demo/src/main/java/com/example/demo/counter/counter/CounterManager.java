@@ -69,7 +69,6 @@ public class CounterManager {
             }
         }
 
-        System.out.println(insertUserDTO.getId());
         return insertUserDTO;
     }
 
