@@ -20,7 +20,7 @@
     <update id="updateUser" parameterType="com.example.demo.counter.DTO.UserDTO">
         <![CDATA[
 			update user
-			set name = #{name}, email = #{email}, birth = #{birth}, phone = #{phone}, grade = #{grade}, time = #{time}
+			set name = #{name},pwd = #{pwd}, email = #{email}, birth = #{birth}, phone = #{phone}, grade = #{grade}, time = #{time}
 			where id = #{id};
 		]]>
     </update>

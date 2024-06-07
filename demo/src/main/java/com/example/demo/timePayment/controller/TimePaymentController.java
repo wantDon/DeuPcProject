@@ -86,7 +86,7 @@ public class TimePaymentController {
             newPaymentDTO.setPay_price(Integer.parseInt(price));
             newPaymentDTO.setMethod("결제방법");
             newPaymentDTO.setPay_date(LocalDateTime.now());
-            newPaymentDTO.setPay_div(0);
+            newPaymentDTO.setPay_div(1);
             newPaymentDTO.setPay_state(0);
             newPaymentDTO.setId(userId);
 
@@ -101,7 +101,7 @@ public class TimePaymentController {
 
 
             newPaymentDTO.setPay_price(Integer.parseInt(price));
-            newPaymentDTO.setMethod("결제방법");
+            newPaymentDTO.setMethod("card");
             newPaymentDTO.setPay_date(LocalDateTime.now());
             newPaymentDTO.setPay_div(0);
             newPaymentDTO.setPay_state(0);
@@ -109,9 +109,21 @@ public class TimePaymentController {
 
             counterManager.addUserTime(newUserDTO.getId(), times);//시간충전
             counterManager.insertPayment(newPaymentDTO);//결제기록 insert
+            //counterManager.addUserPws_pcnum(newUserDTO, (String) session.getAttribute("pcnum"));//신규유저의 pwd 자리번호입력
+            counterManager.addUserPws_pcnum(newUserDTO, "테스트용pcnum");
+            session.setAttribute("loginId", newUserDTO.getId());//비회원 로그인
 
+            String originalString = newUserDTO.getId();
+            String prefixToRemove = "비회원-";
+            String modifiedString = originalString.substring(prefixToRemove.length());
+
+            model.addAttribute("id", modifiedString);
+            model.addAttribute("time", times);
+            model.addAttribute("price", price);
+
+            return "timePayment/nonUserIdPrint";
         }
-        return "/pc/smain";
+
     }
 
 }

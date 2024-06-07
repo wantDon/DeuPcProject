@@ -41,70 +41,81 @@
 </div>
 <!--중앙 컨텐츠-->
 <div class="text-center" style="margin-left: 50px;margin-right: 50px;margin-top: 50px;">
-    <div class="mx-auto p-2 row justify-content-center grid gap-3">
-        <!--좌측 컨텐츠-->
-        <div class="card col" style="width: 18rem;min-height: 600px;max-width: 600px;">
-            <div class="card-body" style="max-height: 100px;">
-                <h5 class="card-title">요금제 선택</h5>
-                <p class="card-text">구매하실 요금을 선택해 주세요</p>
-            </div>
-            <ul class="list-group list-group-flush">
-            </ul>
-            <div class="card-body">
-                <div class="container text-center justify-content-center">
-                    <div class="grid gap-3 row row-cols-3">
+    <div>
+        <div style="display: flex; justify-content: flex-start; padding:10px;">
+            <button id="backToPage" class="btn btn-primary" type="submit" style="max-width:100px;">전 페이지
+            </button>
+        </div>
+        <div>
+            <div class="mx-auto p-2 row justify-content-center grid gap-3">
+                <!--좌측 컨텐츠-->
+                <div class="card col" style="width: 18rem;min-height: 600px;max-width: 600px;">
+                    <div class="card-body" style="max-height: 100px;">
+                        <h5 class="card-title">요금제 선택</h5>
+                        <p class="card-text">구매하실 요금을 선택해 주세요</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                    </ul>
+                    <div class="card-body">
+                        <div class="container text-center justify-content-center">
+                            <div class="grid gap-3 row row-cols-3">
 
-                        <!-- 반복되는 timeItem1 카드들 -->
-                        <div th:each="time : ${times}" th:id="'timeItem-' + ${time.time_num}" class="card col"
-                             th:style="'width: 10rem;'" th:data-time="${time.time_use}"
-                             th:data-price="${time.time_price}">
-                            <div class="card-body">
-                                <h5 th:id="'itemName-' + ${time.time_num}" class="card-title"
-                                    th:data-time="${time.time_use}"
-                                    th:text="${time.time_use} + '분'"></h5>
-                                <h6 th:id="'itemPrice-' + ${time.time_num}"
-                                    class="card-subtitle mb-2 text-body-secondary"
-                                    th:data-Price="${time.time_price}"
-                                    th:text="${time.time_price} + ' 원'"></h6>
-                                <button th:id="'addItemInBucket-' + ${time.time_num}" class="btn btn-primary"
-                                        type="submit">추가하기
+                                <!-- 반복되는 timeItem1 카드들 -->
+                                <div th:each="time : ${times}" th:id="'timeItem-' + ${time.time_num}" class="card col"
+                                     th:style="'width: 10rem;'" th:data-time="${time.time_use}"
+                                     th:data-price="${time.time_price}">
+                                    <div class="card-body">
+                                        <h5 th:id="'itemName-' + ${time.time_num}" class="card-title"
+                                            th:data-time="${time.time_use}"
+                                            th:text="${time.time_use} + '분'"></h5>
+                                        <h6 th:id="'itemPrice-' + ${time.time_num}"
+                                            class="card-subtitle mb-2 text-body-secondary"
+                                            th:data-price="${time.time_price}"
+                                            th:text="${time.time_price} + ' 원'"></h6>
+                                        <button th:id="'addItemInBucket-' + ${time.time_num}" class="btn btn-primary"
+                                                type="submit">추가하기
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- 반복 끝 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--우측 컨텐츠-->
+                <div class="card col" style="width: 18rem;min-height: 600px;max-width: 500px;">
+                    <div class="card-body" style="max-height: 100px;">
+                        <h5 class="card-title">결제 정보 확인</h5>
+                        <p class="card-text">구매하실 요금을 선택해 주세요</p>
+                    </div>
+                    <ul class="list-group list-group-flush"></ul>
+                    <div class="card-body">
+                        <div style="margin: 1px ;"></div>
+                        <!--구매 목록 리스트-->
+                        <ul id="buyItemList" class="list-group"></ul>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li id="allPrice" class="list-group-item">합계 금액 0원</li>
+                        <li id="allTime" class="list-group-item">충전 시간 0시간 0분</li>
+                    </ul>
+                    <div style="padding: 5px;">
+                        <div class="container text-center">
+                            <div class="grid gap-3 row  justify-content-center">
+                                <button id="buyButton" class="btn btn-primary" type="submit" onclick="requestPay()"
+                                        style="max-width:100px;">구매하기
+                                </button>
+                                <button id="cancleButton" class="btn btn-primary" type="submit"
+                                        style="max-width:100px;">취소
                                 </button>
                             </div>
                         </div>
-                        <!-- 반복 끝 -->
                     </div>
                 </div>
             </div>
         </div>
-        <!--우측 컨텐츠-->
-        <div class="card col" style="width: 18rem;min-height: 600px;max-width: 500px;">
-            <div class="card-body" style="max-height: 100px;">
-                <h5 class="card-title">결제 정보 확인</h5>
-                <p class="card-text">구매하실 요금을 선택해 주세요</p>
-            </div>
-            <ul class="list-group list-group-flush"></ul>
-            <div class="card-body">
-                <div style="margin: 1px ;"></div>
-                <!--구매 목록 리스트-->
-                <ul id="buyItemList" class="list-group"></ul>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li id="allPrice" class="list-group-item">합계 금액 0원</li>
-                <li id="allTime" class="list-group-item">충전 시간 0시간 0분</li>
-            </ul>
-            <div style="padding: 5px;">
-                <div class="container text-center">
-                    <div class="grid gap-3 row  justify-content-center">
-                        <button id="buyButton" class="btn btn-primary" type="submit" onclick="requestPay()"
-                                style="max-width:100px;">구매하기
-                        </button>
-                        <button id="cancleButton" class="btn btn-primary" type="submit" style="max-width:100px;">취소
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
+
 </div>
 
 <!-- Bootstrap core JS-->

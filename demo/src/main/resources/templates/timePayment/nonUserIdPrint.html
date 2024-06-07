@@ -19,15 +19,20 @@
 </div>
 <div class="nld1">
     <div class="nld2 w-75">
-        <span class="login-logo">충전하기</span><br>
-        <span class="do-hyeon-regular">충전을 위해 회원님의 id를 입력해 주세요</span>
+        <span class="login-logo">충전완료</span><br>
+        <span class="do-hyeon-regular">충전이 완료되었습니다.</span>
     </div>
     <div class="nld3 mt-4">
         <div class="nld4 w-75">
             <form id="loginFrm" name="loginFrm" method="POST" th:action="@{/timePayment/paymentMain_User}">
-                <input class="form-control mb-3 mt-5" name="id" type="text" placeholder="아이디" required>
-                <p>
-                    <button type="submit" class="login mt-2">로그인</button>
+                <input style="margin:10px;" class="form-control" type="text" th:placeholder="${'아이디 : ' + id}"
+                       required disabled>
+                <input style="margin:10px;" class="form-control" type="text"
+                       th:placeholder="${'시간 : ' + time +'분'}"
+                       required disabled>
+                <input style="margin:10px;" class="form-control" type="text"
+                       th:placeholder="${'가격 : ' + price}"
+                       required disabled>
             </form>
             <div class="nld5" th:if="${error}" th:text="${error}"></div>
         </div>

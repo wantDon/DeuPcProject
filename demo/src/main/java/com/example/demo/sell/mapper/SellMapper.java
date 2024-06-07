@@ -21,4 +21,11 @@ public interface SellMapper {
     List<SellDTO> getFilteredSellBySearch(@Param("searchTerm") String searchTerm, @Param("offset") int offset, @Param("pageSize") int pageSize);
 
     int getTotalFilteredSellCountBySearch(@Param("searchTerm") String searchTerm);
+
+    // 전체 상품 목록과 각 상품의 판매 내역을 가져오는 쿼리
+    List<SellDTO> getAllProductsAndSales(@Param("offset") int offset, @Param("pageSize") int pageSize);
+    
+    int getTotalProductsCount();
+
+	int getTotalSellsCount();
 }

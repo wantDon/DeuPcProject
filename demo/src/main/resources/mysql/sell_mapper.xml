@@ -59,7 +59,7 @@
     </select>
     
     <select id="getTotalFilteredSellCountBySearch" resultType="int">
-        SELECT COUNT(*)
+	    SELECT COUNT(*)
         FROM payment p
         JOIN `order` o ON p.pay_num = o.order_num
         JOIN food f ON o.food_num = f.food_num
@@ -68,6 +68,30 @@
         WHERE (f.food_name LIKE CONCAT('%', #{searchTerm}, '%') OR
                c.cate_name LIKE CONCAT('%', #{searchTerm}, '%') OR
                u.id LIKE CONCAT('%', #{searchTerm}, '%'))
-    </select>
+	</select>
 
+	<!-- 전체 상품 목록과 각 상품의 판매 내역을 가져오는 쿼리 -->
+	<select id="getAllProductsAndSales" resultType="com.example.demo.sell.dto.SellDTO">
+	    SELECT f.food_num, c.cate_name, f.food_name, 
+		       SUM(o.order_count) AS total_order_count, 
+		       f.food_price, 
+		       SUM(p.total_price) AS total_price, 
+		       p.method
+		FROM food f
+		JOIN category c ON f.cate_name = c.cate_name
+		LEFT JOIN `order` o ON f.food_num = o.food_num
+		LEFT JOIN payment p ON o.order_num = p.pay_num
+		GROUP BY f.food_num, c.cate_name, f.food_name, f.food_price, p.method
+		ORDER BY f.food_num
+		LIMIT #{offset}, #{pageSize}
+
+	</select>
+	
+	<select id="getTotalProductsCount" resultType="int">
+	    SELECT COUNT(*) FROM food
+	</select>
+    
+    <select id="getTotalSellsCount" resultType="int">
+	    SELECT COUNT(*) FROM payment
+	</select>
 </mapper>
