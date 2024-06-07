@@ -1,4 +1,30 @@
 document.addEventListener("DOMContentLoaded", function() {
+// 모든 카드 타이틀 요소 선택
+            var cardTitles = document.querySelectorAll('.card-title');
+
+            cardTitles.forEach(function(cardTitle) {
+                // 현재 카드 타이틀의 텍스트 값을 가져옴
+                var text = cardTitle.textContent;
+
+                // 텍스트에서 분 부분을 숫자로 추출
+                var minutes = parseInt(text);
+
+                if (!isNaN(minutes)) {
+                    // 시간과 분 계산
+                    var hours = Math.floor(minutes / 60);
+                    var remainingMinutes = minutes % 60;
+
+                    // 새로운 텍스트 생성
+                    var newText = "";
+                    if (hours > 0) {
+                        newText += hours + "시간 ";
+                    }
+                    newText += remainingMinutes + "분";
+
+                    // 카드 타이틀의 텍스트 값을 새로운 텍스트로 설정
+                    cardTitle.textContent = newText;
+                }
+            });
     // 추가 버튼에 대한 클릭 이벤트 처리
     document.querySelectorAll('[id^="addItemInBucket-"]').forEach(addButton => {
         addButton.addEventListener("click", function() {
@@ -46,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     updateTotalTime();
                 });
             }
+            //======================
+
 
             // Update total price and time
             updateTotalPrice();
@@ -54,6 +82,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     });
 
+    document.getElementById('backToPage').addEventListener('click', function() {
+        window.location.href = '/pc/member';
+    });
     // 결제 정보 확인 버튼 클릭 이벤트 처리======================================================
     function requestPay() {
         // 필요한 정보를 찾는다.
@@ -82,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function() {
           pay_method: "card",
           merchant_uid: createOrderNum(), //주문번호 생성(하단)
           name: "시간 충전", // 주문명 (예: "90분 충전")
-          amount: price, // 가격 (예: 1000)
+          amount: 100, // 가격 (예: 1000)
           buyer_email: "aaa@naver.com", //메일
           buyer_name: user.dataset.userId, //사용자 id 입력
           buyer_tel: "01001000100 ", //전화번호
@@ -97,6 +128,10 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = successUrl; // 생성된 URL로 이동
           } else { //결제 실패
              alert("결재 실패\n" + rsp.error_msg);
+            alert('결제가 성공적으로 완료되었습니다.');
+            var successUrl = '/timePayment/paymentMain/payItem?price=' + encodeURIComponent(price) + '&times=' + encodeURIComponent(totalTime) + '&userId='+encodeURIComponent(user.dataset.id);
+            console.log(user.dataset.id +"asdf");
+            window.location.href = successUrl; // 생성된 URL로 이동
           }
        });
        console.log(IMP.request_pay.merchant_uid);

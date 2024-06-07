@@ -62,6 +62,8 @@ public class CounterManager {
                 // 사용자가 존재하지 않으면 해당 코드 반환+insert시키기
 
                 insertUserDTO.setId(nonMemberCode);
+
+                insertUserDTO.setGrade(1);
                 testMapper.insertUser(insertUserDTO);
                 break;
             }
@@ -70,6 +72,14 @@ public class CounterManager {
         System.out.println(insertUserDTO.getId());
         return insertUserDTO;
     }
+
+    public void addUserPws_pcnum(UserDTO userDTO, String pcnum) {
+        //신규 유저를 아이디 기반으로 찾은뒤에 값을 변경하고 insert 시켜준다.
+        UserDTO userDTO1 = testMapper.selectUser(userDTO.getId());//유저 db탐색
+        userDTO1.setPwd(pcnum);
+        testMapper.updateUser(userDTO1);
+    }
+
 
     //요금표 관리 메소드=============================================================
     public List<TimeDTO> selectAllTime() {
