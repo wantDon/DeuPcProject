@@ -23,33 +23,37 @@ public class SellController {
         this.sellService = sellService;
     }
     
-    // 판매 내역 페이지 요청 처리
+    // 판매 현황 페이지 요청 처리
     @RequestMapping(value={"", "*"})
     public String sell(Model model, 
                        @RequestParam(defaultValue = "1") int page, 
                        @RequestParam(defaultValue = "") String sword) {
         int pageSize = 10;
-        int totalSells;
+        int totalProducts;
         List<SellDTO> sellList;
 
         if (sword.isEmpty()) {
-            totalSells = sellService.getTotalSellCount();
+        	totalProducts = sellService.getTotalSellCount();
             sellList = sellService.getListSellByPage(page, pageSize);
         } else {
-            totalSells = sellService.getTotalFilteredSellCountBySearch(sword);
+        	totalProducts = sellService.getTotalFilteredSellCountBySearch(sword);
             sellList = sellService.getListSellBySearch(sword, page, pageSize);
         }
 
-        int totalPages = (int) Math.ceil((double) totalSells / pageSize);
-
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        
         model.addAttribute("sellList", sellList);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("sword", sword);
         model.addAttribute("pageName", "판매 현황");
+        
+        List<SellDTO> allProductsAndSales = sellService.getAllProductsAndSales(page, pageSize);
+        model.addAttribute("allProductsAndSales", allProductsAndSales);
 
         return "sell/sell";
     }
+
 
     // 판매 내역 페이지 요청 처리
     @RequestMapping("/sell_search")
@@ -58,15 +62,18 @@ public class SellController {
                              @RequestParam(defaultValue = "") String startDate,
                              @RequestParam(defaultValue = "") String endDate) {
         int pageSize = 10;
-        int totalSells = sellService.getTotalFilteredSellCount(startDate, endDate);
+        int totalSells = sellService.getTotalSellsCount(); // 변경된 부분
         int totalPages = (int) Math.ceil((double) totalSells / pageSize);
 
+        // 페이지가 범위를 벗어나면 첫 페이지로 설정
         if (page < 1 || page > totalPages) {
-            page = 1; // 페이지가 범위를 벗어나면 첫 페이지로 설정
+            page = 1;
         }
 
+        // 필터링된 판매 내역을 가져옴
         List<SellDTO> sellList = sellService.getListFilteredSellByPage(startDate, endDate, page, pageSize);
 
+        // 모델에 필요한 데이터 추가
         model.addAttribute("sellList", sellList);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", totalPages);
@@ -76,6 +83,7 @@ public class SellController {
 
         return "sell/sell_search";
     }
+
 
     // 검색어에 따른 판매 내역 페이지 요청 처리
     @RequestMapping("/search")
@@ -100,6 +108,4 @@ public class SellController {
 
         return "sell/search";
     }
-
-
 }

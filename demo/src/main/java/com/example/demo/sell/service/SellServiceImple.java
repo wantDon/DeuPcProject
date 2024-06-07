@@ -26,7 +26,7 @@ public class SellServiceImple implements SellService {
 	
 	@Override
 	public int getTotalSellCount() {
-        return sellMapper.getTotalSellCount();
+        return sellMapper.getTotalProductsCount();
     }
 
 	@Override
@@ -56,7 +56,7 @@ public class SellServiceImple implements SellService {
 	        return getListSellByPage(page, pageSize);
 	    }
 	}
-
+	
 	// 날짜를 datetime으로 변환하는 메서드
 	private String formatDateToDateTime(String date) {
 	    return date + " 00:00:00"; // 시간 정보를 추가하여 datetime 형식으로 반환
@@ -73,4 +73,19 @@ public class SellServiceImple implements SellService {
     public int getTotalFilteredSellCountBySearch(String searchTerm) {
         return sellMapper.getTotalFilteredSellCountBySearch(searchTerm);
     }
+    
+    // 전체 상품 목록과 각 상품의 판매 내역을 가져오는 메서드 추가
+    @Override
+    public List<SellDTO> getAllProductsAndSales(int page, int pageSize) {
+        int totalProducts = sellMapper.getTotalProductsCount();
+        int offset = (page - 1) * pageSize;
+        int totalPages = (int) Math.ceil((double) totalProducts / pageSize);
+        return sellMapper.getAllProductsAndSales(offset, pageSize);
+    }
+    
+    @Override
+    public int getTotalSellsCount() {
+        return sellMapper.getTotalSellsCount();
+    }
+
 }

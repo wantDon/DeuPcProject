@@ -6,12 +6,15 @@ import java.time.format.DateTimeFormatter;
 public class SellDTO {
 
 	private int pay_num;
+	private int food_num;
 	private LocalDateTime pay_date;
 	private String cate_name;
 	private String food_name;
 	private int order_count;
+	private int total_sales;
 	private int food_price;
 	private int total_price;
+	private int total_order_count;
 	private String id;
 	private String method;
 	private int pay_div;
@@ -23,10 +26,14 @@ public class SellDTO {
 		this.pay_num = pay_num;
 	}
 	// 추가: pay_date를 String으로 변환하는 메서드
-    public String getFormattedPayDate() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        return pay_date.format(formatter);
-    }
+	public String getFormattedPayDate() {
+	    if (pay_date != null) {
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+	        return pay_date.format(formatter);
+	    } else {
+	        return ""; // 또는 다른 기본값을 반환할 수도 있습니다.
+	    }
+	}
 	public void setPay_date(LocalDateTime pay_date) {
 		this.pay_date = pay_date;
 	}
@@ -77,5 +84,23 @@ public class SellDTO {
 	}
 	public void setId(String id) {
 		this.id = id;
+	}
+	public int getFood_num() {
+		return food_num;
+	}
+	public void setFood_num(int food_num) {
+		this.food_num = food_num;
+	}
+	public int getTotal_sales() {
+		return total_sales;
+	}
+	public void setTotal_sales(int total_sales) {
+		this.total_sales = total_sales;
+	}
+	public int getTotal_order_count() {
+		return total_order_count;
+	}
+	public void setTotal_order_count(int total_order_count) {
+		this.total_order_count = total_order_count;
 	}
 }
