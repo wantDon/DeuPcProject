@@ -20,28 +20,28 @@
 					<div class="aorder-d2">
 						<span class="aorder-sp1 do-hyeon-regular">주문 목록</span>
 					</div>
-					<div class="aorder-d3"></div>
+					<div class="aorder-d3"><span class="aorder-sp1">현재 주문이 없습니다.</span></div>
 				</div>
 			<div th:replace="~{layout/right_tab::deupcRight_Tab}"></div>
 			</div>
 			
-			!-- 모달 -->
+			<!-- 모달 -->
 			<div id="orderModal" class="modal fade" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
-			<div class="modal-dialog">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="orderModalLabel">주문 상세 정보</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<p><strong>주문목록:</strong><span id="orderList"></span></p>
-						<p><strong>요청사항:</strong><span id="request"></span></p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="orderModalLabel">주문 상세 정보</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<p><strong>주문목록:</strong><span id="orderList"></span></p>
+							<p><strong>요청사항:</strong><span id="request"></span></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+						</div>
 					</div>
 				</div>
-			</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="/assets/js/admin_order.js"></script>

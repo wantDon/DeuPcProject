@@ -89,6 +89,7 @@ public class LoginController {
                 session.setAttribute("loginTime", useTime);
 	            String formattedLoginTime3 = useTime.format(formatter2);
 	            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime3 + "/" + time);
+	        	System.out.println("[" + formattedLoginTime + "] " + id + " 자리이동, " + pcnum + " 사용 종료");
         		return "success";
         	}
             
@@ -152,6 +153,7 @@ public class LoginController {
 	                session.setAttribute("loginTime", useTime);
 		            String formattedLoginTime3 = useTime.format(formatter2);
 		            messagingTemplate.convertAndSend("/topic/login", id + "/" + pcnum + "/" + formattedLoginTime3 + "/" + time);
+		        	System.out.println("[" + formattedLoginTime + "] " + id + " 자리이동, " + pcnum + " 사용 종료");
 	        		
 	        		return "redirect:pc";
 	        	}

@@ -7,20 +7,20 @@
     <th:block th:fragment="deupcLeft_Tab">
         <div class="left-tab bg-secondary p-0" style="background-color: #9F297D !important; width: 10%; height: 100vh; float: left;">
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group" style="width: 100%;">
-				<button type="button" class="btn btn-secondary" style="background-color: none; color: white; font-size: 18pt; font-weight:bold; height: 80px; display: flex; align-items: center; justify-content: center; margin-top: 20px;"
+				<button type="button" class="btn" style="background-color: none; color: white; font-size: 20pt; font-weight:bold; height: 85px; display: flex; align-items: center; justify-content: center; margin-top: 15px;"
 					th:onclick="location.href = '/pc/admin'">DEU PC</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center; margin-top: 20px;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 135px; display: flex; align-items: center; justify-content: center; margin-top: 15px;"
                     th:onclick="'changeButtonStyle1(this)'">회원관리</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 135px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToFoodPage()">상품관리</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 135px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'">이용요금관리</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 140px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 135px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'">주문현황</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 135px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToSellSearchPage()">판매내역</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 150px; display: flex; align-items: center; justify-content: center;"
-                    th:onclick="'changeButtonStyle1(this)'">매출통계</button>
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 135px; display: flex; align-items: center; justify-content: center;"
+                    th:onclick="'changeButtonStyle1(this)'; navigateToSellPage()">판매통계</button>
             </div>
         </div>
         <script>
@@ -42,6 +42,10 @@
 			
 			function navigateToSellSearchPage() {
 			    window.location.href = '/sell/sell_search'; // 판매 내역 페이지로 이동
+			}
+			
+			function navigateToSellPage() {
+			    window.location.href = '/sell'; // 판매 현황 페이지로 이동
 			}
         </script>
     </th:block>

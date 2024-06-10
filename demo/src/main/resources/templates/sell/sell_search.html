@@ -8,7 +8,7 @@
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div th:replace="layout/left_tab :: deupcLeft_Tab"></div>
+            <div th:replace="~{layout/left_tab :: deupcLeft_Tab}"></div>
             
             <div class="container col-md-10">
                 <div class="container mt-5">
@@ -53,7 +53,7 @@
                         <tbody>
                             <tr th:each="rowData : ${sellList}">
                                 <td th:text="${rowData.pay_num}"></td>
-                                <td th:text="${rowData.formattedPayDate}"></td>
+                                <td th:text="${rowData.pay_date}"></td>
                                 <td th:text="${rowData.cate_name}"></td>
                                 <td th:text="${rowData.food_name}"></td>
                                 <td th:text="${rowData.order_count}"></td>
@@ -90,7 +90,7 @@
 				<!-- 페이징 처리 끝 -->
                 
             </div>
-            <div th:replace="layout/right_tab :: deupcRight_Tab"></div>
+            <div th:replace="~{layout/right_tab :: deupcRight_Tab}"></div>
         </div>
     </div>
     

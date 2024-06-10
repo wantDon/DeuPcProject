@@ -7,7 +7,7 @@ public class SellDTO {
 
 	private int pay_num;
 	private int food_num;
-	private LocalDateTime pay_date;
+	private String pay_date;
 	private String cate_name;
 	private String food_name;
 	private int order_count;
@@ -25,16 +25,10 @@ public class SellDTO {
 	public void setPay_num(int pay_num) {
 		this.pay_num = pay_num;
 	}
-	// 추가: pay_date를 String으로 변환하는 메서드
-	public String getFormattedPayDate() {
-	    if (pay_date != null) {
-	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-	        return pay_date.format(formatter);
-	    } else {
-	        return ""; // 또는 다른 기본값을 반환할 수도 있습니다.
-	    }
+	public String getPay_date() {
+		return pay_date;
 	}
-	public void setPay_date(LocalDateTime pay_date) {
+	public void setPay_date(String pay_date) {
 		this.pay_date = pay_date;
 	}
 	public String getCate_name() {

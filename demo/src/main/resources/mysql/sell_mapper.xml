@@ -10,80 +10,94 @@
     </select>
 	
     <select id="getSellByPage" resultType="com.example.demo.sell.dto.SellDTO">
-        SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
-               f.food_price, p.total_price, u.id, p.method, p.pay_div
-        FROM payment p
-        JOIN `order` o ON p.pay_num = o.order_num
-        JOIN food f ON o.food_num = f.food_num
-        JOIN category c ON f.cate_name = c.cate_name
-        JOIN user u ON p.id = u.id
-        ORDER BY p.pay_date DESC
-        LIMIT #{offset}, #{pageSize}
+		<![CDATA[
+	        SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
+	               f.food_price, p.total_price, u.id, p.method, p.pay_div
+	        FROM payment p
+	        JOIN `order` o ON p.pay_num = o.pay_num
+	        JOIN food f ON o.food_num = f.food_num
+	        JOIN category c ON f.cate_name = c.cate_name
+	        JOIN user u ON p.id = u.id
+	        ORDER BY p.pay_date DESC
+	        LIMIT #{offset}, #{pageSize}
+		]]>
     </select>
     
     <select id="getTotalSellCount" resultType="int">
-        SELECT COUNT(*) FROM payment
+		<![CDATA[
+	        SELECT COUNT(*) FROM payment
+		]]>
     </select>
     
     <select id="getFilteredSellByPage" resultType="com.example.demo.sell.dto.SellDTO">
-	    SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
-	           f.food_price, p.total_price, u.id, p.method, p.pay_div
-	    FROM payment p
-	    JOIN `order` o ON p.pay_num = o.order_num
-	    JOIN food f ON o.food_num = f.food_num
-	    JOIN category c ON f.cate_name = c.cate_name
-	    JOIN user u ON p.id = u.id
-	    WHERE p.pay_date BETWEEN #{startDate} AND #{endDate}
-	    ORDER BY p.pay_date DESC
-	    LIMIT #{offset}, #{pageSize}
+		<![CDATA[
+		    SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
+		           f.food_price, p.total_price, u.id, p.method, p.pay_div
+		    FROM payment p
+		    JOIN `order` o ON p.pay_num = o.order_num
+		    JOIN food f ON o.food_num = f.food_num
+		    JOIN category c ON f.cate_name = c.cate_name
+		    JOIN user u ON p.id = u.id
+		    WHERE p.pay_date BETWEEN #{startDate} AND #{endDate}
+		    ORDER BY p.pay_date DESC
+		    LIMIT #{offset}, #{pageSize}
+		]]>
 	</select>
 	
 	<select id="getTotalFilteredSellCount" resultType="int">
-	    SELECT COUNT(*) FROM payment
-	    WHERE pay_date BETWEEN #{startDate} AND #{endDate}
+		<![CDATA[
+		    SELECT COUNT(*) FROM payment
+		    WHERE pay_date BETWEEN #{startDate} AND #{endDate}
+		]]>
 	</select>
 	
 	<select id="getFilteredSellBySearch" resultType="com.example.demo.sell.dto.SellDTO">
-        SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
-               f.food_price, p.total_price, u.id, p.method, p.pay_div
-        FROM payment p
-        JOIN `order` o ON p.pay_num = o.order_num
-        JOIN food f ON o.food_num = f.food_num
-        JOIN category c ON f.cate_name = c.cate_name
-        JOIN user u ON p.id = u.id
-        WHERE (f.food_name LIKE CONCAT('%', #{searchTerm}, '%') OR
-               c.cate_name LIKE CONCAT('%', #{searchTerm}, '%') OR
-               u.id LIKE CONCAT('%', #{searchTerm}, '%'))
-        ORDER BY p.pay_date DESC
-        LIMIT #{offset}, #{pageSize}
+		<![CDATA[
+	        SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
+	               f.food_price, p.total_price, u.id, p.method, p.pay_div
+	        FROM payment p
+	        JOIN `order` o ON p.pay_num = o.order_num
+	        JOIN food f ON o.food_num = f.food_num
+	        JOIN category c ON f.cate_name = c.cate_name
+	        JOIN user u ON p.id = u.id
+	        WHERE (f.food_name LIKE CONCAT('%', #{searchTerm}, '%') OR
+	               c.cate_name LIKE CONCAT('%', #{searchTerm}, '%') OR
+	               u.id LIKE CONCAT('%', #{searchTerm}, '%'))
+	        ORDER BY p.pay_date DESC
+	        LIMIT #{offset}, #{pageSize}
+		]]>
     </select>
     
     <select id="getTotalFilteredSellCountBySearch" resultType="int">
-	    SELECT COUNT(*)
-        FROM payment p
-        JOIN `order` o ON p.pay_num = o.order_num
-        JOIN food f ON o.food_num = f.food_num
-        JOIN category c ON f.cate_name = c.cate_name
-        JOIN user u ON p.id = u.id
-        WHERE (f.food_name LIKE CONCAT('%', #{searchTerm}, '%') OR
-               c.cate_name LIKE CONCAT('%', #{searchTerm}, '%') OR
-               u.id LIKE CONCAT('%', #{searchTerm}, '%'))
+		<![CDATA[
+		    SELECT COUNT(*)
+	        FROM payment p
+	        JOIN `order` o ON p.pay_num = o.order_num
+	        JOIN food f ON o.food_num = f.food_num
+	        JOIN category c ON f.cate_name = c.cate_name
+	        JOIN user u ON p.id = u.id
+	        WHERE (f.food_name LIKE CONCAT('%', #{searchTerm}, '%') OR
+	               c.cate_name LIKE CONCAT('%', #{searchTerm}, '%') OR
+	               u.id LIKE CONCAT('%', #{searchTerm}, '%'))
+		]]>
 	</select>
 
 	<!-- 전체 상품 목록과 각 상품의 판매 내역을 가져오는 쿼리 -->
 	<select id="getAllProductsAndSales" resultType="com.example.demo.sell.dto.SellDTO">
-	    SELECT f.food_num, c.cate_name, f.food_name, 
-		       SUM(o.order_count) AS total_order_count, 
-		       f.food_price, 
-		       SUM(p.total_price) AS total_price, 
-		       p.method
-		FROM food f
-		JOIN category c ON f.cate_name = c.cate_name
-		LEFT JOIN `order` o ON f.food_num = o.food_num
-		LEFT JOIN payment p ON o.order_num = p.pay_num
-		GROUP BY f.food_num, c.cate_name, f.food_name, f.food_price, p.method
-		ORDER BY f.food_num
-		LIMIT #{offset}, #{pageSize}
+		<![CDATA[
+		    SELECT f.food_num, c.cate_name, f.food_name, 
+			       SUM(o.order_count) AS total_order_count, 
+			       f.food_price, 
+			       SUM(p.total_price) AS total_price, 
+			       p.method
+			FROM food f
+			JOIN category c ON f.cate_name = c.cate_name
+			LEFT JOIN `order` o ON f.food_num = o.food_num
+			LEFT JOIN payment p ON o.order_num = p.pay_num
+			GROUP BY f.food_num, c.cate_name, f.food_name, f.food_price, p.method
+			ORDER BY f.food_num
+			LIMIT #{offset}, #{pageSize}
+		]]>
 
 	</select>
 	
