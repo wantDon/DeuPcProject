@@ -14,16 +14,18 @@
             <div class="btn-group-vertical" role="group" aria-label="Vertical button group" style="width: 100%;">
 				<button type="button" class="btn" style="background-color: none; color: white; font-size: 20pt; font-weight:bold; height: 85px; display: flex; align-items: center; justify-content: center; margin-top: 30px;"
 					th:onclick="location.href = '/pc/admin'">DEU PC</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 155px; display: flex; align-items: center; justify-content: center; margin-top: 30px;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 130px; display: flex; align-items: center; justify-content: center; margin-top: 30px;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToMemberPage();">회원관리</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 155px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 130px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToFoodPage();">상품관리</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 155px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 130px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToTimeManagerPage();">이용요금관리</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 155px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 130px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToSellSearchPage()">판매내역</button>
-                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 155px; display: flex; align-items: center; justify-content: center;"
+                <button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 130px; display: flex; align-items: center; justify-content: center;"
                     th:onclick="'changeButtonStyle1(this)'; navigateToSellPage()">판매통계</button>
+				<button type="button" class="btn btn-secondary" style="background-color: gray; color: white; height: 130px; display: flex; align-items: center; justify-content: center;"
+					th:onclick="'changeButtonStyle1(this)'; navigateToSeatPage()">사용현황</button>
             </div>
         </div>
         <script>
@@ -53,6 +55,10 @@
 			
 			function navigateToSellPage() {
 			    window.location.href = '/sell'; // 판매 현황 페이지로 이동
+			}			
+			
+			function navigateToSeatPage() {
+			    window.location.href = '/pc/admin/seat'; // 판매 현황 페이지로 이동
 			}
 			
 			function navigateToTimeManagerPage() {

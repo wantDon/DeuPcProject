@@ -65,4 +65,10 @@
 			update payment set pay_state = 2 where pay_num = #{pay_num};
 		]]>
 	</update>
+	
+	<select id="getUserHistory" resultType="com.example.demo.admin.dto.UserSeatDTO">
+		<![CDATA[
+			select use_time, use_start, id, use_seat from `use` where use_time is not null order by use_num desc;
+		]]>
+	</select>
 </mapper>

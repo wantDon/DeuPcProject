@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.admin.dto.LoginTimeDTO;
 import com.example.demo.admin.dto.MemberDTO;
 import com.example.demo.admin.dto.UserOrdersDTO;
+import com.example.demo.admin.dto.UserSeatDTO;
 import com.example.demo.admin.mapper.AdminMapper;
 
 @Service
@@ -26,6 +27,13 @@ public class AdminServiceImple implements AdminService {
 	private AdminMapper adminMapper;
 	public AdminServiceImple(AdminMapper adminMapper) {
 		this.adminMapper = adminMapper;
+	}
+	
+	@Override
+	public Vector<UserSeatDTO> getUserHistory() {
+		Vector<UserSeatDTO> vlist = adminMapper.getUserHistory();
+		if (vlist.isEmpty()) return null;
+		return vlist;
 	}
 	
 	@Override

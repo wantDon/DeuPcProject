@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import com.example.demo.admin.dto.LoginTimeDTO;
 import com.example.demo.admin.dto.MemberDTO;
 import com.example.demo.admin.dto.UserOrdersDTO;
+import com.example.demo.admin.dto.UserSeatDTO;
 
 @Mapper
 public interface AdminMapper {
@@ -28,5 +29,7 @@ public interface AdminMapper {
 	public Vector<UserOrdersDTO> getOrderList();
 	
 	public void updateUserOrder(int pay_num);
+	
+	public Vector<UserSeatDTO> getUserHistory();
 	
 }

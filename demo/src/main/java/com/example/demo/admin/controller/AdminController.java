@@ -1,6 +1,8 @@
 package com.example.demo.admin.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.admin.dto.MemberDTO;
 import com.example.demo.admin.dto.UserOrdersDTO;
+import com.example.demo.admin.dto.UserSeatDTO;
 import com.example.demo.admin.service.AdminServiceImple;
 
 import jakarta.servlet.http.HttpSession;
@@ -100,6 +103,26 @@ public class AdminController {
 	@ResponseBody
 	public void UpdateGrade(@PathVariable String id, @PathVariable int grade) {
 		adminService.updateGrade(id, grade);
+	}
+	
+	@GetMapping(value="/seat")
+	public String getUserSeatHistory(@RequestParam(required = false) String id, Model model) {
+		Vector<UserSeatDTO> vlist = adminService.getUserHistory();
+		List<UserSeatDTO> filteredList = new ArrayList<>();
+		
+		if (id == null) {
+			filteredList.addAll(vlist);
+		} else {
+			for (UserSeatDTO userSeat : vlist) {
+				if (userSeat.getId().equals(id)) {
+					filteredList.add(userSeat);
+				}
+			}
+		}
+		
+		model.addAttribute("seatHistory", filteredList);
+		
+		return "/admin/admin_seat";
 	}
 	
 }
