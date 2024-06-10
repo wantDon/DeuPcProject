@@ -28,3 +28,15 @@
 .top-s1 {
 	font-size: 18pt;
 }
+
+.notification {
+	display: none;
+	position: fixed;
+	top: 10px;
+	right: 48%;
+	padding: 15px;
+	background-color: rgba(0, 0, 0, 0.8);
+	color: white;
+	border-radius: 5px;
+	z-index: 1000;
+}
