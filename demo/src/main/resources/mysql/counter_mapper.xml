@@ -31,6 +31,11 @@
             where time_div = 1;
         ]]>
     </select>
+    <select id="selectAllTime" resultType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+            SELECT * from `time`;
+        ]]>
+    </select>
     <select id="selectUserTime" resultType="com.example.demo.counter.DTO.TimeDTO"
             parameterType="com.example.demo.counter.DTO.TimeDTO">
         <![CDATA[
@@ -38,6 +43,25 @@
             where time_div = 0;
         ]]>
     </select>
+    <insert id="insertTime" parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+            INSERT into `time`(time_num,time_div,time_use,time_price)
+            values (#{time_num},#{time_div},#{time_use},#{time_price})
+        ]]>
+    </insert>
+    <delete id="deleteTime" parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+			delete from `time`
+			where time_num = #{time_num}
+		]]>
+    </delete>
+    <update id="updateTime" parameterType="com.example.demo.counter.DTO.TimeDTO">
+        <![CDATA[
+			update time
+			set time_div = #{time_div}, time_use = #{time_use}, time_price = #{time_price}
+			where time_num = #{time_num};
+		]]>
+    </update>
 
     <!--payment-->
     <select id="selectAllPayment" resultType="com.example.demo.counter.DTO.PaymentDTO">
