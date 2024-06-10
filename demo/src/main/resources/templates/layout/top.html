@@ -10,18 +10,24 @@
 		<!-- Responsive navbar-->
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 		  <div class="container">
-		    <!-- 위에 상단바 있던 자리-->
 		  </div>
 		</nav>
-		<!-- Page header with logo and tagline-->
 		<header class="py-2 bg-light border-bottom mb-4">		
 		<div class="top-d1">
 		<div class="top-d2">
 			<div class="top-d3 py-3"><span class="top-s1 jua-regular" onclick="location.href = '/pc'">DEU PC</span></div>
 			<div class="top-d3 py-3"><span class="top-s1 jua-regular" onclick="location.href = '/userorder'">음식주문</span></div>
 			<div class="top-d3 py-3"><span class="top-s1 jua-regular" onclick="location.href = '/'">마이페이지</span></div>
+			<div class="top-d3 py-3"><span class="top-s1 jua-regular" onclick="charge()">시간충전</span></div>
 			<div class="top-d3 py-3"><span class="top-s1 jua-regular" onclick="if(confirm('자리이동 하시겠습니까?')){location.href = '/pc/seat'}">자리이동</span></div>
 			<div class="top-d3 py-3"><span class="top-s1 jua-regular" onclick="if(confirm('사용 종료하시겠습니까?')){location.href = '/pc/logout'}">사용종료</span></div>
+			<div class="top-d3 py-3 ms-5">
+				<div class="row" align="left">
+					<div class="loginId"></div>
+					<div class="useTime"></div>
+					<div class="leftTime"></div>
+				</div>
+			</div>
 		</div>
 		</div>
 		</header>

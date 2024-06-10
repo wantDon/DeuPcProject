@@ -12,7 +12,7 @@
 	
 	<select id="getPreviousNoticeNum" parameterType="int" resultType="java.lang.Integer">
 		<![CDATA[
-	    	SELECT MAX(notice_num) FROM notice WHERE notice_num &lt; #{notice_num}
+	    	SELECT MAX(notice_num) FROM notice WHERE notice_num > #{notice_num}
 		]]>
 	</select>
     

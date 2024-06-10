@@ -97,6 +97,7 @@ public class CounterManager {
         testMapper.deleteTime(timeDTO);//해당시간을 삭제한다.
     }
 
+
     //payment관련 메소드 ========================================
     public List<PaymentDTO> selectAllPayment(PaymentDTO paymentDTO) {
         return testMapper.selectAllPayment(paymentDTO);//시간표를 조회한다.

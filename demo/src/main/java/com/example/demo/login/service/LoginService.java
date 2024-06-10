@@ -24,4 +24,6 @@ public interface LoginService {
     
     public String getMovetime(String id);
     
+    public int getUserTime(String id);
+    
 }

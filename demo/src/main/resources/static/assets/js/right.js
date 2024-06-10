@@ -1,5 +1,4 @@
 $(document).ready(function() {
-	
 	getOrderCount();
 	
 	var socket = new SockJS('/ws'); // WebSocket 서버 URL

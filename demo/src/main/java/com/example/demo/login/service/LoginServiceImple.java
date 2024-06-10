@@ -23,6 +23,11 @@ public class LoginServiceImple implements LoginService {
     }
     
     @Override
+    public int getUserTime(String id) {
+    	return loginMapper.getUserTime(id);
+    }
+    
+    @Override
     public String getMovetime(String id) {
     	return loginMapper.getMovetime(id);
     }

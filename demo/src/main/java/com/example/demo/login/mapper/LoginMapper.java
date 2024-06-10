@@ -31,4 +31,6 @@ public interface LoginMapper {
     
     public String getMovetime(String id);
     
+    public int getUserTime(String id);
+    
 }

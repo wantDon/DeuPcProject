@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>DEU PC - 요금 관리</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico"/>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous" />	
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div th:replace="~{layout/left_tab :: deupcLeft_Tab}"></div>
+
+        <div class="admin-d1 container col-md-10">
+            <!--상단-->
+            <div class="grid text-center" style="background-color: gray;">
+                <div class="g-col-2" style="min-height: 90px; font-size: 32px;display: flex;align-items: center;justify-content: center;">
+                    요금 요금 관리
+                </div>
+            </div>
+            <!--중앙 컨텐츠-->
+            <div class="text-center" style="margin-left: 50px; margin-right: 50px; margin-top: 30px;">
+                <div class="mx-auto p-2 row justify-content-center grid gap-3">
+                    <!--좌측 컨텐츠-->
+                    <div class="card col" style="width: 16rem; min-height: 600px;">
+                        <div class="card-body" style="max-height: 100px;">
+                            <h5 class="card-title">요금제 선택</h5>
+                            <p class="card-text">수정하실 요금을 선택해 주세요</p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                        </ul>
+                        <div class="card-body">
+                            <div class="container text-center">
+                                <div class="grid gap-3 row row-cols-3">
+                                    <!--요금 출력해줄것-->
+                                    <div th:each="timeList : ${timeList}" class="card col" style="width: 10rem;"
+                                         th:data-time_num="${timeList.time_num}" th:data-time_div="${timeList.time_div}"
+                                         th:data-time="${timeList.time_use}"
+                                         th:data-price="${timeList.time_price}">
+                                        <div class="card-body">
+                                            <div class="card-title" th:text="${timeList.time_num}"></div>
+                                            <div class="card-title" th:text="${timeList.time_div}"></div>
+                                            <h5 class="card-title" th:text="${timeList.time_use}"></h5>
+                                            <h6 class="card-subtitle mb-2 text-body-secondary"
+                                                th:text="${timeList.time_price+'원'}"></h6>
+                                            <button th:id="'button-' + ${timeList.time_num}" class="btn btn-primary"
+                                                    type="submit">선택하기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li id="allPrice_left" class="list-group-item"></li>
+                        </ul>
+                        <div style="padding: 5px;">
+                            <div class="container text-center">
+                                <div class="grid gap-3 row">
+                                    <button id="newPriceMenuButton" class="btn btn-primary" type="submit">신규 생성</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--우측 컨텐츠-->
+                    <div class="card col" style="width: 18rem;min-height: 600px;max-width: 500px;">
+                        <div class="card-body" style="max-height: 100px;">
+                            <h5 class="card-title">요금제 수정</h5>
+                            <p class="card-text">요금제를 수정해 주세요</p>
+                        </div>
+                        <ul class="list-group list-group-flush"></ul>
+                        <div class="card-body">
+                            <!--시간번호-->
+                            <div class="input-group input-group-lg" style="margin: 10px;">
+                                <span class="input-group-text" id="inputGroup-sizing-lg-num">번호</span>
+                                <input id="timeNumInput" type="text" class="form-control"
+                                       aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-lg" disabled>
+                            </div>
+                            <!--시간수정-->
+                            <div class="input-group input-group-lg" style="margin: 10px;">
+                                <span class="input-group-text" id="inputGroup-sizing-lg-time">시간</span>
+                                <input id="timeInput" type="text" class="form-control" aria-label="Sizing example input"
+                                       aria-describedby="inputGroup-sizing-lg">
+                            </div>
+                            <!--가격수정-->
+                            <div class="input-group input-group-lg" style="margin: 10px;">
+                                <span class="input-group-text" id="inputGroup-sizing-lg-price">가격</span>
+                                <input id="priceInput" type="text" class="form-control"
+                                       aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li id="allPrice_right" class="list-group-item">
+                                <div class="form-check form-switch">
+                                    <input id="memberSwitch" class="form-check-input" type="checkbox" role="switch">
+                                    <label class="form-check-label" for="memberSwitch">회원 여부</label>
+                                </div>
+                            </li>
+                        </ul>
+                        <div style="padding: 5px;">
+                            <div class="container text-center">
+                                <div class="grid gap-3 row row-cols-4">
+                                    <button id="refixPriceMenu" class="btn btn-primary" type="submit">수정하기</button>
+                                    <button id="deletePriceMenu" class="btn btn-primary" type="submit">삭제</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div th:replace="~{layout/right_tab :: deupcRight_Tab}"></div>
+    </div>
+</div>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- 외부 js -->
+<script src="/assets/js/priceListManagement.js"></script>
+
+</body>
+</html>

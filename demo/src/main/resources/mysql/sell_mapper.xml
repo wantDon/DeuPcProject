@@ -12,7 +12,7 @@
     <select id="getSellByPage" resultType="com.example.demo.sell.dto.SellDTO">
 		<![CDATA[
 	        SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
-	               f.food_price, p.total_price, u.id, p.method, p.pay_div
+	               f.food_price, p.total_price, u.id, p.method, p.pay_div, p.pcnum
 	        FROM payment p
 	        JOIN `order` o ON p.pay_num = o.pay_num
 	        JOIN food f ON o.food_num = f.food_num
@@ -32,7 +32,7 @@
     <select id="getFilteredSellByPage" resultType="com.example.demo.sell.dto.SellDTO">
 		<![CDATA[
 		    SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
-		           f.food_price, p.total_price, u.id, p.method, p.pay_div
+		           f.food_price, p.total_price, u.id, p.method, p.pay_div, p.pcnum
 		    FROM payment p
 		    JOIN `order` o ON p.pay_num = o.order_num
 		    JOIN food f ON o.food_num = f.food_num
@@ -54,7 +54,7 @@
 	<select id="getFilteredSellBySearch" resultType="com.example.demo.sell.dto.SellDTO">
 		<![CDATA[
 	        SELECT p.pay_num, p.pay_date, c.cate_name, f.food_name, o.order_count, o.order_num, 
-	               f.food_price, p.total_price, u.id, p.method, p.pay_div
+	               f.food_price, p.total_price, u.id, p.method, p.pay_div, p.pcnum
 	        FROM payment p
 	        JOIN `order` o ON p.pay_num = o.order_num
 	        JOIN food f ON o.food_num = f.food_num

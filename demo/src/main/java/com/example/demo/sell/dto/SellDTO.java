@@ -18,6 +18,7 @@ public class SellDTO {
 	private String id;
 	private String method;
 	private int pay_div;
+	private String pcnum;
 	
 	public int getPay_num() {
 		return pay_num;
@@ -96,5 +97,11 @@ public class SellDTO {
 	}
 	public void setTotal_order_count(int total_order_count) {
 		this.total_order_count = total_order_count;
+	}
+	public String getPcnum() {
+		return pcnum;
+	}
+	public void setPcnum(String pcnum) {
+		this.pcnum = pcnum;
 	}
 }
