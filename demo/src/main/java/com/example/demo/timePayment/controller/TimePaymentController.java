@@ -66,6 +66,11 @@ public class TimePaymentController {
         return "redirect:/timePayment/paymentMain_nonUser?id=" + id;
     }
 
+    @GetMapping(value = "/timePayment/paymentMain_User")
+    public String memberbuy(HttpSession session, Model model) {
+        return "timePayment/userPayment";
+    }
+
     //결제 완료 페이지=============================
     @GetMapping(value = "/timePayment/paymentMain/payItem")
     public String buyItem(@RequestParam("price") String price, @RequestParam("times") int times, @RequestParam("userId") String userId, HttpSession session, Model model) {
@@ -94,7 +99,7 @@ public class TimePaymentController {
             //비회원은 결제 완료후 바로 이용 시작화면으로
             UserDTO newUserDTO = counterManager.makeNewRandomUser();//신규 유저 생성
             PaymentDTO newPaymentDTO = new PaymentDTO();
-            
+
             newPaymentDTO.setPay_price(Integer.parseInt(price));
             newPaymentDTO.setMethod("card");
             newPaymentDTO.setPay_date(LocalDateTime.now());
@@ -113,12 +118,12 @@ public class TimePaymentController {
             model.addAttribute("id", modifiedString);
             model.addAttribute("time", times);
             model.addAttribute("price", price);
-            
+
             //만약 세션값이 있다면 pc로 이동하고 아니라면 예정대로 진해
             if (session.getAttribute("loginId") != null) {
                 return "redirect:/pc";
             }
-            
+
             return "timePayment/nonUserIdPrint";
         }
 
