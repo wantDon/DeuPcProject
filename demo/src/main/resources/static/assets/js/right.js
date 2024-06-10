@@ -81,6 +81,6 @@ function navigateToNoticePage() {
     window.location.href = '/notice/'; // 공지 페이지로 이동
 }
 
-function navigateToFoodPage() {
-    window.location.href = '/food'; // 상품 등록 페이지로 이동
+function navigateToItemPage() {
+	window.location.href = '/inventory';
 }

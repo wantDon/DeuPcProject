@@ -196,7 +196,7 @@ public class LoginController {
     }
 
     @GetMapping(value = "/pc/logout")
-    public String logout(HttpSession session) {
+    public String logout(HttpSession session) {    	
     	LocalDateTime loginTime = (LocalDateTime)session.getAttribute("loginTime");
     	LocalDateTime logoutTime = LocalDateTime.now();
     	

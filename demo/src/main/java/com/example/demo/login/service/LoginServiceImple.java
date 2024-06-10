@@ -99,13 +99,17 @@ public class LoginServiceImple implements LoginService {
     }
     
     @Override
-    public void logout(String id, long time) {
+    public void logout(String id, long time) {    	
     	Map<String, Object> param = new HashMap<>();
     	param.put("id", id);
     	param.put("time", time);
     	
     	loginMapper.logout(param);
-    	loginMapper.logout2(param);
+    	
+    	if (id.contains("비회원-"))
+    		loginMapper.logout3(id);
+    	else
+    		loginMapper.logout2(param);
     }
     
 }

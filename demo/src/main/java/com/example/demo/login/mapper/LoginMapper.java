@@ -23,6 +23,8 @@ public interface LoginMapper {
     
     public void logout2(Map<String, Object> param);
     
+    public void logout3(String id);
+    
     public void moveUse(Map<String, Object> param);
     
     public void moveUser(String id);

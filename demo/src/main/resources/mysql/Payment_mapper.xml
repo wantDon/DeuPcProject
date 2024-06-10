@@ -6,8 +6,8 @@
 
     <!-- Insert Payment -->
     <insert id="savePayment" parameterType="com.example.demo.user_order.userorderDTO.PaymentDTO" useGeneratedKeys="true" keyProperty="pay_num">
-        INSERT INTO payment (total_price, method, pay_date, pay_req, pay_div, pay_state, id, pcnum)
-        VALUES (#{total_price}, #{method}, now(), #{pay_req}, #{pay_div}, #{pay_state}, #{id}, #{pcnum})
+        INSERT INTO payment (total_price, method, pay_date, pay_req, pay_div, pay_state, id, pcnum, grade)
+        VALUES (#{total_price}, #{method}, now(), #{pay_req}, 1, #{pay_state}, #{id}, #{pcnum}, 1)
     </insert>
 
     <!-- Insert Order -->

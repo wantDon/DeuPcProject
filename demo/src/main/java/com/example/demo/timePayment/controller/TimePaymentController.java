@@ -109,9 +109,7 @@ public class TimePaymentController {
 
             counterManager.addUserTime(newUserDTO.getId(), times);//시간충전
             counterManager.insertPayment(newPaymentDTO);//결제기록 insert
-            //counterManager.addUserPws_pcnum(newUserDTO, (String) session.getAttribute("pcnum"));//신규유저의 pwd 자리번호입력
-            counterManager.addUserPws_pcnum(newUserDTO, "테스트용pcnum");
-            session.setAttribute("loginId", newUserDTO.getId());//비회원 로그인
+            counterManager.addUserPws_pcnum(newUserDTO, (String) session.getAttribute("pcnum"));//신규유저의 pwd 자리번호입력
 
             String originalString = newUserDTO.getId();
             String prefixToRemove = "비회원-";
@@ -120,7 +118,12 @@ public class TimePaymentController {
             model.addAttribute("id", modifiedString);
             model.addAttribute("time", times);
             model.addAttribute("price", price);
-
+            
+            //만약 세션값이 있다면 pc로 이동하고 아니라면 예정대로 진해
+            if (session.getAttribute("loginId") != null) {
+                return "redirect:/pc";
+            }
+            
             return "timePayment/nonUserIdPrint";
         }
 

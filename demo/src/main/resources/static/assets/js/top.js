@@ -127,5 +127,9 @@ function updateUseTime() {
 }
 
 function charge() {
-	window.location.href = '/timePayment/paymentMain_nonUser?id=' + id;
+	if (id.includes('비회원-')) {
+		alert('비회원은 시간 충전기능을 이용할 수 없습니다.');
+	} else {
+		window.location.href = '/timePayment/paymentMain_nonUser?id=' + id;
+	}
 }

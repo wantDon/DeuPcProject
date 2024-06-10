@@ -56,6 +56,12 @@
 		]]>
 	</update>
 	
+	<update id="logout3" parameterType="String">
+		<![CDATA[
+			update user set time = 0 where id = #{id};
+		]]>
+	</update>
+	
 	<update id="moveUser" parameterType="String">
 		<![CDATA[
 			update `use` set use_seat = '자리이동' where id = #{id} and use_time is null;
