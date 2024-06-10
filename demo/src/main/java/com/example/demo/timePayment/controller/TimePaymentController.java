@@ -6,6 +6,7 @@ import com.example.demo.counter.DTO.UserDTO;
 import com.example.demo.counter.counter.CounterManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -53,14 +54,6 @@ public class TimePaymentController {
         return "timePayment/nonUserPayment";
     }
 
-    //회원 사용자가 시간을 충전 할려고 할때================================
-    @GetMapping(value = "/timePayment/paymentMain_User")
-    public String inputUserId(HttpSession session, Model model) {
-
-
-        return "timePayment/userPayment";
-    }
-
     @PostMapping(value = "/timePayment/paymentMain_User")
     public String chkUser(@RequestParam("id") String id, HttpSession session, Model model) {
         //존재하지 않는 id면 돌려보내야 한다.
@@ -76,7 +69,7 @@ public class TimePaymentController {
     //결제 완료 페이지=============================
     @GetMapping(value = "/timePayment/paymentMain/payItem")
     public String buyItem(@RequestParam("price") String price, @RequestParam("times") int times, @RequestParam("userId") String userId, HttpSession session, Model model) {
-        System.out.println("TimePaymentController price = " + price + ", times" + times + ", userId " + userId);
+
         if (!userId.equals("undefined")) {
             System.out.println(userId);
             //회원일때 1.입력된 정보를 카운터를 이용해 충전한다.+결제기록을 남긴다. 2.화면을 이동시켜준다.
@@ -92,14 +85,16 @@ public class TimePaymentController {
 
             counterManager.addUserTime(userId, times);
             counterManager.insertPayment(newPaymentDTO);//결제기록 insert
-
+            //만약 세션값이 있다면 pc로 이동하고 아니라면 예정대로 진해
+            if (session.getAttribute("loginId") != null) {
+                return "redirect:/pc";
+            }
             return "/pc/smain";
         } else {
             //비회원은 결제 완료후 바로 이용 시작화면으로
             UserDTO newUserDTO = counterManager.makeNewRandomUser();//신규 유저 생성
             PaymentDTO newPaymentDTO = new PaymentDTO();
-
-
+            
             newPaymentDTO.setPay_price(Integer.parseInt(price));
             newPaymentDTO.setMethod("card");
             newPaymentDTO.setPay_date(LocalDateTime.now());
