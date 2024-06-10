@@ -57,7 +57,8 @@
 								<td th:text="${ulist.name}"></td>
 								<td th:text="${ulist.id}"></td>
 								<td th:text="${ulist.email}"></td>
-								<td th:text="${ulist.birth}"></td>
+								<td th:if="${ulist.birth != '0'}" th:text="${ulist.birth}"></td>								
+								<td th:unless="${ulist.birth != '0'}"></td>
 								<td th:text="${ulist.phone}"></td>
 								<td>
 									<select th:id="${ulist.id}" class="form-sel2 form-select form-select-sm" onchange="grade(this)">
