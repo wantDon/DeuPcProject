@@ -58,5 +58,17 @@ public class PriceListManagementController {
 
         return "redirect:/priceListManagement/priceListManagement";
     }
+    
+    @RequestMapping(value = "/priceListManagement/priceListManagement/deleteTimeMenu")
+    public String deleteTimeMenu(Model model, @RequestParam("timeNum") String timeNum) {
+        //수정 요금표를 생성해준다.
+        TimeDTO timeDTO = new TimeDTO();
+        timeDTO.setTime_num(Integer.parseInt(timeNum));
+        
+
+        counterManager.deleteTime(timeDTO);
+
+        return "redirect:/priceListManagement/priceListManagement";
+    }
 
 }

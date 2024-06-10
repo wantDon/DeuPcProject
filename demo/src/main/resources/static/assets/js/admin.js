@@ -76,6 +76,8 @@ function seat(num) {
 						`;
 						$('#seatDetails').append(resultHtml);
 					}
+					$('#seatModal').data('seat-id', memberInfo.id);
+					
 					element.classList.add("active");
 					element.style.backgroundColor = "#FFF"
 					$('#seatModal').modal('show');
@@ -112,6 +114,24 @@ function getUser() {
 }
 
 $(document).ready(function() {
+    $(document).on("click", ".admin-modal-btn.btn-danger", function() {
+        const userId = $(this).closest('.modal').data('seat-id');
+        $.ajax({
+			url: '/pc/logout2/' + userId,
+			type: 'POST',
+			success: function(response) {
+				if (response.error) {
+					alert(response.error);
+				} else {
+					alert("해당 PC는 로그아웃 되었습니다.")
+				}
+			},
+			error: function() {
+				alert('서버 요청에 실패했습니다. 잠시 후 다시 시도 해주세요.');
+			}
+		});
+    });
+	
 	// 페이지가 로드될 때 실행되는 함수
 	window.onload = function() { 
 		generatePCSeats();

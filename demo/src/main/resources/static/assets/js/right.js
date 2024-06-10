@@ -21,8 +21,10 @@ function getOrderCount() {
 			if (response.error) {
 				alert(response.error);
 			} else {
-				const orderList = groupByPayNum(response.orderList);
-				document.getElementById("orderNum").textContent = orderList.length;
+				if (response && response.orderList) {				
+					const orderList = groupByPayNum(response.orderList);
+					document.getElementById("orderNum").textContent = orderList.length;
+				}
 			}
 		},
 		error: function() {

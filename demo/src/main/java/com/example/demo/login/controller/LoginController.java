@@ -14,6 +14,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -217,5 +218,11 @@ public class LoginController {
     	
         session.invalidate();
         return "redirect:/pc/smain";
+    }
+    
+    @PostMapping(value = "/pc/logout2/{id}")
+    @ResponseBody
+    public void logout2(@PathVariable String id, HttpSession session) {
+    	messagingTemplate.convertAndSend("/topic/login", "adminlogout/" + id);
     }
 }
