@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.example.demo.admin.dto.LoginTimeDTO;
 import com.example.demo.admin.dto.MemberDTO;
+import com.example.demo.admin.dto.UserOrdersDTO;
 
 @Mapper
 public interface AdminMapper {
@@ -23,5 +24,9 @@ public interface AdminMapper {
 	public void resignUser(String id);
 
 	public void updateGrade(Map<String, Object> param);
+	
+	public Vector<UserOrdersDTO> getOrderList();
+	
+	public void updateUserOrder(int pay_num);
 	
 }

@@ -16,4 +16,12 @@ public interface LoginService {
     
     public void logout(String id, long time);
     
+    public void moveUser(String id);
+    
+    public int moveCheck(String id);
+    
+    public void moveUse(String id, String pcnum);
+    
+    public String getMovetime(String id);
+    
 }

@@ -21,7 +21,31 @@ public class LoginServiceImple implements LoginService {
     public LoginServiceImple(LoginMapper loginMapper){
         this.loginMapper = loginMapper;
     }
+    
+    @Override
+    public String getMovetime(String id) {
+    	return loginMapper.getMovetime(id);
+    }
+    
+    @Override
+    public void moveUse(String id, String pcnum) {
+    	Map<String, Object> param = new HashMap<>();
+    	param.put("id", id);
+    	param.put("pcnum", pcnum);
+    	
+    	loginMapper.moveUse(param);
+    }
 
+    @Override
+    public int moveCheck(String id) {
+    	return loginMapper.moveCheck(id);
+    }
+    
+    @Override
+    public void moveUser(String id) {
+    	loginMapper.moveUser(id);
+    }
+    
     @Override
     public LoginDTO login(String id, String pwd) {
     	LoginDTO dto = loginMapper.login(id);
@@ -57,7 +81,6 @@ public class LoginServiceImple implements LoginService {
     
     @Override
     public void movePC(String id, String pwd) {
-    	id = "비회원-" + id;
     	loginMapper.movePC(id, pwd);
     }
 

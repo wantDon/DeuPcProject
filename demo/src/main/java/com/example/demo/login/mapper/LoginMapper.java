@@ -23,4 +23,12 @@ public interface LoginMapper {
     
     public void logout2(Map<String, Object> param);
     
+    public void moveUse(Map<String, Object> param);
+    
+    public void moveUser(String id);
+    
+    public int moveCheck(String id);
+    
+    public String getMovetime(String id);
+    
 }

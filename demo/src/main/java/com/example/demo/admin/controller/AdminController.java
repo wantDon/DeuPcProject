@@ -1,5 +1,9 @@
 package com.example.demo.admin.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Vector;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.admin.dto.MemberDTO;
+import com.example.demo.admin.dto.UserOrdersDTO;
 import com.example.demo.admin.service.AdminServiceImple;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +40,27 @@ public class AdminController {
 //		if (memberDTO == null || memberDTO.getGrade() != 0)
 //			return "redirect:/pc/smain";
 		return "admin/index";
+	}
+	
+	@GetMapping(value="/order")
+	public String AdminCheckOrder() {
+		return "admin/admin_order";
+	}
+	
+	@PostMapping(value="/order")
+	@ResponseBody
+	public Map<String, Object> AdminGetOrder() {
+		Map<String, Object> response = new HashMap<>();
+		Vector<UserOrdersDTO> vlist = adminService.getOrderList();
+		response.put("orderList", vlist);
+		return response;
+	}
+	
+	@PostMapping(value="/state/{num}")
+	@ResponseBody
+	public String UpdateOrderState(@PathVariable int num) {
+		adminService.updateUserOrder(num);
+		return "success";
 	}
 	
 	@GetMapping("/member")

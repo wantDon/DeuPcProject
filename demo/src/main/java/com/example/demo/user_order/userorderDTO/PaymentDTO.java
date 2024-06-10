@@ -12,6 +12,7 @@ public class PaymentDTO {
     private int pay_state;
     private String id;
     private List<OrderDTO> orders;
+    private String pcnum;
 
     public List<OrderDTO> getOrders() {
         return orders;
@@ -85,4 +86,10 @@ public class PaymentDTO {
     public void setId(String id) {
         this.id = id;
     }
+	public String getPcnum() {
+		return pcnum;
+	}
+	public void setPcnum(String pcnum) {
+		this.pcnum = pcnum;
+	}
 }

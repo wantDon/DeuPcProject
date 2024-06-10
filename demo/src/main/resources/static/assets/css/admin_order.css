@@ -1,0 +1,66 @@
+.order-item {
+    border: 1px solid #000;
+    padding: 10px;
+    margin-bottom: 30px;
+    display: flex;
+}
+
+.order-header {
+	display: flex;
+	align-items: center;
+	margin-left: 2%;
+	width: 14%;
+}
+
+.order-circle {
+	width: 60%;
+	height: 90%;
+	position: relative;
+    background-color: #B08EC2;
+	border-radius: 50%;
+}
+
+.order-circle p {
+	font-size: 16pt;
+	color: white;
+	position: absolute;
+	top: 32%;
+	left: 22%;
+}
+
+.order-body {
+	float: right;
+	width: 84%;
+	padding-top: 5px;
+}
+
+.order-body p {
+    margin: 5px 0;
+}
+
+.text-truncate {
+	max-width: 90%;
+}
+
+.complete-btn {
+    float: right;
+    background-color: #B08EC2;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.complete-btn:hover {
+    background-color: #986B96;
+}
+
+.aorder-d2 {
+	margin-top: 7%;
+	margin-bottom: 5%;
+}
+
+.aorder-sp1 {
+	font-size: 25pt;
+}

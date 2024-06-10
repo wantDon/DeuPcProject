@@ -67,27 +67,27 @@
                     </table>
                 </div>
                 
-                <!-- 페이징 처리 시작 -->
-                <div class='d-flex'>
-                    <ul class="pagination mx-auto">
-                        <li class='page-item' th:classappend="${currentPage == 1} ? 'disabled'">
-                            <a class='page-link' th:href="@{|/sell/sell_search?page=1&startDate=${startDate}&endDate=${endDate}|}">맨 앞</a>
-                        </li>
-                        <li class='page-item' th:classappend="${currentPage == 1} ? 'disabled'">
-                            <a class='page-link' th:href="@{|/sell/sell_search?page=${currentPage - 1}&startDate=${startDate}&endDate=${endDate}|}">이 전</a>
-                        </li>
-                        <li class='page-item' th:each="page: ${#numbers.sequence(1, totalPages)}" th:classappend="${page == currentPage} ? 'active'">
-                            <a class='page-link' th:href="@{|/sell/sell_search?page=${page}&startDate=${startDate}&endDate=${endDate}|}" th:text="${page}"></a>
-                        </li>
-                        <li class='page-item' th:classappend="${currentPage == totalPages} ? 'disabled'">
-                            <a class='page-link' th:href="@{|/sell/sell_search?page=${currentPage + 1}&startDate=${startDate}&endDate=${endDate}|}">다 음</a>
-                        </li>
-                        <li class='page-item' th:classappend="${currentPage == totalPages} ? 'disabled'">
-                            <a class='page-link' th:href="@{|/sell/sell_search?page=${totalPages}&startDate=${startDate}&endDate=${endDate}|}">맨 뒤</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- 페이징 처리 끝 -->
+				<!-- 페이징 처리 시작 -->
+				<div class='d-flex'>
+				    <ul class="pagination mx-auto">
+				        <li class='page-item' th:classappend="${currentPage == 1} ? 'disabled'">
+				            <a class='page-link' th:href="@{|/sell/sell_search?page=1&startDate=${startDate}&endDate=${endDate}|}">맨 앞</a>
+				        </li>
+				        <li class='page-item' th:classappend="${currentPage == 1} ? 'disabled'">
+				            <a class='page-link' th:href="@{|/sell/sell_search?page=${currentPage - 1}&startDate=${startDate}&endDate=${endDate}|}">이 전</a>
+				        </li>
+				        <li class='page-item' th:each="page: ${#numbers.sequence(1, totalPages)}" th:classappend="${page == currentPage} ? 'active'">
+				            <a class='page-link' th:href="@{|/sell/sell_search?page=${page}&startDate=${startDate}&endDate=${endDate}|}" th:text="${page}"></a>
+				        </li>
+				        <li class='page-item' th:classappend="${currentPage == totalPages} ? 'disabled'">
+				            <a class='page-link' th:href="@{|/sell/sell_search?page=${currentPage + 1}&startDate=${startDate}&endDate=${endDate}|}">다 음</a>
+				        </li>
+				        <li class='page-item' th:classappend="${currentPage == totalPages} ? 'disabled'">
+				            <a class='page-link' th:href="@{|/sell/sell_search?page=${totalPages}&startDate=${startDate}&endDate=${endDate}|}">맨 뒤</a>
+				        </li>
+				    </ul>
+				</div>
+				<!-- 페이징 처리 끝 -->
                 
             </div>
             <div th:replace="layout/right_tab :: deupcRight_Tab"></div>
