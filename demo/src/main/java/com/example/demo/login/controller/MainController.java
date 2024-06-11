@@ -91,6 +91,8 @@ public class MainController {
     @RequestMapping(value="/member")
     public String memberMain(HttpSession session, Model model) {
     	model.addAttribute("pcnum", session.getAttribute("pcnum"));
+    	List<LoginTimeDTO> ulist = adminService.getAllUse();
+    	use = 16 - ulist.size();
 		model.addAttribute("use", use);
     	return "pc/memMain";
     }
@@ -98,6 +100,8 @@ public class MainController {
     @RequestMapping(value="/non-member")
     public String nonmemberMain(HttpSession session, Model model) {
     	model.addAttribute("pcnum", session.getAttribute("pcnum"));
+    	List<LoginTimeDTO> ulist = adminService.getAllUse();
+    	use = 16 - ulist.size();
 		model.addAttribute("use", use);
     	return "pc/nmemMain";
     }

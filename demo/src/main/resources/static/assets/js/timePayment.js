@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <label class="form-check-label">${itemName}</label>
                     <label class="form-check-label">${itemPrice}</label>
                     <label class="form-check-label">1개</label>
-                    <button class="btn btn-primary item-more-reduce-button" type="submit">-</button>
+                    <button class="btn item-more-reduce-button" style="background-color: #BD75C3; color: white;" type="submit">-</button>
                 `;
 
                 buyItemList.appendChild(listItem);

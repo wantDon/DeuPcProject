@@ -19,10 +19,12 @@
 			    max-width: 70%;
 				margin: 0 auto;
 				margin-top: 3%;
+				max-height: 500px;
 			}
 			.slick-next { /* 다음 컨트롤러 */		
 				display: none !important;
 			}
+			
 			.slick-prev { /* 이전 컨트롤러 */
 			   	display: none !important;
 			}
@@ -31,15 +33,17 @@
 	<body>
 	<th:block th:replace="~{layout/top::top_main}"></th:block>
 		<div class="main-d1">
-			<img id="banners" src="/assets/img/b06.png" alt="배너 이미지" width="14%" height="780" sytle="float:left; display: flex;">
-			<div class="main-d2">				
+			<img class="banners" src="/assets/img/b06.png" alt="배너 이미지" width="14%" height="780">
+			<div class="main-d2">
 				<div id="bannerContainer" class="bannerContainer">
-					<div><img id="banner" src="/assets/img/b03.png" alt="배너 이미지" width="100%" height="300"></div>
-					<div><img id="banner" src="/assets/img/b04.png" alt="배너 이미지" width="100%" height="300"></div>
-					<div><img id="banner" src="/assets/img/b05.png" alt="배너 이미지" width="100%" height="300"></div>
+					<div><img class="banner" src="/assets/img/b01.png" alt="배너 이미지" width="100%" height="300"></div>
+					<div><img class="banner" src="/assets/img/b02.png" alt="배너 이미지" width="100%" height="300"></div>
+					<div><img class="banner" src="/assets/img/b03.png" alt="배너 이미지" width="100%" height="300"></div>
+					<div><img class="banner" src="/assets/img/b04.png" alt="배너 이미지" width="100%" height="300"></div>
+					<div><img class="banner" src="/assets/img/b05.png" alt="배너 이미지" width="100%" height="300"></div>
 				</div>
 			</div>
-			<img id="banners" src="/assets/img/b07.png" alt="배너 이미지" width="14%" height="780" style="float:right;">
+			<img class="banners" src="/assets/img/b07.png" alt="배너 이미지" width="14%" height="780" style="float:right;">
 		</div>
 		<script type="text/javascript">
 		      $.noConflict();

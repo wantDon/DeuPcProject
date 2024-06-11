@@ -41,7 +41,7 @@
                         </li>
                     </th:block>
                 </ul>
-				<button class="btn btn-primary" onclick="location.reload()">초기화</button>
+				<button class="btn" style="background-color: #BD75C3; color: white;" onclick="location.reload()">초기화</button>
             </div>
             <!-- Modal===== name,price,count,state,image를 바꿀수 있도록 바꿔야 한다. -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
@@ -96,8 +96,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                            <button id="itemRefixButton" type="button" class="btn btn-primary">수정하기</button>
+                            <button type="button" class="btn" style="background-color: #BD75C3; color: white; border: none;" data-bs-dismiss="modal">닫기</button>
+                            <button id="itemRefixButton" type="button" style="background-color: #BD75C3; color: white; border: none;" class="btn btn-primary">수정하기</button>
                         </div>
                     </div>
                 </div>
@@ -125,7 +125,7 @@
                     <td width="150" th:text="${food.state}"></td>
                     <td width="350"><span class="d-inline-block text-truncate mt-2" style="max-width: 300px;" th:text="${food.food_info}"></span></td>
                     <td>
-                        <button type="button" class="btn btn-primary edit-button" data-bs-toggle="modal"
+                        <button type="button" class="btn edit-button" style="background-color: #BD75C3; color: white;" data-bs-toggle="modal"
                                 data-bs-target="#staticBackdrop"
                                 th:data-food-num="${food.food_num}"
                                 th:data-food-name="${food.food_name}"

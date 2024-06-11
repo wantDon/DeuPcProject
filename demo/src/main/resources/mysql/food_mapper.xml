@@ -6,9 +6,9 @@
 
     <insert id="insertFood" parameterType="com.example.demo.food.dto.FoodDTO">
         INSERT INTO food
-        (cate_name, food_name, food_price, count, state, food_info)
+        (cate_name, food_name, food_price, count, state, food_info, food_img)
         VALUES
-        (#{cate_name}, #{food_name}, #{food_price}, #{count}, #{state}, #{food_info})
+        (#{cate_name}, #{food_name}, #{food_price}, #{count}, #{state}, #{food_info}, #{food_img})
     </insert>
 
     <select id="getAllFoods" resultType="com.example.demo.food.dto.FoodDTO">

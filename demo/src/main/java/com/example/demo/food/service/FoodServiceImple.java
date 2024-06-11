@@ -17,6 +17,8 @@ public class FoodServiceImple implements FoodService{
 	
 	private FoodMapper foodMapper;
 	
+	private final String uploadDir = "/assets/img/"; // 실제 경로로 변경
+	
 	public FoodServiceImple(FoodMapper foodMapper) {
 		this.foodMapper = foodMapper;
 	}

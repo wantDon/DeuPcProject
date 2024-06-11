@@ -125,7 +125,12 @@ public class LoginController {
         } else {
         	System.out.println(loginDTO.getId() + "(" + loginDTO.getPwd() + ") " + pcnum + "번 PC에 접속 시도중");
     		loginDTO.setId(loginDTO.getId().split("-")[1]);
-        	if (loginDTO.getPwd().equals(pcnum) || loginDTO.getPwd().equals("자리이동")) {
+
+    		if (loginDTO.getTime() == 0) {
+	        	System.out.println("비회원-" + loginDTO.getId() + " 접속 실패");
+	            r.addFlashAttribute("error", "접속할 수 없는 ID 입니다. 관리자에게 문의해주세요.");
+	            return "redirect:nlogin";
+    		} else if (loginDTO.getPwd().equals(pcnum) || loginDTO.getPwd().equals("자리이동")) {
         		String id = "비회원-" + loginDTO.getId();
             	int time = loginDTO.getTime();
             	int check = loginService.moveCheck(id);
@@ -167,7 +172,7 @@ public class LoginController {
 	            return "redirect:pc";
         	} else {
 	        	System.out.println("비회원-" + loginDTO.getId() + " 접속 실패");
-                r.addFlashAttribute("error", "충전한 좌석이 아닙니다. 관리자에게 문의해주세요.");
+                r.addFlashAttribute("error", "충전한 좌석이 아닙니다. 충전한 자리에서 로그인 해주세요.");
                 return "redirect:nlogin";
         	}
         }

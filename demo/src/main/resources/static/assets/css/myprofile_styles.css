@@ -10830,3 +10830,52 @@ textarea.form-control-lg {
   background-position: center;
   background-size: cover;
 }
+
+.img-fluid {
+	width: 100px;
+	height: 100px;
+}
+.passwordchk {
+	width: 120px; /* 버튼의 고정 너비 */
+	height: 50px; /* 버튼의 고정 높이 */
+	margin: 3px; /* 버튼 간격 */
+	background-color: #BD75C3;
+	color: white;
+}
+.password-modal {
+	display: none; /* Initially hide the modal */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0,0,0); /* Fallback color */
+	background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+.password-modal-content {
+	background-color: #fefefe;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: 20px;
+	border: 1px solid #888;
+	width: 80%; /* Could be more or less, depending on screen size */
+}
+.btn-primary{
+	background-color: #BD75C3 !important;
+	color: white !important;
+	border-color: #BD75C3 !important;
+}
+.btn-primary:hover {
+	background-color: white !important;
+	color: black 	!important;
+	border-color: #BD75C3 !important;
+}
+
+.scrollable-table {
+	margin-top: 3%;
+	max-height: 400px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	margin-bottom: 2%;
+}

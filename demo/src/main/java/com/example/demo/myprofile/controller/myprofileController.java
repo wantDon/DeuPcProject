@@ -1,5 +1,7 @@
 package com.example.demo.myprofile.controller;
 
+import com.example.demo.admin.dto.UserSeatDTO;
+import com.example.demo.admin.service.AdminServiceImple;
 import com.example.demo.myprofile.myprofileDTO.paymentDTO;
 import com.example.demo.myprofile.myprofileDTO.userDTO;
 import com.example.demo.myprofile.myprofileService.myorderService;
@@ -21,10 +23,29 @@ public class myprofileController {
 
     @Autowired
     private myorderService myorderService;
+    
+    @Autowired
+    private AdminServiceImple adminService;
 
     @GetMapping("/myprofile")
     public String userProfile(HttpSession session, Model model) {
         String userId = (String) session.getAttribute("loginId");
+        
+		Vector<UserSeatDTO> vlist = adminService.getUserHistory();
+		List<UserSeatDTO> filteredList = new ArrayList<>();
+		
+		if (userId == null) {
+			filteredList.addAll(vlist);
+		} else {
+			for (UserSeatDTO userSeat : vlist) {
+				if (userSeat.getId().equals(userId)) {
+					filteredList.add(userSeat);
+				}
+			}
+		}
+		
+		model.addAttribute("seatHistory", filteredList);
+        
         if (userId != null) {
             userDTO user = userService.getUserProfile(userId);
             List<paymentDTO> userOrders = myorderService.getUserOrders(userId);

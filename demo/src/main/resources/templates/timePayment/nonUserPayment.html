@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="description" content=""/>
-    <meta name="author" content=""/>
-    <title>Heroic Features - Start Bootstrap Template</title>
+    <title>DEU PC - 시간 충전</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="/assets/css/timePayment.css"/>
     <!-- Bootstrap icons-->
@@ -43,7 +39,7 @@
 <div class="text-center" style="margin-left: 50px;margin-right: 50px;margin-top: 50px;">
     <div>
         <div style="display: flex; justify-content: flex-start; padding:10px;">
-            <button id="backToPage" class="btn btn-primary" type="submit" style="max-width:100px;">전 페이지
+            <button id="backToPage" class="btn" type="submit"style="background-color: #BD75C3; color: white; max-width:100px;">전 페이지
             </button>
         </div>
         <div>
@@ -72,7 +68,8 @@
                                             class="card-subtitle mb-2 text-body-secondary"
                                             th:data-price="${time.time_price}"
                                             th:text="${time.time_price} + ' 원'"></h6>
-                                        <button th:id="'addItemInBucket-' + ${time.time_num}" class="btn btn-primary"
+                                        <button th:id="'addItemInBucket-' + ${time.time_num}" class="btn" 
+											style="background-color: #BD75C3; color: white;"
                                                 type="submit">추가하기
                                         </button>
                                     </div>
@@ -101,11 +98,11 @@
                     <div style="padding: 5px;">
                         <div class="container text-center">
                             <div class="grid gap-3 row  justify-content-center">
-                                <button id="buyButton" class="btn btn-primary" type="submit" onclick="requestPay()"
-                                        style="max-width:100px;">구매하기
+                                <button id="buyButton" class="btn" type="submit" onclick="requestPay()"
+                                        style="max-width:100px; background-color: #BD75C3; color: white;">구매하기
                                 </button>
-                                <button id="cancleButton" class="btn btn-primary" type="submit"
-                                        style="max-width:100px;">취소
+                                <button id="cancleButton" class="btn" type="submit"
+                                        style="max-width:100px; background-color: #BD75C3; color: white;">취소
                                 </button>
                             </div>
                         </div>

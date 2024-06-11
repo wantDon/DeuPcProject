@@ -1,5 +1,6 @@
 .order-item {
     border: 1px solid #000;
+    border-radius: 10px;
     padding: 10px;
     margin-bottom: 30px;
     display: flex;
@@ -47,7 +48,8 @@
     background-color: #B08EC2;
     color: white;
     border: none;
-    padding: 5px 15px;
+    padding: 5px 30px;
+    margin-right: 10px;
     cursor: pointer;
     border-radius: 5px;
 }

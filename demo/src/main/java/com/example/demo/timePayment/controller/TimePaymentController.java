@@ -76,13 +76,10 @@ public class TimePaymentController {
     public String buyItem(@RequestParam("price") String price, @RequestParam("times") int times, @RequestParam("userId") String userId, HttpSession session, Model model) {
 
         if (!userId.equals("undefined")) {
-            System.out.println(userId);
             //회원일때 1.입력된 정보를 카운터를 이용해 충전한다.+결제기록을 남긴다. 2.화면을 이동시켜준다.
-
-
             PaymentDTO newPaymentDTO = new PaymentDTO();
             newPaymentDTO.setPay_price(Integer.parseInt(price));
-            newPaymentDTO.setMethod("결제방법");
+            newPaymentDTO.setMethod("card");
             newPaymentDTO.setPay_date(LocalDateTime.now());
             newPaymentDTO.setPay_div(1);
             newPaymentDTO.setPay_state(0);
@@ -94,7 +91,7 @@ public class TimePaymentController {
             if (session.getAttribute("loginId") != null) {
                 return "redirect:/pc";
             }
-            return "/pc/smain";
+            return "redirect:/pc/smain";
         } else {
             //비회원은 결제 완료후 바로 이용 시작화면으로
             UserDTO newUserDTO = counterManager.makeNewRandomUser();//신규 유저 생성
@@ -126,11 +123,5 @@ public class TimePaymentController {
 
             return "timePayment/nonUserIdPrint";
         }
-
     }
-
 }
-
-
-
-

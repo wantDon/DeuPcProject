@@ -19,3 +19,16 @@ function movePage(value) {
 		location.href = "/pc/smain";
 	}
 }
+
+$(document).ready(function() {	
+	var socket = new SockJS('/ws'); // WebSocket 서버 URL
+	var stompClient = Stomp.over(socket);
+	
+	stompClient.connect({}, function(){
+		stompClient.subscribe('/topic/login', function(message) {
+			if (message.body.includes("logout") || message.body.includes("login")) {
+				window.location.reload();
+			}
+		});
+	});
+});

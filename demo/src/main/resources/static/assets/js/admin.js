@@ -132,12 +132,9 @@ $(document).ready(function() {
 		});
     });
 	
-	// 페이지가 로드될 때 실행되는 함수
-	window.onload = function() { 
-		generatePCSeats();
-	
-		getUser();
-	};
+	generatePCSeats();
+
+	getUser();
 	
 	$('#seatModal').on('hidden.bs.modal', function () {
 		if (currentElement) {

@@ -7,7 +7,8 @@ $(document).ready(function() {
 	stompClient.connect({}, function() {
 		stompClient.subscribe('/topic/order', function(message) {
 			if (message.body.includes("success")) {
-				location.reload();
+				getOrderCount();
+				showNotification("새로운 주문이 있습니다.");
 			}
 		});
 	});
@@ -21,7 +22,7 @@ function getOrderCount() {
 			if (response.error) {
 				alert(response.error);
 			} else {
-				if (response && response.orderList) {				
+				if (response && response.orderList) {
 					const orderList = groupByPayNum(response.orderList);
 					document.getElementById("orderNum").textContent = orderList.length;
 				}
@@ -85,4 +86,21 @@ function navigateToNoticePage() {
 
 function navigateToItemPage() {
 	window.location.href = '/inventory';
+}
+
+function showNotification(message) {
+	var notification = document.createElement('div');
+	notification.className = 'notification';
+	notification.innerText = message;
+	document.body.appendChild(notification);
+	
+	// 알림 창을 표시
+	$(notification).fadeIn();
+	
+	// 5초 후에 알림 창을 숨기고 제거
+	setTimeout(function() {
+		$(notification).fadeOut(function() {
+			notification.remove();
+		});
+	}, 5000);
 }

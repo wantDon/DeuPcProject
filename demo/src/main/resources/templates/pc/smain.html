@@ -2,10 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>DEU PC 동의대점</title>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 	</head>
-<th:block th:replace="~{layout/stop::sTop}"></th:block>
+	<th:block th:replace="~{layout/stop::sTop}"></th:block>
 		<div class="d1 smain">
-			<th:block th:unless="${clientIP == '127.0.0.2'}">
+			<th:block th:unless="${clientIP == '127.0.0.1'}">
 			<div class="d2">
 				<div class="d3 mx-2" onclick="movePage('회원')">
 					<div class="d4">
@@ -21,7 +25,7 @@
 				</div>
 			</div>
 			</th:block>
-			<th:block th:if="${clientIP == '127.0.0.2'}">
+			<th:block th:if="${clientIP == '127.0.0.1'}">
 			<div class="d2-admin">
 				<div class="d3 d3-admin mx-2" onclick="movePage('관리자')">
 					<div class="d4">

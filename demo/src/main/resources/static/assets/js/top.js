@@ -34,7 +34,7 @@ function getTime() {
 		},
 		error: function() {
 			$('#result').empty();
-			alert('서버 요청에 실패했습니다. 잠시 후 다시 시도 해주세요.');
+			window.location.replace("/pc/smain");
 		}
 	});
 }

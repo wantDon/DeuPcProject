@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
 			timeUseElement.innerText = hours + '시간 ' + minutes + '분';
 		}
 	
-	    var button = card.querySelector('.btn.btn-primary[type="submit"]');
+	    var button = card.querySelector('.btn.btn-asd[type="submit"]');
 		if (button) {
 			// 해당 버튼에 이벤트 리스너를 추가합니다.
 			button.addEventListener('click', function() {
